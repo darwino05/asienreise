@@ -1,5 +1,5 @@
 /* Offline-Hülle für die Asienreise-App. Fremde Kacheln und Fotos werden nicht gespeichert. */
-const V='asien27-20261102230150';
+const V='asien27-583b20b2c6';
 const SHELL=['./','index.html','leaflet.js','fonts.css','manifest.webmanifest','icon-192.png','icon-512.png','icon-180.png','3y9K6as8bTXq_nANBjzKo3IeZx8z6up5BeSl9D4dj_x9PpZBMlGGInHWVyNJtvI.woff2','3y9K6as8bTXq_nANBjzKo3IeZx8z6up5BeSl9D4dj_x9PpZBMlGHInHWVyNJtvI.woff2','3y9K6as8bTXq_nANBjzKo3IeZx8z6up5BeSl9D4dj_x9PpZBMlGIInHWVyNJ.woff2','_Xms-HUzqDCFdgfMm4S9DaRvzig.woff2','_Xms-HUzqDCFdgfMm4q9DaRvziissg.woff2','aFTR7PB1QTsUX8KYvumzEY2tbYf-Vlh3uA.woff2','aFTR7PB1QTsUX8KYvumzEYOtbYf-Vlg.woff2','aFTU7PB1QTsUX8KYthSQBK6PYK3EXw.woff2','aFTU7PB1QTsUX8KYthqQBK6PYK0.woff2'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith('asien27-')&&k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
