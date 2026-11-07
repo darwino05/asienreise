@@ -1,7 +1,7 @@
 /* Offline-Hülle für die Asienreise-App.
    Eigene Dateien: kommen aus dem Cache, wenn kein Netz da ist.
    Fotos (Wikimedia) und Kartenkacheln (Esri): werden beim Ansehen gemerkt und bleiben beim App-Update erhalten. */
-const V='asien27-612f0cbc42';
+const V='asien27-a3673ccb4c';
 const IMG='asienmedia-img',TILES='asienmedia-tiles',MAX={[IMG]:500,[TILES]:700};
 const SHELL=['./','index.html','leaflet.js','fonts.css','manifest.webmanifest','icon-192.png','icon-512.png','icon-180.png','3y9K6as8bTXq_nANBjzKo3IeZx8z6up5BeSl9D4dj_x9PpZBMlGGInHWVyNJtvI.woff2','3y9K6as8bTXq_nANBjzKo3IeZx8z6up5BeSl9D4dj_x9PpZBMlGHInHWVyNJtvI.woff2','3y9K6as8bTXq_nANBjzKo3IeZx8z6up5BeSl9D4dj_x9PpZBMlGIInHWVyNJ.woff2','_Xms-HUzqDCFdgfMm4S9DaRvzig.woff2','_Xms-HUzqDCFdgfMm4q9DaRvziissg.woff2','aFTR7PB1QTsUX8KYvumzEY2tbYf-Vlh3uA.woff2','aFTR7PB1QTsUX8KYvumzEYOtbYf-Vlg.woff2','aFTU7PB1QTsUX8KYthSQBK6PYK3EXw.woff2','aFTU7PB1QTsUX8KYthqQBK6PYK0.woff2'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});

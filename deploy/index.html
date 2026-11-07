@@ -218,7 +218,7 @@ svg.map{display:block;width:100%;height:auto;max-height:68vh}
 .bk .row{display:flex;flex-wrap:wrap;gap:4px 14px;color:var(--muted);font-size:14px}
 .bk .row b{color:var(--ink);font-weight:600}
 .addr{overflow-wrap:anywhere}
-.hotl{margin:8px 0 4px}.hotl summary{cursor:pointer;font-weight:600;padding:6px 0}.hotl ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}.hotl li{display:grid;gap:2px}.hotl .hp{font-family:var(--mono,monospace);font-size:13px}
+.apps{list-style:none;margin:0;padding:0;display:grid;gap:14px}.apps li{display:grid;gap:2px}.hotl h4{margin:12px 0 2px;font-size:15px}.hotl .lk{display:flex;flex-wrap:wrap;gap:12px;font-size:13px}.hotl{margin:8px 0 4px}.hotl summary{cursor:pointer;font-weight:600;padding:6px 0}.hotl ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}.hotl li{display:grid;gap:2px}.hotl .hp{font-family:var(--mono,monospace);font-size:13px}
 
 /* Geld */
 .ring{position:relative;width:132px;height:132px;flex:none}
@@ -384,16 +384,6 @@ const eur=n=>nf0.format(Math.round(n))+' €', eur2=n=>nf2.format(n)+' €';
 
 /* ---------- Daten ---------- */
 let STAGES,ORDER,ROUTE,ROUTE_DAY,SEG_DAY,ROUTE_META,DAYS,SEED,FRIST,BOOK,ENTRY,COST,RECO,BKT,DAYACTS,VIEWKEYS,REGLBL,BUCKETS_DEF,FIRSTSTOP,LASTSTOP,TRIP;
-const A_STAGES=[
- {id:'th',name:'Thailand',from:0,to:13,intro:'Stadt, Kultur im Norden, dann eine Woche Strand und Klettern an der Andamanensee, wo Februar und März zur Trockenzeit gehören.',
-  tips:['Ein Nachtzug Bangkok–Chiang Mai spart eine Übernachtung und gilt bei vielen Reisenden als Erlebnis für sich; früh buchen.','Railay hat keine Straßenanbindung und ist nur per Boot erreichbar, also mit leichtem Rucksack anreisen.','Bei Elefanten nur Projekte ohne Reiten und ohne Shows wählen.']},
- {id:'vn',name:'Vietnam',from:14,to:21,intro:'Norden und Mitte in acht Tagen: Altstadt-Leben in Hanoi, eine Nacht auf dem Boot zwischen Kalksteinfelsen, Laternen in Hoi An. Mit österreichischem Pass braucht ihr ein E-Visum.',
-  tips:['Die Lan-Ha-Bucht gleich neben Ha Long gilt als ruhiger mit weniger Booten; eine Tour mit Übernachtung und guten Bewertungen wählen.','In Hoi An lohnt sich die Altstadt am meisten abends, wenn die Laternen brennen.','Am 18.3. früh Flug Da Nang → Tokyo (meist mit Umstieg).']},
- {id:'jp',name:'Japan',from:22,to:35,intro:'Der Zeitraum trifft die Kirschblüte typischerweise gut: Tokyo blüht meist ab etwa dem 20.–24. März, Kyoto und Osaka ein paar Tage später mit Vollblüte um den Monatswechsel. Rechnet mit kühlen 9–14 °C.',
-  tips:['Ab Februar 2027 die Blütenprognosen (z. B. Japan Meteorological Corporation) beobachten und notfalls Tokyo und Kyoto tauschen.','Ein landesweiter JR Pass lohnt sich bei dieser Route kaum; Einzeltickets für Shinkansen plus IC-Karte (Suica/ICOCA) reichen.','Beliebte Spots wie Fushimi Inari und Arashiyama vor 8 Uhr besuchen, danach wird es sehr voll.']},
- {id:'ko',name:'Südkorea',from:36,to:42,intro:'Seoul blüht meist Anfang April, also direkt nach Japan; die Hauptblüte lag in den letzten Jahren zwischen etwa 2. und 12. April. Gut für eine zweite Blütenrunde zum Abschluss.',
-  tips:['Blütenspots wie Yeouido werktags am frühen Morgen besuchen; am Wochenende ist es dort sehr voll.','Unterkünfte für Anfang April 6–8 Wochen vorher buchen, das ist Seouls stärkste Woche.','Die T-money-Karte für U-Bahn und Bus gleich am Flughafen kaufen.']}
-];
 const STOPS={
  bkk:{n:'Bangkok',st:'th',ll:[100.50,13.75],lab:'r',q:'Bangkok, Thailand'},
  cnx:{n:'Chiang Mai',st:'th',ll:[98.99,18.79],lab:'r',q:'Chiang Mai, Thailand'},
@@ -412,127 +402,20 @@ const STOPS={
  sgn:{n:'Ho-Chi-Minh-Stadt',st:'vn',ll:[106.7019,10.7769],lab:'r',q:'Ho Chi Minh City, Vietnam'},
  hij:{n:'Hiroshima',st:'jp',ll:[132.4553,34.3853],lab:'l',q:'Hiroshima, Japan'},
  nbh:{n:'Ninh Binh',st:'vn',ll:[105.975,20.2506],lab:'r',q:'Ninh Binh, Vietnam'},
+ pai:{n:'Pai',st:'th',ll:[98.4417,19.3583],lab:'r',q:'Pai, Thailand'},
  khs:{n:'Khao Sok',st:'th',ll:[98.55,8.96],lab:'l',q:'Khao Sok National Park, Thailand'},
  hag:{n:'Ha Giang',st:'vn',ll:[104.9784,22.8233],lab:'l',q:'Ha Giang, Vietnam'},
  home:{n:'Zürich',st:'home',ll:[8.5492,47.4647],lab:'r',q:'Flughafen Zürich'}
 };
-const A_ORDER=['bkk','cnx','krb','han','hlb','hoi','tyo','kyo','nar','osa','sel'];
-const A_ROUTE=["home","bkk","cnx","krb","bkk","han","hlb","han","hoi","tyo","kyo","nar","kyo","osa","sel","home"];
-const A_SEG_DAY=[0,0,4,8,13,14,17,18,19,22,27,30,31,32,36,42];
-const A_ROUTE_META=[null,["flug","Direktflug ca. 10 Std."],["flug","ca. 1 h 15 oder Nachtzug"],["flug","ca. 2 Std."],["flug","Abendflug"],["flug","ca. 1 h 40"],["bus","Shuttle ca. 3–4 Std."],["bus","Shuttle zurück"],["flug","nach Da Nang, dann Transfer"],["flug","meist mit Umstieg"],["zug","Shinkansen ca. 2 h 15"],["zug","ca. 45 min"],["zug","ca. 45 min"],["zug","ca. 15 min"],["flug","ca. 2 Std."],["flug","Rückflug, ca. 14 Std. mit Umstieg"]];
-const A_ROUTE_DAY=[0,1,4,8,13,14,17,18,19,22,27,30,31,32,36,42];
-const A_DAYS=[
- ['Anreise',null,'Abflug Zürich/München, Nachtflug'],
- ['Bangkok','bkk','Ankunft, ankommen, abends Chinatown (Yaowarat) zum Streetfood'],
- ['Bangkok','bkk','Grand Palace und Wat Pho früh morgens, Fähre zum Wat Arun zum Sonnenuntergang'],
- ['Bangkok','bkk','Chatuchak-Wochenendmarkt, Rooftop-Bar am Abend'],
- ['→ Chiang Mai','cnx','Flug (ca. 1 h 15) oder Nachtzug ab Vortag; abends Sunday Walking Street'],
- ['Chiang Mai','cnx','Altstadt-Tempel: Wat Phra Singh, Wat Chedi Luang; abends Doi Suthep'],
- ['Chiang Mai','cnx','Ethisches Elefantenschutzgebiet (ohne Reiten) oder Thai-Kochkurs'],
- ['Chiang Mai','cnx','Flexibler Tag: Doi Inthanon, Wandern oder Ausflug nach Chiang Rai (Weißer Tempel)'],
- ['→ Krabi','krb','Flug Chiang Mai–Krabi, Longtail-Boot nach Railay'],
- ['Railay','krb','Klettern: halber Tag Einführungskurs, Nachmittag Phra Nang Beach'],
- ['Railay','krb','Aussichtspunkt und Lagune (steil, nur mit festen Schuhen), Kajak'],
- ['Krabi','krb','4-Islands-Tour oder Hong Islands per Longtail'],
- ['Krabi','krb','Freier Strandtag, optional Koh Lanta als Tagesausflug'],
- ['Krabi','krb','Entspannen, Packen; Abendflug nach Bangkok'],
- ['→ Hanoi','han','Flug Bangkok–Hanoi; abends Altstadt, Bia Hoi an der Straßenecke'],
- ['Hanoi','han','Hoan-Kiem-See am Morgen, Literaturtempel, Streetfood-Tour (Bun Cha, Pho, Eierkaffee)'],
- ['Hanoi','han','Train Street, Wasserpuppentheater; oder Tagesausflug Ninh Binh (Trang An per Boot)'],
- ['Ha-Long-/Lan-Ha-Bucht','hlb','Abholung per Shuttle, Bootstour mit Kajak und Höhle, Übernachtung an Bord'],
- ['→ Hanoi','han','Sonnenaufgang auf dem Boot, Rückfahrt nach Hanoi'],
- ['→ Hoi An','hoi','Flug Hanoi–Da Nang, Transfer nach Hoi An (ca. 45 min); abends Laternen am Fluss'],
- ['Hoi An','hoi','Radtour durch Reisfelder, Kochkurs oder Schneider für Maßkleidung'],
- ['Hoi An','hoi','An Bang Beach oder Marble Mountains; Abend in der Altstadt'],
- ['→ Tokyo','tyo','Flug ab Da Nang, Ankunft, Shinjuku am Abend'],
- ['Tokyo','tyo','Asakusa (Senso-ji), Sumida-Fluss, Tokyo Skytree'],
- ['Tokyo','tyo','Shibuya Crossing, Harajuku, Meiji-Schrein; abends Shibuya Sky'],
- ['Tokyo','tyo','Hanami: Shinjuku Gyoen, Ueno-Park, abends Meguro-Kanal beleuchtet'],
- ['Tokyo','tyo','Flexibler Tag: Hakone (Onsen, Blick auf den Fuji) oder Kamakura'],
- ['→ Kyoto','kyo','Shinkansen (ca. 2 h 15); nachmittags Gion, Yasaka-Schrein'],
- ['Kyoto','kyo','Fushimi Inari ab 7 Uhr, Philosophenweg, Ginkaku-ji'],
- ['Kyoto','kyo','Arashiyama-Bambushain früh, Tenryu-ji, Bootsfahrt Hozu'],
- ['Nara','nar','Tagesausflug: Todai-ji, Hirsche im Nara-Park, Kasuga-Schrein'],
- ['Kyoto','kyo','Maruyama-Park (Hanami am Abend), Kiyomizu-dera, Nishiki-Markt'],
- ['→ Osaka','osa','Zug (ca. 15 min); Burg Osaka mit Kirschblüte, abends Dotonbori'],
- ['Osaka','osa','Kuromon-Markt, Shinsekai; oder Tagesausflug Himeji (Burg zur Blüte)'],
- ['Osaka','osa','Universal Studios oder Umeda Sky Building; Streetfood (Takoyaki, Okonomiyaki)'],
- ['Osaka','osa','Puffer für Blüte; abends packen'],
- ['→ Seoul','sel','Flug Osaka–Seoul (ca. 2 h); abends Myeongdong-Streetfood'],
- ['Seoul','sel','Gyeongbokgung (im Hanbok freier Eintritt), Bukchon-Hanok-Dorf, Insadong'],
- ['Seoul','sel','Seokchon-See mit Kirschblüte am Morgen, Lotte World Tower; abends Hongdae'],
- ['Seoul','sel','Yeouido (Kirschblütenallee), Fahrrad am Han-Fluss, Korean BBQ'],
- ['Seoul','sel','Flexibler Tag: DMZ-Tour (vorab buchen) oder Bukhansan-Wanderung'],
- ['Seoul','sel','Namsan-Turm, Gwangjang-Markt, letzte Einkäufe. Achtung: Gyeongbokgung ist dienstags zu'],
- ['Rückflug',null,'Flug Seoul → Zürich/München']
-];
 const stageOf=i=>STAGES.find(s=>i>=s.from&&i<=s.to);
 const stopAt=i=>DAYS[i][1]||(i<1?FIRSTSTOP:LASTSTOP);
 
 /* Buchungen: Vorgaben aus dem Plan, Eintragungen kommen vom Nutzer */
-const A_SEED=[
- {id:'s1',k:'stay',stop:'bkk',a:1,b:3,t:'Bangkok'},
- {id:'s2',k:'stay',stop:'cnx',a:4,b:7,t:'Chiang Mai'},
- {id:'s3',k:'stay',stop:'krb',a:8,b:12,t:'Krabi & Railay'},
- {id:'s4',k:'stay',stop:'bkk',a:13,b:13,t:'Bangkok (Zwischenstopp)'},
- {id:'s5',k:'stay',stop:'han',a:14,b:16,t:'Hanoi'},
- {id:'s6',k:'stay',stop:'hlb',a:17,b:17,t:'Boot in der Lan-Ha-Bucht'},
- {id:'s7',k:'stay',stop:'han',a:18,b:18,t:'Hanoi'},
- {id:'s8',k:'stay',stop:'hoi',a:19,b:21,t:'Hoi An'},
- {id:'s9',k:'stay',stop:'tyo',a:22,b:26,t:'Tokyo'},
- {id:'s10',k:'stay',stop:'kyo',a:27,b:31,t:'Kyoto'},
- {id:'s11',k:'stay',stop:'osa',a:32,b:35,t:'Osaka'},
- {id:'s12',k:'stay',stop:'sel',a:36,b:41,t:'Seoul'},
- {id:'l0',k:'leg',a:0,from:'Zürich/München',to:'Bangkok',t:'Hinflug (Nachtflug)'},
- {id:'l1',k:'leg',a:4,from:'Bangkok',to:'Chiang Mai',t:'Flug oder Nachtzug'},
- {id:'l2',k:'leg',a:8,from:'Chiang Mai',to:'Krabi',t:'Flug, dann Longtail-Boot nach Railay'},
- {id:'l3',k:'leg',a:13,from:'Krabi',to:'Bangkok',t:'Abendflug'},
- {id:'l4',k:'leg',a:14,from:'Bangkok',to:'Hanoi',t:'Flug'},
- {id:'l5',k:'leg',a:19,from:'Hanoi',to:'Hoi An',t:'Flug nach Da Nang, Transfer ca. 45 min'},
- {id:'l6',k:'leg',a:22,from:'Da Nang',to:'Tokyo',t:'Flug, meist mit Umstieg'},
- {id:'l7',k:'leg',a:27,from:'Tokyo',to:'Kyoto',t:'Shinkansen, ca. 2 h 15'},
- {id:'l8',k:'leg',a:32,from:'Kyoto',to:'Osaka',t:'Zug, ca. 15 min'},
- {id:'l9',k:'leg',a:36,from:'Osaka',to:'Seoul',t:'Flug, ca. 2 h'},
- {id:'l10',k:'leg',a:42,from:'Seoul',to:'Zürich/München',t:'Rückflug'},
- {id:'a1',k:'act',a:6,t:'Elefantenschutzgebiet oder Kochkurs',stop:'cnx'},
- {id:'a2',k:'act',a:9,t:'Kletterkurs Railay',stop:'krb'},
- {id:'a3',k:'act',a:17,t:'Bootstour Lan-Ha-Bucht mit Übernachtung',stop:'hlb'},
- {id:'a4',k:'act',a:20,t:'Kochkurs Hoi An',stop:'hoi'},
- {id:'a5',k:'act',a:24,t:'Shibuya Sky',stop:'tyo'},
- {id:'a6',k:'act',a:40,t:'DMZ-Tour (optional)',stop:'sel'}
-];
-const A_FRIST=[
- {d:'2027-01-04',t:'Südkorea: K-ETA-Regel prüfen',s:'Die Befreiung gilt bis 31.12.2026 und wird 2027 voraussichtlich nicht verlängert. Auf k-eta.go.kr nachsehen, sonst K-ETA beantragen (ca. 10.000 KRW).'},
- {d:'2027-03-29',t:'Südkorea: e-Arrival-Karte ausfüllen',s:'Kostenlos, innerhalb von 3 Tagen vor der Ankunft (1.4.) auf e-arrivalcard.go.kr.'},
- {d:'2027-02-01',t:'Kirschblüten-Prognose beobachten',s:'Ab Februar. Bei Abweichung Tokyo und Kyoto tauschen.'},
- {d:'2027-02-04',t:'Unterkunft Seoul buchen',s:'6–8 Wochen vor dem 1.4., das ist Seouls stärkste Woche.'},
- {d:'2027-02-17',t:'Vietnam-E-Visum beantragen',s:'25 USD, ca. 3 Werktage. Spätestens 2–3 Wochen vor Einreise.'},
- {d:'2027-02-21',t:'Thailand: Einreisekarte TDAC',s:'Pflicht, innerhalb von 72 h vor Ankunft ausfüllen.'},
- {d:'2027-03-15',t:'Japan: Visit Japan Web',s:'Optional, beschleunigt die Einreise. Vor dem Abflug nach Tokyo.'}
-];
-const A_BOOK=['Urlaub für 24.2.–7.4.2027 fixieren','Open-Jaw-Flug buchen: Zürich/München → Bangkok, Seoul → Zürich/München (Preise beider Flughäfen vergleichen)','Unterkünfte Japan 18.–31.3. buchen (kostenlos stornierbar, wegen Blütenprognose)','Unterkünfte Seoul 1.–7.4. buchen','Ha-Long-/Lan-Ha-Bootstour mit Übernachtung reservieren','Zwischenflüge: Bangkok–Chiang Mai, Chiang Mai–Krabi, Krabi–Bangkok, Bangkok–Hanoi, Hanoi–Da Nang, Da Nang–Tokyo, Osaka–Seoul','Unterkünfte Thailand und Vietnam','Reiseversicherung inkl. Auslandskranken und Kletter-/Sportschutz','Kletterkurs Railay und Kochkurs vorab anfragen'];
 const PACK=['Kleidung für 7 Tage, unterwegs waschen','Schichten für Japan und Seoul: leichte Daunenjacke oder Fleece, Regenjacke','Badesachen, Sonnenschutz, Mückenschutz','Lange Hose und Schultern bedeckt für Tempel','Feste Schuhe für Railay und Wanderungen, plus Sandalen','Kletterschuhe und Gurt nur, wenn ihr mehr als einen Tag klettert (sonst leihen)','Reiseapotheke, Kopien von Pass und Versicherung','eSIM für Asien, Powerbank, Universaladapter','Kreditkarte ohne Auslandsgebühren, etwas Bargeld'];
 let LISTS;
-const A_ENTRY=[
- {st:'th',n:'Thailand',r:'Visumfrei, seit 15.9.2026 nur noch bis 30 Tage (vorher 60). Digitale Einreisekarte TDAC ist Pflicht.',w:'TDAC innerhalb von 72 h vor Ankunft'},
- {st:'vn',n:'Vietnam',r:'E-Visum nötig (25 USD, ca. 3 Werktage). Österreich steht nicht auf der Liste der Länder mit 45 Tagen visumfrei.',w:'Mindestens 2–3 Wochen vorher auf evisa.gov.vn'},
- {st:'jp',n:'Japan',r:'Visumfrei bis 90 Tage. Visit Japan Web ist optional und beschleunigt die Einreise. Die geplante Einreise-Genehmigung JESTA kommt frühestens 2028.',w:'Vor dem Abflug nach Tokyo'},
- {st:'ko',n:'Südkorea',r:'K-ETA-Befreiung gilt bis 31.12.2026. Ab 1.1.2027 voraussichtlich wieder Pflicht (10.000 KRW), falls nicht erneut verlängert. Zusätzlich die kostenlose e-Arrival-Karte.',w:'K-ETA mind. 72 h vorher auf k-eta.go.kr, e-Arrival-Karte innerhalb von 3 Tagen vor Ankunft'}
-];
-const A_COST=[
- ['Langstreckenflug Open-Jaw (Zürich/München–Bangkok, Seoul–zurück)','–','–','800–1.100 €'],
- ['Flüge und Züge innerhalb Asiens (5 Flüge, Shinkansen)','–','–','500–800 €'],
- ['Thailand','14','60–80 €','800–1.100 €'],
- ['Vietnam','8','50–75 €','400–600 €'],
- ['Japan (Kirschblüte, Hotels teurer)','14','95–130 €','1.300–1.800 €'],
- ['Seoul','6','100–120 €','600–720 €'],
- ['Versicherung, eSIM, Vietnam-Visum, Eintritte, Puffer','–','–','400–600 €']
-];
-const A_RECO=['Nicht zu viele Stationen: Bei Thailand-Routen mit vielen Inseln geht viel Zeit an Flughäfen und Fähren verloren. Deshalb hat jede Etappe nur zwei bis drei Standorte.','Wat Arun zum Sonnenuntergang und früh morgens in Tempel gehen, um Hitze und Gedränge zu vermeiden.','Railay mindestens eine Nacht: Die Halbinsel ist abends nach Abfahrt der Tagesboote am schönsten.','Ha Long mit Übernachtung statt Tagestour: Der Sonnenaufgang auf dem Wasser wird oft als Highlight genannt.','Fushimi Inari vor 8 Uhr und bis weiter nach oben steigen: unten ist es voll, weiter oben fast leer.','Japan zur Blüte: Hotels früh buchen, die Preise steigen Ende März stark. Beleuchtete Hanami-Spots wie Meguro-Kanal und Maruyama-Park nicht verpassen.','Seoul: Seokchon-See für Fotos, Yeouido für Festival-Stimmung; beide werktags früh.','Passend für euch: Klettern in Railay, Kajak in der Lan-Ha-Bucht, Radtour in Hoi An und eine Wanderung am Bukhansan.'];
 
 /* Geld */
 const CATS=[['essen','Essen'],['unterkunft','Unterkunft'],['transport','Transport'],['flug','Flüge'],['aktiv','Aktivitäten'],['shop','Einkaufen'],['sonst','Sonstiges']];
-const A_BKT=[['lang','Langstreckenflug'],['inner','Flüge & Züge Asien'],['th','Thailand'],['vn','Vietnam'],['jp','Japan'],['ko','Südkorea'],['misc','Versicherung, Visa, Puffer']];
 const CURS=['EUR','THB','VND','JPY','KRW','USD'];
 const CURN={EUR:'Euro',THB:'Baht',VND:'Dong',JPY:'Yen',KRW:'Won',USD:'US-Dollar'};
 /* Typische Preise in Landeswährung (von, bis). Grobe Richtwerte, gerundet. */
@@ -566,6 +449,7 @@ const CLIM={
  phi:{hi:32,lo:25,ic:'sun',rain:'wenig Regen',tip:'Trockenzeit mit ruhigem Meer. Sonnencreme ohne Riffschäden, viel Wasser mitnehmen.'},
  lan:{hi:33,lo:25,ic:'sun',rain:'wenig Regen',tip:'Trockenzeit, ruhiges Meer. Gut für Strand und Schnorcheln.'},
  rep:{hi:35,lo:24,ic:'sun',rain:'trocken',tip:'Sehr heiß am Tag. Früh starten, Hut und Wasser mitnehmen, Schultern und Knie für die Tempel bedecken.'},
+ pai:{hi:33,lo:14,ic:'sun',rain:'trocken',tip:'Tagsüber heiß, morgens und abends kühl. Jacke für Roller und Abend mitnehmen.'},
  khs:{hi:32,lo:22,ic:'partly',rain:'trocken, einzelne Schauer im Dschungel möglich',tip:'Schwül im Regenwald. Leichte lange Kleidung, Insektenschutz, wasserfeste Tasche für Boot und Wasserfälle.'},
  hag:{hi:21,lo:11,ic:'cloud',rain:'Nieselregen und Nebel möglich',tip:'In den Bergen morgens und abends kühl. Windjacke, Handschuhe und Regenschutz für die Motorradtage.'},
  sgn:{hi:35,lo:25,ic:'sun',rain:'trocken, Regenzeit erst später',tip:'Heiß und schwül. Leichte Kleidung, viel trinken.'},
@@ -911,6 +795,251 @@ const ACTS_B2=[
 /* ---------- SÜDKOREA ---------- */
 {id:"sel-hanriverferry",s:"sel",c:"trip",t:"Fährfahrt auf dem Han-Fluss (ab Yeouido)",q:"Ashley boat terminal 2, Yeouido, Seoul",d:"Fähren und Ausflugsschiffe ab dem Anleger bei Yeouido fahren am Han-Fluss entlang, vorbei an Brücken und Skyline. Abends mit Beleuchtung am schönsten. Der Anleger „Ashley boat terminal 2“ aus eurer Liste muss nicht genau der richtige sein, dort fahren viele Schiffe, sagt eure Notiz.",h:"Mehrere Abfahrten täglich, abends und bei Sonnenuntergang beliebt",p:"Fahrten ca. 12.000–25.000 KRW je nach Schiff und Dauer",z:"40–90 Min.",w:"Metro Yeouinaru oder Yeouido, kurzer Fußweg zum Anleger",tips:["Abfahrtszeiten und Anleger vorher online prüfen.","Bei Wind kann es kühl sein, eine Jacke mitnehmen.","Mit Kirschblüte in Yeouido am selben Tag kombinieren."]}
 ];
+/* Mehr zum Selbermachen: Kochen, Klettern, Surfen, Tauchen und mehr. Preise sind Richtwerte, vor der Buchung beim Anbieter prüfen. */
+const ACTLL_C={
+ 'tyo-surf':[35.304,139.542],'tyo-fuji':[35.5009,138.7660],'osa-cupnoodles':[34.8222,135.4308],'osa-koyasan':[34.2134,135.5855],
+ 'pai-walking':[19.3586,98.4417],'kyo-sake':[34.9302,135.7598],'kyo-tea':[35.0036,135.7790],'kyo-cooking':[35.0050,135.7647],
+ 'tyo-karaoke':[35.6595,139.7005]
+};
+const ACTS_C=[
+/* ---------- THAILAND ---------- */
+{id:"bkk-cooking",s:"bkk",c:"fun",t:"Thai-Kochkurs mit Marktbesuch",q:"Thai cooking class Bangkok",d:"Halbtags-Kochkurs: erst Markt mit Kräutern und Gewürzen, dann kocht ihr vier bis fünf Gerichte selbst, zum Beispiel Tom Yum, Curry, Pad Thai und ein Dessert. Das Essen esst ihr danach. Eine der beliebtesten Aktivitäten bei Reisenden.",h:"Meist Vormittag oder Nachmittag, 3–4 Std.",p:"ca. 1.200–1.800 THB pro Person",z:"3–4 Std.",w:"Abholung vom Hotel oder Treffpunkt an einer Skytrain-Station",tips:["Schulen mit kleinen Gruppen und guten aktuellen Bewertungen wählen.","Vegetarische Variante vorher ankündigen.","Am Anfang der Reise machen, dann kocht ihr zu Hause nach."]},
+{id:"bkk-muaythaiclass",s:"bkk",c:"fun",t:"Muay-Thai-Probetraining",q:"Muay Thai gym trial class Bangkok",d:"Ein bis zwei Stunden Pratzen, Tritte und Kondition im Gym, geführt von einem Trainer. Anfänger sind willkommen, es wird nicht gekämpft. Gut, um das Nationalsport-Erlebnis selbst zu spüren und nicht nur zuzuschauen.",h:"Meist Vormittags und am späten Nachmittag",p:"ca. 500–1.000 THB für eine Stunde Probetraining",z:"1,5–2 Std.",w:"Gyms liegen in vielen Stadtvierteln, meist mit Grab oder Skytrain erreichbar",tips:["Bequeme Sportkleidung mitnehmen, Handtuch und Wasser gibt es oft vor Ort.","Vorher klären, ob Gebühr für Handschuhe und Bandagen anfällt.","Nicht am selben Tag wie lange Fahrten legen, ihr werdet müde sein."]},
+{id:"cnx-climbing",s:"cnx",c:"fun",t:"Klettern am Crazy Horse Buttress",q:"Crazy Horse Buttress climbing Chiang Mai",d:"Klettern am Fels in der Nähe von Chiang Mai, geeignet für Anfänger mit Guide und Fortgeschrittene. Die Saison ist von November bis April am besten, also genau in eurem Zeitraum. Halbtags-Touren mit Material und Transport.",h:"Meist Vormittag, Abholung in der Stadt",p:"ca. 1.800–2.500 THB für eine Halbtagestour",z:"4–6 Std. inklusive Anfahrt",w:"Ca. 45–60 Min. von Chiang Mai, mit dem Anbieter-Bus",tips:["Anbieter mit zertifizierten Guides und Sicherungsmaterial prüfen.","Sonnenschutz, Wasser und feste Schuhe mitnehmen.","Wer Klettern in Railay plant, kann hier schon üben."]},
+{id:"pai-walking",s:"pai",c:"night",t:"Pai Walking Street",q:"Pai Walking Street",d:"Jeden Abend füllt sich die Hauptstraße von Pai mit Streetfood, Kunsthandwerk und Livemusik. Entspannter und kleiner als die Märkte in Bangkok oder Chiang Mai, typisch für die Backpacker-Stimmung der Stadt.",h:"Täglich ab ca. 17–18 Uhr bis spät",p:"Eintritt frei, Gerichte ab ca. 30–80 THB",z:"1,5–2 Std.",w:"Zu Fuß vom Zentrum",tips:["Bargeld in kleinen Scheinen mitnehmen.","Nach Sonnenuntergang wird es kühl, eine Jacke einpacken.","Die vielen Stände mit gegrilltem Essen und Süßem lohnen den Umweg über die Seitengassen."]},
+{id:"pai-canyon",s:"pai",c:"nature",t:"Pai Canyon zum Sonnenuntergang",q:"Pai Canyon",d:"Schmale Grate zwischen tiefen Schluchten aus rotem Lehm, mit Blick über das Tal. Zum Sonnenuntergang ein beliebter Spot. Die Wege sind schmal und ohne Geländer.",h:"Ganztägig zugänglich, am schönsten am späten Nachmittag",p:"Eintritt frei oder kleine Spende",z:"1–1,5 Std.",w:"Ca. 8 km südlich von Pai, mit Roller, Taxi oder Songthaew",tips:["Feste Schuhe und nicht bei Regen gehen.","Auf den schmalen Graten Abstand halten und nicht drängeln.","Vor Sonnenuntergang kommen, es wird sonst voll."]},
+{id:"pai-waterfall",s:"pai",c:"nature",t:"Mo-Paeng-Wasserfall",q:"Mo Paeng Waterfall Pai",d:"Wasserfall mit natürlichen Rutschen in der Nähe von Pai. Im März führt er weniger Wasser als in der Regenzeit, zum Baden reicht es meist trotzdem.",h:"Tagsüber",p:"Eintritt frei, ggf. kleine Gebühr für Parken",z:"1–2 Std.",w:"Ca. 8 km von Pai, mit Roller oder Taxi",tips:["Badesachen und Wassersandalen mitnehmen.","Bei wenig Wasser ist das Rutschen weniger spaßig, vorher fragen.","Mit Pai Canyon an einem Tag kombinieren."]},
+{id:"pai-hotsprings",s:"pai",c:"nature",t:"Heiße Quellen bei Pai",q:"Tha Pai Hot Springs",d:"Natürliche heiße Quellen in einem Park, in denen ihr in kleinen Becken baden könnt. Gut am Morgen, wenn die Luft noch frisch ist, oder nach einem Tag auf dem Roller.",h:"Meist 7–18 Uhr",p:"Eintritt ca. 100–300 THB (vor Ort prüfen)",z:"1–2 Std.",w:"Ca. 7 km von Pai, mit Roller, Taxi oder Songthaew",tips:["Nicht zu heiß einsteigen, die Becken haben unterschiedliche Temperatur.","Handtuch und Badesachen mitnehmen.","Wertsachen im Hotel lassen."]},
+{id:"pai-bamboo",s:"pai",c:"sight",t:"Bambusbrücke Boon Ko Ku So",q:"Boon Ko Ku So bamboo bridge Pai",d:"Eine lange Fußgängerbrücke aus Bambus über Reisfelder, im Sonnenaufgang oder bei Dämmerung ein beliebter Fotospot. Im März sind die Felder oft braun.",h:"Tagsüber",p:"Eintritt ca. 20–50 THB",z:"30–60 Min.",w:"Ca. 5–8 km von Pai, mit Roller oder Taxi",tips:["Früh am Morgen kommen, dann ist es leer.","Im März sind die Felder eher trocken, ein anderes Bild als in der Regenzeit.","Nach Regen kann der Weg rutschig sein."]},
+{id:"krb-dws",s:"krb",c:"fun",t:"Deep-Water-Solo (Klettern über dem Meer)",q:"Deep water solo Railay Krabi",d:"Klettern am Kalkfelsen ohne Seil, über dem Wasser: Fallt ihr, landet ihr im Meer. Mit Guide, Booten und Einweisung auch für Anfänger. Ein Highlight für alle, die in Railay klettern.",h:"Halbtags oder ganztags, meist Vormittag",p:"ca. 1.800–2.500 THB für einen halben Tag",z:"4–6 Std.",w:"Abholung am Strand von Ao Nang oder Railay mit dem Boot",tips:["Nur mit seriösen Anbietern, die Einweisung und Rettungsmaterial haben.","Badesachen und eine Bandage für die Hände sind hilfreich.","Wer Höhenangst hat, kann niedrigere Routen wählen."]},
+{id:"lan-dive",s:"lan",c:"fun",t:"Tauchtag Koh Lanta (Hin Daeng und Hin Muang)",q:"diving Koh Lanta Hin Daeng Hin Muang",d:"Koh Lanta ist Ausgangspunkt für Tauchplätze wie Hin Daeng und Hin Muang. Mit einem Tauchtag oder Schnuppertauchen erlebt ihr Riffe mit Fischschwärmen. Mit Tauchschein möglich, sonst ein Schnupper-Dive mit Guide.",h:"Ganztags, Abfahrt früh am Morgen",p:"Fun-Dive mit zwei Tauchgängen ab ca. 3.500–4.500 THB, Schnuppertauchen ähnlich",z:"Ganzer Tag",w:"Abholung vom Hotel, Boot ab Saladan",tips:["Tauchschein-Anfänger nehmen das Schnuppertauchen, nicht den Hin-Daeng-Tag.","Nach dem Tauchen 18–24 Stunden nicht fliegen, deshalb nicht am Abreisetag.","Versicherung mit Tauchschutz prüfen."]},
+/* ---------- JAPAN ---------- */
+{id:"tyo-sushi",s:"tyo",c:"fun",t:"Sushi selber machen (Kochkurs)",q:"sushi making class Tokyo",d:"Ihr lernt Reis, Nigiri und Rollen herzustellen und esst die Ergebnisse danach. Kurse dauern etwa zwei Stunden, oft mit Fischkunde und Tipps zum Messer. Ein Highlight für alle, die Sushi lieben.",h:"Meist Vormittag oder Nachmittag, 2–2,5 Std.",p:"ca. 6.000–10.000 JPY pro Person",z:"2–2,5 Std.",w:"Meist in Asakusa, Shinjuku oder Tsukiji, über Anbieter-Seiten buchbar",tips:["Wenige Wochen vorher buchen, beliebte Zeitfenster sind schnell weg.","Allergien und vegetarische Wünsche vorher melden.","Im Kurs oft mit auf Englisch, die Gruppe ist klein."]},
+{id:"tyo-ramenclass",s:"tyo",c:"fun",t:"Ramen selber machen (Kochkurs)",q:"ramen making class Tokyo Asakusa",d:"Nudeln, Brühe und Toppings selbst zubereiten. Danach isst du deine eigene Schüssel Ramen. Eine lockere Alternative zum Sushi-Kurs.",h:"Meist Nachmittag, ca. 2 Std.",p:"ca. 5.000–8.000 JPY pro Person",z:"2 Std.",w:"Meist in Asakusa oder Shinjuku",tips:["Vorher buchen.","Vegetarische Brühe gibt es bei manchen Anbietern.","Passt gut als Alternative zum Sushi-Kurs."]},
+{id:"tyo-bouldering",s:"tyo",c:"fun",t:"Bouldern in einer Kletterhalle",q:"bouldering gym Tokyo",d:"Tokyo hat viele Boulderhallen, die Preise sind fair und das Niveau hoch. Gut für einen Regentag oder den Abend. Kletterschuhe lassen sich leihen.",h:"Meist 10–22 Uhr",p:"Tageskarte ca. 1.500–2.500 JPY, Schuhmiete ca. 300–500 JPY",z:"1,5–3 Std.",w:"Viele Hallen nahe der U-Bahn, z. B. in Shinjuku, Shibuya oder Akihabara",tips:["Eine Halle mit englischer Beschreibung und Anfängerrouten wählen.","Magnesium ist meist erlaubt, Handtuch mitnehmen.","Mit eigenen Schuhen aus Railay vergleichen, ihr könnt sonst leihen."]},
+{id:"tyo-surf",s:"tyo",c:"fun",t:"Surfstunde in Shonan (Kamakura)",q:"surf lesson Kamakura Shonan",d:"Die Küste von Shonan ist Tokyos Surfspot, etwa eine Stunde mit dem Zug. Im März hat das Wasser nur 14–15 °C, mit dickem Neoprenanzug sind Anfängerstunden trotzdem möglich. Wellen sind klein bis mittel, es kann windig sein.",h:"Meist Vormittag, 2–3 Std.",p:"ca. 6.000–9.000 JPY mit Brett und Neoprenanzug",z:"Halber Tag mit Anreise",w:"Zug von Tokyo nach Kamakura oder Zushi, ca. 1–1,5 Std.",tips:["Anbieter mit englischsprachigem Lehrer und Anfängerkursen vorab buchen.","Dicken Neoprenanzug (5/4 mm) und Haube nehmen, das Wasser ist kalt.","Mit einem Besuch in Kamakura (Großer Buddha) und Enoshima verbinden."]},
+{id:"tyo-fuji",s:"tyo",c:"trip",t:"Mount Fuji und Kawaguchiko (Idee)",q:"Chureito Pagoda Kawaguchiko Mount Fuji",d:"Tagesausflug zum Fünf-Seen-Gebiet mit Blick auf den Fuji, etwa zwei Stunden Busfahrt von Tokyo. Wer klare Sicht erwischt, hat eines der berühmtesten Motive Japans. Im März liegt noch Schnee auf dem Berg.",h:"Ganzer Tag, Bus ab Shinjuku",p:"Bus ca. 2.000–4.000 JPY pro Strecke",z:"Ganzer Tag",w:"Direktbus ab Shinjuku nach Kawaguchiko, ca. 2 Std.",tips:["Bei schlechter Sicht verschieben, die Wetter-App prüfen.","Alternative zu Hakone, nicht beides am selben Tag.","Früh aufbrechen, die Rückfahrt kann voll sein."]},
+{id:"tyo-karaoke",s:"tyo",c:"night",t:"Karaoke mit Freunden",q:"karaoke Shibuya",d:"Japanisches Karaoke gibt es in privaten Räumen, ihr singt unter euch. Mit Getränkeflatrate ein günstiger und lustiger Abend. Viele Ketten haben englische Songlisten.",h:"Meist bis spät in die Nacht",p:"ca. 500–1.500 JPY pro Person und Stunde, Getränke extra oder inklusive",z:"1–2 Std.",w:"Überall in Shibuya, Shinjuku und Ikebukuro",tips:["Free-Time-Tarif mit Getränken ist meist günstiger.","Nach 22 Uhr steigen die Preise.","Am Wochenende vorher reservieren."]},
+{id:"kyo-cooking",s:"kyo",c:"fun",t:"Kochkurs mit Marktbesuch in Kyoto",q:"cooking class Kyoto Nishiki market",d:"Kyoto-Küche kennenlernen: Marktführung über den Nishiki-Markt und danach ein Kochkurs, zum Beispiel für Sushi, Miso-Suppe oder Hausmannskost. Kleine Gruppen, oft in einer Altbau-Küche.",h:"Meist Vormittag, 3–4 Std.",p:"ca. 8.000–12.000 JPY pro Person",z:"3–4 Std.",w:"Treffpunkt nahe Nishiki-Markt oder Gion",tips:["Früh buchen, vor allem zur Kirschblüte.","Vegetarische Optionen vorher klären.","Nach dem Kurs lohnt sich ein Spaziergang am Kamo-Fluss."]},
+{id:"kyo-tea",s:"kyo",c:"fun",t:"Teezeremonie",q:"tea ceremony Kyoto Gion",d:"In einem Teehaus oder Tempel lernt ihr Matcha nach der klassischen Zeremonie zuzubereiten und zu trinken. Ruhig und kurz, gut für Einsteiger. Oft mit Süßigkeiten und Erklärungen auf Englisch.",h:"Mehrfach täglich, 45–60 Min.",p:"ca. 3.000–6.000 JPY pro Person",z:"45–60 Min.",w:"Vor allem in Higashiyama und Gion",tips:["Vorher reservieren, besonders am Wochenende.","Knie und Füße sind für das Sitzen auf dem Boden gefragt, es gibt oft Sitzvarianten.","Kimono-Verleih lässt sich gut mit der Teezeremonie kombinieren."]},
+{id:"kyo-kimono",s:"kyo",c:"fun",t:"Kimono tragen (Verleih)",q:"kimono rental Kyoto Gion",d:"Ihr leiht einen Kimono mit Frisur und macht damit einen Spaziergang durch Gion oder Higashiyama. Ein Klassiker und gut für Fotos. Oft mit Zeitfenstern und Rückgabe am Abend.",h:"Meist 9–18 Uhr",p:"ca. 3.500–6.000 JPY pro Person inklusive Frisur",z:"Halber Tag",w:"Läden in Gion und nahe Kiyomizu-dera",tips:["Bei Regen kann ein Termin verschoben werden, vorher fragen.","Bequeme Schuhe, die ihr zum Kimono ausziehen könnt.","Zur Blüte sind die Läden voll, früh buchen."]},
+{id:"kyo-sake",s:"kyo",c:"food",t:"Sake-Viertel Fushimi",q:"Fushimi sake district Gekkeikan Okura Museum Kyoto",d:"Fushimi ist seit Jahrhunderten für Sake bekannt. Ihr besucht Brauerei-Museen und probiert verschiedene Sorten. Passt gut zum Tag am Fushimi Inari, das Viertel liegt in der Nähe.",h:"Meist 9:30–16:30, montags geschlossen (vor Ort prüfen)",p:"Museum ca. 400–600 JPY, Verkostungen ca. 500–1.500 JPY",z:"1,5–2 Std.",w:"Keihan-Linie bis Chushojima, ca. 15 Min. ab Fushimi Inari",tips:["Mit einem Schluck anfangen, es kommen mehrere Sorten.","Nach dem Probieren nicht mehr Fahrrad oder Roller fahren.","Gut verbindbar mit einem Mittagessen im Viertel."]},
+{id:"osa-cupnoodles",s:"osa",c:"fun",t:"Cup-Noodles-Museum (eigene Cup Noodles)",q:"Cupnoodles Museum Osaka Ikeda",d:"Im Museum in Ikeda bei Osaka gestaltet ihr euren eigenen Becher und füllt ihn mit Nudeln und Zutaten. Das Museum erzählt die Geschichte der Instant-Nudeln. Ein lustiger Ausflug für Gruppen.",h:"Meist 9:30–16:30, dienstags geschlossen (vor Ort prüfen)",p:"Eintritt ca. 500 JPY, Becher selbst gestalten ca. 500 JPY",z:"1,5–2 Std.",w:"Hankyu-Linie ab Umeda bis Ikeda, ca. 25 Min.",tips:["Zeitfenster für die eigene Becher-Gestaltung früh buchen.","Dienstags geschlossen.","Lohnt sich vor allem mit Freunden, kein Pflichtprogramm."]},
+{id:"osa-bouldering",s:"osa",c:"fun",t:"Bouldern in einer Kletterhalle",q:"bouldering gym Osaka",d:"Auch Osaka hat viele Boulderhallen mit fairen Preisen. Gut für einen Regentag oder den Abend nach dem Sightseeing. Schuhe lassen sich leihen.",h:"Meist 10–22 Uhr",p:"Tageskarte ca. 1.500–2.500 JPY, Schuhmiete ca. 300–500 JPY",z:"1,5–3 Std.",w:"Hallen nahe Namba, Umeda und Shinsaibashi",tips:["Eine Halle mit englischer Beschreibung und Anfängerrouten wählen.","Handtuch mitnehmen.","Wer in Tokyo schon geklettert ist, kennt die Preise."]},
+{id:"osa-koyasan",s:"osa",c:"trip",t:"Koyasan: Tempelübernachtung und Friedhof (Idee)",q:"Koyasan Okunoin Wakayama",d:"Der heilige Berg Koyasan mit Tempeln, einem bewaldeten Friedhof und der Möglichkeit, in einem Tempel zu übernachten (Shukubo) mit vegetarischem Essen. Tagesausflug oder Übernachtung, etwa zwei Stunden ab Osaka.",h:"Tempel meist 8:30–17 Uhr",p:"Zugticket ca. 2.000–3.000 JPY hin und zurück, Tempelübernachtung ab ca. 12.000 JPY pro Person",z:"Ganzer Tag",w:"Nankai-Linie ab Namba bis Gokurakubashi, dann Seilbahn und Bus",tips:["Eine Übernachtung im Tempel früh reservieren.","Feste Schuhe und warme Kleidung, auf dem Berg ist es kühler.","Als Alternative zu Hiroshima, wenn ihr es ruhiger wollt."]},
+/* ---------- VIETNAM UND SÜDKOREA (Reise B) ---------- */
+{id:"hoi-surf",s:"hoi",c:"fun",t:"Surfstunde bei Da Nang (My Khe Beach)",q:"surf lesson Da Nang My Khe Beach",d:"Der Strand My Khe bei Da Nang ist etwa 30 Minuten von Hoi An entfernt. Im März sind die Wellen klein, was für Anfänger gut ist. Die Hauptsaison zum Surfen ist im Herbst und Winter.",h:"Meist Vormittag",p:"ca. 600.000–900.000 VND für eine Stunde mit Brett",z:"2–3 Std. mit Anfahrt",w:"Ca. 30 Min. mit dem Taxi von Hoi An",tips:["Anfänger-Kurse mit kleinen Gruppen wählen.","Sonnenschutz nicht vergessen, das Wasser ist warm.","Wer richtig Wellen will, fährt im Herbst."]},
+{id:"han-cooking",s:"han",c:"fun",t:"Kochkurs in Hanoi (Bun Cha, Frühlingsrollen)",q:"cooking class Hanoi old quarter",d:"Halbtags-Kochkurs mit Marktbesuch: Frühlingsrollen, Bun Cha und Pho-Brühe selbst machen. Ein guter Einstieg in die vietnamesische Küche, bevor ihr in Hoi An noch einen zweiten Kurs macht.",h:"Vormittag oder Nachmittag, 3–4 Std.",p:"ca. 600.000–1.000.000 VND pro Person",z:"3–4 Std.",w:"Meist Treffpunkt in der Altstadt",tips:["Auf Bewertungen mit kleinen Gruppen achten.","Vegetarische Variante vorher ankündigen.","Wer in Hoi An kocht, kann hier einen anderen Schwerpunkt nehmen."]},
+{id:"sel-cooking",s:"sel",c:"fun",t:"Koreanischer Kochkurs (Kimchi, Bibimbap)",q:"Korean cooking class Seoul kimchi bibimbap",d:"Kimchi einlegen, Bibimbap und Pfannkuchen zubereiten. Mit Marktbesuch oder in einer Kochschule, oft mit Verkostung von Reiswein.",h:"Meist Vormittag, 3 Std.",p:"ca. 50.000–90.000 KRW pro Person",z:"3 Std.",w:"Meist Treffpunkt in Insadong, Myeongdong oder Hongdae",tips:["Wenige Plätze, vorher buchen.","Vegetarische Optionen vorher klären.","Gut an einem Regentag."]},
+{id:"sel-climbing",s:"sel",c:"fun",t:"Bouldern in einer Kletterhalle",q:"bouldering gym Seoul",d:"Seoul hat viele Boulderhallen, die Preise sind moderat. Gut für einen Abend nach einem langen Sightseeing-Tag. Schuhe lassen sich leihen.",h:"Meist 10–23 Uhr",p:"Tageskarte ca. 20.000–30.000 KRW, Schuhmiete ca. 3.000–5.000 KRW",z:"1,5–3 Std.",w:"Viele Hallen in Hongdae, Gangnam und Seongsu",tips:["Eine Halle mit englischer Beschreibung wählen.","Handtuch mitnehmen.","Am Wochenende ist es voller."]}
+];
+/* ---------- Reise A: Thailand + Japan in 6 Wochen, so wie es andere machen (24.2.–7.4.2027) ---------- */
+const A_START=new Date(2027,1,24);
+const A_STAGES=[
+ {id:'th',name:'Thailand',from:0,to:24,intro:'Dreieinhalb Wochen Thailand, so wie es viele Reisende machen: Bangkok mit Ayutthaya, per Nachtzug nach Chiang Mai (mit Pai und dem Weißen Tempel), ein Flug nach Krabi und dann die Andamanensee mit Railay, Koh Phi Phi und Koh Lanta. Dazu viel zum Selbermachen: Kochkurs, Muay Thai, Klettern, Tauchen.',
+  tips:['Der Norden und das Landesinnere sind laut Budget-Guides deutlich günstiger als die Inseln. Wer sparen will, bleibt länger in Chiang Mai und Pai.','Nachtzug Bangkok–Chiang Mai statt Flug: spart eine Hotelnacht und kostet ca. 1.000–1.100 THB in der 2. Klasse. Früh reservieren.','Pai erreicht ihr per Minivan in ca. 3 Std. über 762 Kurven. Wer es nicht verträgt, nimmt am Morgen eine Reisetablette.','Seit 15.9.2026 ist die visumfreie Zeit in Thailand auf 30 Tage gekürzt. Ihr bleibt mit 24 Tagen darunter.','Auf den Inseln rechnen Reisende mit 25–50 % Aufschlag gegenüber dem Festland. Die Andamanensee hat im Februar und März Trockenzeit.']},
+ {id:'jp',name:'Japan',from:25,to:42,intro:'Zweieinhalb Wochen Japan zur Kirschblüte, die klassische Route: Tokyo mit Ausflügen nach Kamakura, Hakone und Shonan, Kyoto mit Nara, Osaka und Hiroshima mit Miyajima. Flug rein nach Tokyo und raus ab Osaka (Open-Jaw). Rechnet mit kühlen 9–14 °C.',
+  tips:['Einzeltickets statt JR Pass: Tokyo–Kyoto–Osaka–Hiroshima und zurück kostet einzeln etwa 36.000 JPY. Der 7-Tage-Pass kostet 50.000 JPY und lohnt sich hier nicht.','Hikari oder Sakura statt Nozomi ist nur beim JR Pass Pflicht. Mit Einzeltickets fahrt ihr den schnellsten Zug.','Hotels zur Blüte so früh wie möglich und kostenlos stornierbar buchen. Kyoto ist am teuersten.','Orientierung 2026: Tokyo Blühbeginn 19.3., Vollblüte um den 28.3.; Kyoto und Osaka Vollblüte um den 31.3. Im März 2027 ist Tokyo (21.–26.3.) also früh dran. Prognose ab Februar beobachten.','Duty-Free läuft in Japan seit 1.11.2026 anders: Ihr zahlt den vollen Preis inklusive Steuer und bekommt sie bei der Ausreise zurück. Am Flughafen etwas mehr Zeit einplanen.']}
+];
+const A_ORDER=['bkk','cnx','pai','krb','phi','lan','tyo','kyo','nar','osa','hij'];
+const A_ROUTE=['home','bkk','cnx','pai','cnx','krb','phi','lan','bkk','tyo','kyo','nar','kyo','osa','hij','osa','home'];
+const A_ROUTE_DAY=[0,1,5,10,12,13,17,19,23,25,31,34,35,36,39,41,42];
+const A_SEG_DAY=[0,0,4,10,12,13,17,19,23,24,31,34,35,36,39,41,42];
+const A_ROUTE_META=[null,
+ ['flug','Nonstop oder 1 Stopp, ca. 11–14 Std.'],
+ ['zug','Nachtzug ca. 12–13 Std.'],
+ ['bus','Minivan ca. 3 Std.'],
+ ['bus','Minivan ca. 3 Std. zurück'],
+ ['flug','Thai AirAsia direkt, ca. 2 Std.'],
+ ['boot','Fähre ca. 2 Std.'],
+ ['boot','Fähre ca. 1,5 Std.'],
+ ['flug','Minivan, Fähre, dann Flug Krabi–Bangkok ca. 1 h 20'],
+ ['flug','Nachtflug ca. 6–7 Std. (z. B. AirAsia X, Zipair)'],
+ ['zug','Shinkansen ca. 2 h 15'],
+ ['zug','ca. 45 min'],
+ ['zug','ca. 45 min'],
+ ['zug','ca. 15 min'],
+ ['zug','Shinkansen ca. 1 h 30'],
+ ['zug','Shinkansen ca. 1 h 30'],
+ ['flug','Rückflug ab Osaka, ca. 15–18 Std. mit Umstieg']];
+const A_DAYS=[
+ ['Anreise',null,'Abflug Zürich/München, Nachtflug nach Bangkok'],
+ ['Bangkok','bkk','Ankunft, Check-in, abends Chinatown (Yaowarat) zum Streetfood'],
+ ['Bangkok','bkk','Grand Palace und Wat Pho früh morgens, Fähre zum Wat Arun zum Sonnenuntergang'],
+ ['Bangkok','bkk','Chatuchak-Wochenendmarkt, Lumphini-Park; abends Thai-Kochkurs'],
+ ['Bangkok','bkk','Tagesausflug Ayutthaya per Zug; abends Nachtzug nach Chiang Mai'],
+ ['→ Chiang Mai','cnx','Ankunft per Nachtzug; Wat Phra Singh und Wat Chedi Luang, Khao Soi zum Mittag'],
+ ['Chiang Mai','cnx','Ethisches Elefantenschutzgebiet (ohne Reiten)'],
+ ['Chiang Mai','cnx','Fahrer-Tag: Doi Inthanon, Wasserfälle'],
+ ['Chiang Mai','cnx','Klettern am Crazy Horse Buttress oder Thai-Kochkurs mit Marktbesuch'],
+ ['Chiang Mai','cnx','Tagesausflug nach Chiang Rai: Weißer Tempel (Wat Rong Khun)'],
+ ['→ Pai','pai','Minivan nach Pai (ca. 3 Std.); abends Walking Street'],
+ ['Pai','pai','Pai Canyon, Wasserfall, heiße Quellen und Bambusbrücke'],
+ ['→ Chiang Mai','cnx','Rückfahrt nach Chiang Mai; abends Sunday Walking Street'],
+ ['→ Krabi','krb','Flug Chiang Mai–Krabi, Longtail-Boot nach Railay; Sonnenuntergang am Phra Nang Beach'],
+ ['Railay','krb','Klettern: halber Tag Einführungskurs'],
+ ['Railay','krb','Deep-Water-Solo oder Kajak, Aussichtspunkt und Lagune'],
+ ['Krabi','krb','4-Islands-Tour oder Hong Islands per Longtail'],
+ ['→ Koh Phi Phi','phi','Fähre nach Phi Phi (ca. 2 Std.); Viewpoint zum Sonnenuntergang, abends Ton Sai'],
+ ['Koh Phi Phi','phi','Bootstour: Maya Bay, Pileh Lagoon, Schnorcheln'],
+ ['→ Koh Lanta','lan','Fähre nach Koh Lanta (ca. 1,5 Std.); Strand und Sonnenuntergang'],
+ ['Koh Lanta','lan','Tauchtag (Schnupper- oder Fun-Dive) oder Schnorcheltour Koh Rok'],
+ ['Koh Lanta','lan','Lanta Old Town, freier Strandtag'],
+ ['Koh Lanta','lan','Nationalpark und Leuchtturm'],
+ ['→ Bangkok','bkk','Minivan und Fähre nach Krabi, Flug nach Bangkok; Übernachtung am Zwischenstopp'],
+ ['Bangkok','bkk','Muay-Thai-Probetraining oder Jim Thompson House; abends Nachtflug nach Tokyo'],
+ ['→ Tokyo','tyo','Ankunft morgens, Check-in; abends Shinjuku mit Omoide Yokocho'],
+ ['Tokyo','tyo','Asakusa (Senso-ji), Sumida-Fluss, Tokyo Skytree'],
+ ['Tokyo','tyo','Shibuya Crossing, Harajuku, Meiji-Schrein; abends Shibuya Sky'],
+ ['Tokyo','tyo','Sushi-Kochkurs, Shinjuku Gyoen (Hanami), abends Bouldern'],
+ ['Tokyo','tyo','Tagesausflug Kamakura und Enoshima; Surfstunde in Shonan'],
+ ['Tokyo','tyo','Hakone (Onsen, Blick auf den Fuji) oder teamLab Planets; abends Ueno-Park'],
+ ['→ Kyoto','kyo','Shinkansen (ca. 2 h 15); Gion, Yasaka-Schrein, abends Pontocho'],
+ ['Kyoto','kyo','Fushimi Inari ab 7 Uhr, Philosophenweg, Ginkaku-ji'],
+ ['Kyoto','kyo','Arashiyama (Bambushain, Tenryu-ji), Kinkaku-ji'],
+ ['Nara','nar','Tagesausflug: Todai-ji, Hirsche im Nara-Park, Kasuga-Schrein'],
+ ['Kyoto','kyo','Kochkurs und Teezeremonie, Kiyomizu-dera, Nishiki-Markt'],
+ ['→ Osaka','osa','Zug (ca. 15 min); Burg Osaka mit Kirschblüte, abends Dotonbori'],
+ ['Osaka','osa','Kuromon-Markt, Cup-Noodles-Museum, Shinsekai; abends Bouldern'],
+ ['Osaka','osa','Tagesausflug Himeji (Burg) oder Universal Studios; Takoyaki und Okonomiyaki'],
+ ['→ Hiroshima','hij','Shinkansen (ca. 1 h 30); Friedenspark, Atombombenkuppel, Friedensmuseum'],
+ ['Hiroshima','hij','Miyajima: Itsukushima-Schrein und Mount Misen; abends Hiroshima-Okonomiyaki'],
+ ['→ Osaka','osa','Zurück nach Osaka; Umeda Sky Building, letzte Einkäufe, packen'],
+ ['Rückflug',null,'Flug Osaka (KIX) → Zürich/München']
+];
+const A_SEED=[
+ {id:'s1',k:'stay',stop:'bkk',a:1,b:3,t:'Bangkok'},
+ {id:'s2',k:'stay',stop:'cnx',a:5,b:9,t:'Chiang Mai'},
+ {id:'s3',k:'stay',stop:'pai',a:10,b:11,t:'Pai'},
+ {id:'s4',k:'stay',stop:'cnx',a:12,b:12,t:'Chiang Mai'},
+ {id:'s5',k:'stay',stop:'krb',a:13,b:16,t:'Krabi & Railay'},
+ {id:'s6',k:'stay',stop:'phi',a:17,b:18,t:'Koh Phi Phi'},
+ {id:'s7',k:'stay',stop:'lan',a:19,b:22,t:'Koh Lanta'},
+ {id:'s8',k:'stay',stop:'bkk',a:23,b:23,t:'Bangkok (Zwischenstopp)'},
+ {id:'s9',k:'stay',stop:'tyo',a:25,b:30,t:'Tokyo'},
+ {id:'s10',k:'stay',stop:'kyo',a:31,b:35,t:'Kyoto'},
+ {id:'s11',k:'stay',stop:'osa',a:36,b:38,t:'Osaka'},
+ {id:'s12',k:'stay',stop:'hij',a:39,b:40,t:'Hiroshima'},
+ {id:'s13',k:'stay',stop:'osa',a:41,b:41,t:'Osaka (letzte Nacht)'},
+ {id:'l0',k:'leg',ty:'flug',a:0,from:'Zürich/München',to:'Bangkok',t:'Hinflug (Nachtflug)'},
+ {id:'l1',k:'leg',ty:'zug',a:4,from:'Bangkok',to:'Chiang Mai',t:'Nachtzug, ca. 12–13 Std.'},
+ {id:'l2',k:'leg',ty:'bus',a:10,from:'Chiang Mai',to:'Pai',t:'Minivan, ca. 3 Std.'},
+ {id:'l3',k:'leg',ty:'bus',a:12,from:'Pai',to:'Chiang Mai',t:'Minivan, ca. 3 Std.'},
+ {id:'l4',k:'leg',ty:'flug',a:13,from:'Chiang Mai',to:'Krabi',t:'Flug, ca. 2 Std., dann Longtail nach Railay'},
+ {id:'l5',k:'leg',ty:'boot',a:17,from:'Krabi/Railay',to:'Koh Phi Phi',t:'Fähre, ca. 2 Std.'},
+ {id:'l6',k:'leg',ty:'boot',a:19,from:'Koh Phi Phi',to:'Koh Lanta',t:'Fähre, ca. 1,5 Std.'},
+ {id:'l7',k:'leg',ty:'flug',a:23,from:'Koh Lanta',to:'Bangkok',t:'Minivan und Fähre nach Krabi, Flug ca. 1 h 20'},
+ {id:'l8',k:'leg',ty:'flug',a:24,from:'Bangkok',to:'Tokyo',t:'Nachtflug, ca. 6–7 Std.'},
+ {id:'l9',k:'leg',ty:'zug',a:31,from:'Tokyo',to:'Kyoto',t:'Shinkansen, ca. 2 h 15'},
+ {id:'l10',k:'leg',ty:'zug',a:36,from:'Kyoto',to:'Osaka',t:'Zug, ca. 15 min'},
+ {id:'l11',k:'leg',ty:'zug',a:39,from:'Osaka',to:'Hiroshima',t:'Shinkansen, ca. 1 h 30'},
+ {id:'l12',k:'leg',ty:'zug',a:41,from:'Hiroshima',to:'Osaka',t:'Shinkansen, ca. 1 h 30'},
+ {id:'l13',k:'leg',ty:'flug',a:42,from:'Osaka',to:'Zürich/München',t:'Rückflug'},
+ {id:'a1',k:'act',a:3,t:'Thai-Kochkurs Bangkok',stop:'bkk'},
+ {id:'a2',k:'act',a:14,t:'Kletterkurs Railay',stop:'krb'},
+ {id:'a3',k:'act',a:20,t:'Tauchtag Koh Lanta',stop:'lan'},
+ {id:'a4',k:'act',a:28,t:'Sushi-Kochkurs Tokyo',stop:'tyo'},
+ {id:'a5',k:'act',a:27,t:'Shibuya Sky',stop:'tyo'},
+ {id:'a6',k:'act',a:29,t:'Surfstunde Shonan',stop:'tyo'}
+];
+const A_FRIST=[
+ {d:'2026-11-30',t:'Nachtzug Bangkok–Chiang Mai reservieren',s:'Der Vorverkauf beginnt je nach Quelle 60 oder 90 Tage vorher. 90 Tage vor dem 28.2. ist der 30.11. Buchung auf dticket.railway.co.th, 2. Klasse Liegewagen mit Klimaanlage ca. 1.000–1.100 THB.'},
+ {d:'2026-12-01',t:'Flug Bangkok–Tokyo vergleichen und buchen',s:'Günstig sind Thai AirAsia X, Zipair und Scoot. Gepäck extra rechnen. Auch die Strecke Chiang Mai–Krabi (nur Thai AirAsia direkt) früh buchen.'},
+ {d:'2026-12-15',t:'Unterkünfte Japan (21.3.–6.4.) buchen',s:'Zur Kirschblüte sind günstige Hotels früh weg. Kostenlos stornierbar wählen, Kyoto zuerst.'},
+ {d:'2027-02-01',t:'Kirschblüten-Prognose beobachten',s:'Ab Februar. Bei Abweichung Tokyo und Kyoto tauschen.'},
+ {d:'2027-02-15',t:'Kurse buchen: Kochen, Klettern, Surfen, Tauchen',s:'Sushi-Kurs Tokyo, Kletterkurs Railay, Surfstunde Shonan und den Tauchtag auf Koh Lanta vorab anfragen. Beliebte Termine sind schnell weg.'},
+ {d:'2027-02-22',t:'Thailand: Einreisekarte TDAC',s:'Pflicht, innerhalb von 72 h vor Ankunft (25.2.) ausfüllen.'},
+ {d:'2027-03-01',t:'Shibuya Sky buchen',s:'Für den 27. Tag (22.3.) einen Sonnenuntergangs-Slot reservieren. teamLab Planets nur, wenn ihr es statt Hakone macht.'},
+ {d:'2027-03-18',t:'Japan: Visit Japan Web',s:'Optional, beschleunigt die Einreise. Vor dem Flug nach Tokyo (24.3.).'}
+];
+const A_BOOK=['Urlaub für 24.2.–7.4.2027 fixieren','Open-Jaw-Flug buchen: Zürich/München → Bangkok, Osaka → Zürich/München (Preise beider Flughäfen vergleichen)','Flug Bangkok → Tokyo (Nachtflug, 24.3.) buchen','Nachtzug Bangkok → Chiang Mai (28.2.) reservieren','Zwischenflüge: Chiang Mai–Krabi, Krabi–Bangkok','Unterkünfte Japan 21.3.–6.4. früh buchen (kostenlos stornierbar, wegen Blütenprognose)','Kurse vorab buchen: Thai-Kochkurs, Kletterkurs Railay, Tauchtag Lanta, Sushi-Kurs, Surfstunde, Bouldern','Fähren Railay–Phi Phi–Lanta in der Hauptsaison prüfen','Reiseversicherung inkl. Auslandskranken und Sportschutz (Klettern, Tauchen, Surfen)','Packliste durchgehen'];
+const A_ENTRY=[
+ {st:'th',n:'Thailand',r:'Visumfrei, seit 15.9.2026 nur noch bis 30 Tage (vorher 60). Digitale Einreisekarte TDAC ist Pflicht.',w:'TDAC innerhalb von 72 h vor Ankunft'},
+ {st:'jp',n:'Japan',r:'Visumfrei bis 90 Tage. Visit Japan Web ist optional und beschleunigt die Einreise. Die geplante Einreise-Genehmigung JESTA kommt frühestens 2028.',w:'Vor dem Flug nach Tokyo'}
+];
+const A_RECO=['So haben es andere gemacht: Thailand dauert in den meisten Berichten länger als Japan (3–4 Wochen zu 2–3 Wochen), weil es günstiger ist und die Inseln Zeit brauchen. Reise A folgt dieser Aufteilung.','Thailand ist laut Hostelz-Vergleich pro Tag etwa 60 Dollar günstiger als Japan. Wer Geld sparen will, bleibt länger im Norden und auf dem Festland.','Der Flug Bangkok–Tokyo ist der Dreh- und Angelpunkt: Mit Thai AirAsia X, Zipair oder Scoot kostet er oft nur 130–300 €, dafür kostet Gepäck extra.','Flüge gibt es nur fünf: Hinflug, Chiang Mai–Krabi, Krabi–Bangkok, Bangkok–Tokyo und Rückflug. Dazu ein Nachtzug, Fähren und Shinkansen.','Für Hiroshima und Miyajima reichen zwei Nächte. Wer lieber länger in Kyoto bleibt, streicht Hiroshima und fährt einen Tag früher zurück nach Osaka.','Surfen: In Shonan (Kamakura) gibt es im März Anfängerstunden mit Neoprenanzug, das Wasser hat nur ca. 14–15 °C. In Thailand ist an der Andamanensee in dieser Zeit kaum Welle, dafür gibt es dort Klettern und Tauchen.','Fushimi Inari und Nishiki-Markt vor 9 Uhr besuchen, danach wird es sehr voll.'];
+const A_BKT=[['lang','Langstreckenflug'],['inner','Flüge, Züge & Fähren Asien'],['th','Thailand'],['jp','Japan'],['misc','Versicherung, Visa, Puffer']];
+const A_BUCKETS={lang:1800,inner:660,th:2620,jp:3200,misc:960};
+const A_DAYACTS=[
+ [],
+ ['bkk-yaowarat'],
+ ['bkk-grandpalace','bkk-watpho','bkk-watarun'],
+ ['bkk-chatuchak','bkk-lumphini','bkk-cooking'],
+ ['bkk-ayutthaya'],
+ ['cnx-phrasing','cnx-chedi','cnx-khaosoi'],
+ ['cnx-elephant'],
+ ['cnx-inthanon','cnx-buatong'],
+ ['cnx-climbing','cnx-cooking'],
+ ['cnx-whitetemple'],
+ ['pai-walking'],
+ ['pai-canyon','pai-waterfall','pai-hotsprings','pai-bamboo'],
+ ['cnx-sunday'],
+ ['krb-phranang'],
+ ['krb-climb','krb-railay'],
+ ['krb-dws','krb-viewpoint','krb-kayak'],
+ ['krb-4islands','krb-hong'],
+ ['phi-viewpoint','phi-tonsai'],
+ ['phi-maya','phi-tour'],
+ ['lan-beaches'],
+ ['lan-dive','lan-koh-rok'],
+ ['lan-oldtown'],
+ ['lan-nationalpark'],
+ [],
+ ['bkk-muaythaiclass','bkk-jimthompson'],
+ ['tyo-omoide'],
+ ['tyo-sensoji','tyo-sumida','tyo-skytree'],
+ ['tyo-shibuya','tyo-harajuku','tyo-meiji','tyo-shibuyasky'],
+ ['tyo-sushi','tyo-gyoen','tyo-bouldering'],
+ ['tyo-kamakura','tyo-surf'],
+ ['tyo-hakone','tyo-ueno'],
+ ['kyo-gion','kyo-yasaka','kyo-pontocho'],
+ ['kyo-fushimi','kyo-philosopher','kyo-ginkakuji'],
+ ['kyo-bamboo','kyo-tenryuji','kyo-kinkakuji'],
+ ['nar-todaiji','nar-deer','nar-kasuga'],
+ ['kyo-cooking','kyo-tea','kyo-kiyomizu','kyo-nishiki'],
+ ['osa-castle','osa-dotonbori'],
+ ['osa-kuromon','osa-cupnoodles','osa-shinsekai','osa-bouldering'],
+ ['osa-himeji','osa-streetfood'],
+ ['hij-peacepark','hij-dome','hij-museum'],
+ ['hij-miyajima','hij-misen','hij-okonomiyaki'],
+ ['osa-umeda'],
+ []
+];
+/* Flüge und Kosten. Preise pro Person in EUR, Richtwerte aus Suchportalen (Stand November 2026). */
+const A_COSTX={
+ flights:[
+  {leg:'Zürich/München → Bangkok',how:'Nonstop oder 1 Stopp, ca. 11–14 Std.',when:'24.2.',price:'ca. 400–550 € einfach (Rückflug ab Osaka kommt dazu)',tip:'Open-Jaw buchen: hin nach Bangkok, zurück ab Osaka. Thai Airways nonstop ab Zürich ab ca. CHF 770 hin und zurück im Februar. Vergleich auf Google Flights und Skyscanner.'},
+  {leg:'Chiang Mai → Krabi',how:'Thai AirAsia direkt, ca. 2 Std.',when:'4.3.',price:'ca. 50–90 €',tip:'Die einzige Direktverbindung. Fahrplan wechselt je Saison, vorher prüfen. Alternative über Bangkok ist teurer und länger.'},
+  {leg:'Krabi → Bangkok',how:'ca. 1 h 20',when:'18.3.',price:'ca. 35–70 €',tip:'Von Koh Lanta braucht ihr zuerst Minivan und Fähre nach Krabi (ca. 2,5 Std.). Flug am Nachmittag buchen.'},
+  {leg:'Bangkok → Tokyo',how:'Nachtflug ca. 6–7 Std. (Thai AirAsia X, Zipair, Scoot oder Thai Airways)',when:'21.3.',price:'ca. 130–300 € (Billigflieger), 350–500 € (Linie)',tip:'Der günstigste Teil der Reise. Gepäck und Sitzplatz kosten bei den Billigfliegern extra. Landung in Narita oder Haneda prüfen.'},
+  {leg:'Osaka → Zürich/München',how:'Mit Umstieg, ca. 15–18 Std.',when:'7.4.',price:'ca. 400–600 € einfach',tip:'Gehört zum Open-Jaw-Ticket. Ab Kansai (KIX) fliegen viele Linien, der Flughafen liegt 75 Min. vom Zentrum.'}
+ ],
+ other:[
+  {leg:'Nachtzug Bangkok → Chiang Mai',price:'ca. 25–30 €',tip:'2. Klasse Liegewagen mit Klimaanlage, buchbar auf dticket.railway.co.th ab 60–90 Tage vorher.'},
+  {leg:'Minivan Chiang Mai ↔ Pai',price:'ca. 6–8 € je Strecke',tip:'Rund 3 Std. über viele Kurven.'},
+  {leg:'Fähren Railay–Phi Phi–Lanta',price:'ca. 15–25 € je Strecke',tip:'In der Hauptsaison vorab buchen.'},
+  {leg:'Shinkansen Tokyo → Kyoto',price:'ca. 85 € (ca. 13.900 JPY)',tip:'Einzelticket am Automaten oder per SmartEX-App. Kyoto–Osaka ca. 4 €, Osaka–Hiroshima ca. 65 €.'}
+ ],
+ cats:[
+  {n:'Langstreckenflug Open-Jaw',lo:750,mid:900,hi:1200,spar:'Flexible Daten, Dienstag oder Mittwoch fliegen, ein Gepäckstück.',mehr:'Direktflug oder Premium Economy.'},
+  {n:'Flüge, Züge und Fähren in Asien',lo:230,mid:330,hi:480,spar:'Billigflieger ohne Gepäck, Nachtzug statt Flug.',mehr:'Linienflug Bangkok–Tokyo, Sitzplätze dazu.'},
+  {n:'Unterkunft',lo:655,mid:1055,hi:1800,spar:'Klasse 1: Gästehäuser und Hostel-Privatzimmer. In Thailand ca. 20 € pro Nacht für zwei.',mehr:'Klasse 3 auf den Inseln und in Kyoto.'},
+  {n:'Essen und Trinken',lo:565,mid:935,hi:1530,spar:'Streetfood, Konbini-Frühstück, Mittagsmenüs in Japan.',mehr:'Restaurants, Izakaya, Bars am Abend.'},
+  {n:'Aktivitäten und Eintritte',lo:250,mid:500,hi:900,spar:'Tempel, Parks und Märkte statt Touren. Kochkurs nur einmal.',mehr:'Tauchkurs, Surfstunden, mehrere Kochkurse, Universal Studios.'},
+  {n:'Lokaler Transport',lo:330,mid:420,hi:600,spar:'Metro, Bus, Songthaew, Einzeltickets.',mehr:'Taxi und Grab, Hakone-Ausflug, Fahrer-Tage.'},
+  {n:'Visa, eSIM, Versicherung',lo:120,mid:180,hi:250,spar:'eSIM mit kleinem Paket, günstige Reiseversicherung.',mehr:'Versicherung mit Rücktransport und Sportschutz.'},
+  {n:'Puffer und Mitbringsel',lo:150,mid:300,hi:600,spar:'Nur das Nötigste kaufen.',mehr:'Souvenirs, Kleidung, Duty-Free.'}
+ ]
+};
+const A_QUELLEN=[
+ {t:'Hostelz: Japan gegen Thailand',u:'https://www.hostelz.com/backpacker-budget/compare/japan-vs-thailand',s:'Thailand ist pro Tag etwa 60 US-Dollar günstiger als Japan.'},
+ {t:'Thai Holiday Guide: Budget',u:'https://www.thaiholidayguide.com/thailand-budget-guide/',s:'Backpacker rechnen mit 900–1.500 THB pro Tag, Chiang Mai und Pai gelten als besonders günstig.'},
+ {t:'Mad Monkey Hostels: Thailand günstig reisen',u:'https://madmonkeyhostels.com/blogs/backpacking-thailand-on-a-budget/',s:'Norden und Zentrum sind am günstigsten, die südlichen Inseln deutlich teurer.'},
+ {t:'Wego: Japan 2026 Budget',u:'https://blog.wego.com/is-japan-cheap/',s:'Budget-Reisen kosten in Japan etwa 80–120 US-Dollar pro Tag.'},
+ {t:'Fodor’s Forum: Januar–März Thailand, Hongkong, Japan',u:'https://www.fodors.com/community/16138820-post1/',s:'Forenthema zur Aufteilung der Zeit. Häufig genannt: weniger Tokyo, mehr Kyoto.'},
+ {t:'Travelfish Forum: 6 Wochen Südostasien',u:'https://www.travelfish.org/board/post/thailand/19176_6-week-travel-in-hk-and-se-asia---help--advice-needed-pls',s:'Forenberichte zur Aufteilung. Empfehlung: 2,5 bis 3 Wochen pro Land und langsamer reisen.'},
+ {t:'Japan-Zugpass: lohnt er sich?',u:'https://japantrain.net/guide/jr-pass-worth-it',s:'Für Tokyo–Kyoto–Osaka sind Einzeltickets oft günstiger als ein JR Pass.'}
+];
 /* ---------- Reise B: Reise A als Basis, angepasst an die Google-Maps-Liste "Asien" und mit weniger, dafür lohnenden Flügen (24.2.–7.4.2027) ---------- */
 const B_START=new Date(2027,1,24);
 const B_STAGES=[
@@ -1065,7 +1194,7 @@ const B_COST=[
 ];
 const B_RECO=['Flüge nur dort, wo der Landweg über sechs Stunden dauert: Chiang Mai–Krabi, Surat Thani–Bangkok–Siem Reap, Siem Reap–Hanoi, Hanoi–Da Nang, Da Nang–Tokyo und Osaka–Seoul. Dazwischen Nachtzug, Fähre, Bus und Shinkansen.','Aus eurer Liste (49 verschiedene Orte) sind 42 im Tagesplan. Sieben stehen mit Begründung unter „Ideen und Aktivitäten“, aber nicht im Plan: Ko Tao, Sa Pa, Bạch Long Glass Bridge, Wat Samphran, Rainbow Line Fukui, Gulliver-Garten Shiga und Okuyama Ameyama Nature Park.','Ko Tao kostet mit Fähren zwei zusätzliche Reisetage. Sa Pa und die Glasbrücke liegen je ca. 4–6 Std. von Hanoi entfernt und haben neben dem Ha-Giang-Loop keinen Platz. Rainbow Line, Gulliver-Garten und Okuyama sind ohne Auto kaum machbar.','Der Ha-Giang-Loop ist die größte Abenteuer-Station der Reise. Wer nicht selbst Motorrad fährt, fährt als Beifahrer mit einem Easy Rider. Vorher klären, ob die Versicherung das abdeckt.','Wat Arun zum Sonnenuntergang und früh morgens in Tempel gehen, um Hitze und Gedränge zu vermeiden.','Fushimi Inari und Nishiki-Markt vor 9 Uhr besuchen, danach wird es sehr voll.','Ohne JR Pass reisen: Für Tokyo–Kyoto–Osaka sind Einzeltickets oft günstiger als ein landesweiter Pass.','Golden-Gai in Tokyo am besten ab etwa 20 Uhr. Viele Bars haben eine kleine Sitzgebühr und nur wenige Plätze.'];
 const B_BKT=[['lang','Langstreckenflug'],['inner','Flüge, Züge & Fähren Asien'],['th','Thailand'],['kh','Kambodscha'],['vn','Vietnam'],['jp','Japan'],['ko','Südkorea'],['misc','Versicherung, Visa, Puffer']];
-const B_BUCKETS={lang:1800,inner:1500,th:2000,kh:400,vn:1300,jp:2300,ko:1300,misc:1200};
+const B_BUCKETS={lang:1900,inner:1340,th:1500,kh:400,vn:1170,jp:1850,ko:1060,misc:1060};
 const B_DAYACTS=[
  [],
  ['bkk-yaowarat'],
@@ -1111,84 +1240,260 @@ const B_DAYACTS=[
  ['sel-namsan','sel-gwangjang'],
  []
 ];
-/* Unterkunftsideen pro Station, Preise pro Nacht für zwei Personen im Doppelzimmer in EUR.
-   Quelle: Booking.com-Suche vom 7.11.2026 für das jeweilige Reisedatum (Gesamtpreis geteilt durch Nächte). Richtwerte, vor Buchung prüfen.
-   Felder: n Name, p Preis pro Nacht (gerundet), r Bewertung (von 10), a Lage / Hinweis, q Suchtext für Google Maps, ab Datum der Preisabfrage */
-const HOTELS_B={
- bkk:{ab:'25.–27.2.2027',items:[
-  {n:'Lamphu Tree House Boutique Hotel',p:42,r:8.5,a:'Altstadt, nahe Khao San und Grand Palace, Pool',q:'Lamphu Tree House Boutique Hotel Bangkok'},
-  {n:'W22 by Burasari',p:44,r:8.7,a:'Chinatown, ideal für Yaowarat am Abend',q:'W22 by Burasari Bangkok'},
-  {n:'Thana Wisut Hotel',p:29,r:8.2,a:'Altstadt, günstig, Massage im Haus',q:'Thana Wisut Hotel Bangkok'},
-  {n:'Charlie House Pin Klao',p:36,r:8.8,a:'Westufer des Flusses, Pool, ruhig',q:'Charlie House Pin Klao Bangkok'}
- ]},
- cnx:{ab:'28.2.–2.3.2027',items:[
-  {n:'Hoh Guesthouse',p:24,r:9.5,a:'Altstadt (Si Phum), sehr gut bewertet, Garten',q:'Hoh Guesthouse Chiang Mai'},
-  {n:'All in 1 Guesthouse & Tours',p:27,r:9.0,a:'Altstadt nahe Moon Muang, Touren buchbar',q:'All in 1 Guesthouse & Tours Chiang Mai'},
-  {n:'The Opium Chiang Mai',p:25,r:8.6,a:'Nördlich der Altstadt, Pool, Massage',q:'The Opium Chiang Mai'},
-  {n:'Hotel De Sripoom',p:51,r:8.5,a:'Altstadt, 4 Sterne, Pool, mehr Komfort',q:'Hotel De Sripoom Chiang Mai'}
- ]},
- sel:{ab:'1.–3.4.2027',items:[
-  {n:'K-Grand Hostel Dongdaemun',p:68,r:8.3,a:'Dongdaemun, einfach und günstig, U-Bahn nah',q:'K-Grand Hostel Dongdaemun Seoul'},
-  {n:'Hotel Loft',p:95,r:8.7,a:'Yeongdeungpo, nahe Yeouido (Kirschblütenallee), Restaurant',q:'Hotel Loft Yeongdeungpo Seoul'},
-  {n:'SoSi Stay',p:102,r:9.8,a:'Jung-gu, nahe Myeongdong und Namsan, sehr gut bewertet',q:'SoSi Stay Seoul Jung-gu'},
-  {n:'Seoul DDJ STAY',p:106,r:9.3,a:'Jongno, nahe Insadong und Bukchon',q:'Seoul DDJ STAY Jongno'}
- ]},
- osa:{ab:'30.3.–1.4.2027',items:[
-  {n:'Fawn Hotel',p:34,r:8.8,a:'Bereich Namba/Shinsaibashi, nur Erwachsene, günstigste Option',q:'Fawn Hotel Osaka Shimodera'},
-  {n:'HOTEL RELIEF Namba Daikokuchou',p:56,r:8.5,a:'Namba, gute Anbindung',q:'HOTEL RELIEF Namba Daikokucho Osaka'},
-  {n:'Hotel Sobial Namba Daikokucho',p:60,r:8.8,a:'Namba, 4 Sterne mit Gemeinschaftsbad',q:'Hotel Sobial Namba Daikokucho'},
-  {n:'DEL style Osaka Shin Umeda by Daiwa Roynet',p:70,r:8.5,a:'Fukushima nahe Umeda, 4 Sterne, nah an der Red&Blue Street',q:'DEL style Osaka Shin Umeda by Daiwa Roynet Hotel'}
- ]},
- kyo:{ab:'26.–28.3.2027',items:[
-  {n:'FIRSTCABIN Kyoto Nijojo',p:68,r:8.7,a:'Kabinenhotel nahe Nijo-Schloss, nur Erwachsene, günstigste Option',q:'FIRSTCABIN Kyoto Nijojo'},
-  {n:'Glansit Kyoto Kawaramachi',p:88,r:8.7,a:'Kapselhotel, zentral bei Kawaramachi und Pontocho',q:'Glansit Kyoto Kawaramachi'},
-  {n:'Rest inn Kyoto',p:90,r:8.8,a:'Aparthotel im Bezirk Shimogyo, nahe Bahnhof',q:'Rest inn Kyoto'},
-  {n:'Piece Hostel Sanjo',p:120,r:9.0,a:'Zentral in Nakagyo, 7.000+ Rezensionen, Privatzimmer',q:'Piece Hostel Sanjo Kyoto'}
- ]},
- tyo:{ab:'22.–24.3.2027',items:[
-  {n:'Hearton Hotel Higashi-Shinagawa',p:58,r:8.4,a:'Shinagawa, gut für Shinkansen und Flughafen Haneda',q:'Hearton Hotel Higashi-Shinagawa'},
-  {n:'Almont Inn Tokyo Nihonbashi',p:66,r:8.7,a:'Zentral nahe Tokyo Station, einfache Zimmer',q:'Almont Inn Tokyo Nihonbashi'},
-  {n:'Toyoko Inn Tokyo Minowa-eki',p:68,r:8.9,a:'Nähe Asakusa und Ueno, Frühstück inklusive (Toyoko Inn)',q:'Toyoko Inn Tokyo Minowa-eki'},
-  {n:'Toyoko Inn Tokyo Asakusa Kuramae No.2',p:71,r:8.5,a:'Nahe Senso-ji und Sumida, Frühstück inklusive',q:'Toyoko Inn Tokyo Asakusa Kuramae No.2'}
- ]},
- hoi:{ab:'19.–21.3.2027',items:[
-  {n:'Gia Huy Riverside Hotel',p:31,r:9.3,a:'Am Fluss, nahe Altstadt, 4 Sterne mit Pool',q:'Gia Huy Riverside Hotel Hoi An'},
-  {n:'Ancient Haven Central Boutique Hotel',p:33,r:9.2,a:'Zentral in Cam Pho, Pool, 4 Sterne',q:'Ancient Haven Central Boutique Hotel Hoi An'},
-  {n:'Hoianan Boutique Hotel',p:36,r:9.0,a:'Im Altstadtviertel Minh An, Pool',q:'Hoianan Boutique Hotel Hoi An'},
-  {n:'Hoi An TNT Villa',p:38,r:9.3,a:'Nahe Altstadt, Pool, 1.600+ Rezensionen',q:'Hoi An TNT Villa'}
- ]},
- han:{ab:'13.–15.3.2027',items:[
-  {n:'Anchie Maison Hà Nội',p:27,r:9.0,a:'Aparthotel in Ba Dinh, ruhig, günstig',q:'Anchie Maison Ha Noi'},
-  {n:'Sao Mai Boutique Hotel',p:38,r:9.4,a:'Dong Da, sehr gut bewertet (2.200+ Rezensionen), Restaurant',q:'Sao Mai Boutique Hotel Hanoi'},
-  {n:'Hanoi TrangTrang Hotel',p:45,r:9.1,a:'Altstadt, 4 Sterne, Bar und Dachterrasse',q:'Hanoi TrangTrang Hotel'},
-  {n:'Centre Point Hanoi Hotel',p:49,r:9.1,a:'Hoan Kiem, nahe Altstadt, 1.400+ Rezensionen',q:'Centre Point Hanoi Hotel'}
- ]},
- khs:{ab:'8.–10.3.2027',items:[
-  {n:'Khao Sok Palmview Resort',p:29,r:8.9,a:'Nahe Parkeingang, einfach und günstig, Kanu und Wandern buchbar',q:'Khao Sok Palmview Resort'},
-  {n:'Khao Sok Morning Mist Resort',p:33,r:8.2,a:'Nahe Parkeingang, Pool',q:'Khao Sok Morning Mist Resort'},
-  {n:'Tree Tops River Huts',p:36,r:8.4,a:'Hütten am Fluss, Pool, heiße Quelle',q:'Tree Tops River Huts Khao Sok'},
-  {n:'Khao Sok River & Jungle Resort',p:54,r:8.6,a:'Mehr Komfort, am Fluss, Kanusport',q:'Khao Sok River & Jungle Resort'}
- ]},
- rep:{ab:'11.–13.3.2027',items:[
-  {n:'Kouprey Hotel',p:23,r:9.2,a:'Außerhalb des Zentrums an der Road 6, 4 Sterne mit Pool',q:'Kouprey Hotel Siem Reap'},
-  {n:'Cheathata CTS Hotel',p:30,r:9.0,a:'Nahe Old Market und Pub Street, Dachpool',q:'Cheathata CTS Hotel Siem Reap'},
-  {n:'The Palace Indochine Hotel',p:30,r:9.2,a:'Viertel Wat Bo, ruhiger, Pool',q:'The Palace Indochine Hotel Siem Reap'},
-  {n:'The Community',p:38,r:9.6,a:'Richtung Angkor Wat, sehr gut bewertet (5.000+ Rezensionen), Pool',q:'The Community Siem Reap hotel'}
- ]},
- phi:{ab:'6.–8.3.2027',items:[
-  {n:'Sunflower Boathouse',p:48,r:8.0,a:'Phi Phi Don, am Strand, günstigste Option',q:'Sunflower Boathouse Koh Phi Phi'},
-  {n:'PP Insula',p:65,r:8.5,a:'Ton Sai Bay, nur Erwachsene, zentral',q:'PP Insula Koh Phi Phi'},
-  {n:'Uphill Cottage',p:70,r:8.0,a:'Ton Sai, Pool, Aussicht von oben',q:'Uphill Cottage Koh Phi Phi'},
-  {n:'Phi Phi Indigo Hotel',p:87,r:8.4,a:'Ton Sai, 3 Sterne, 24-Std.-Rezeption',q:'Phi Phi Indigo Hotel Koh Phi Phi'}
- ]},
- krb:{ab:'4.–6.3.2027',items:[
-  {n:'Me Mee Place & Tour Krabi',p:47,r:8.1,a:'Ao Nang, günstigste Option mit Klimaanlage',q:'Me Mee Place & Tour Krabi Ao Nang'},
-  {n:'De Loft Hotel',p:60,r:8.8,a:'Ao Nang, 3 Sterne, Sonnenterrasse',q:'De Loft Hotel Ao Nang'},
-  {n:'Jungle Village Bungalow',p:60,r:8.8,a:'Ao Nang, Bungalows mit Pool im Grünen',q:'Jungle Village Bungalow Ao Nang'},
-  {n:'@Aonang Guesthouse',p:82,r:9.8,a:'Ao Nang, sehr gut bewertetes Gästehaus',q:'@Aonang Guesthouse Ao Nang'}
- ]}
+/* Flüge und Kosten. Preise pro Person in EUR, Richtwerte aus Suchportalen (Stand November 2026). */
+const B_COSTX={
+ flights:[
+  {leg:'Zürich/München → Bangkok',how:'Nonstop oder 1 Stopp, ca. 11–14 Std.',when:'24.2.',price:'ca. 400–550 € einfach (Rückflug ab Seoul kommt dazu)',tip:'Open-Jaw buchen: hin nach Bangkok, zurück ab Seoul. Thai Airways nonstop ab Zürich ab ca. CHF 770 hin und zurück im Februar.'},
+  {leg:'Chiang Mai → Krabi',how:'Thai AirAsia direkt, ca. 2 Std.',when:'4.3.',price:'ca. 50–90 €',tip:'Die einzige Direktverbindung. Fahrplan wechselt je Saison, vorher prüfen.'},
+  {leg:'Surat Thani → Bangkok',how:'ca. 1 h 20, vorher Minivan von Khao Sok (1,5–2 Std.)',when:'10.3.',price:'ca. 35–60 €',tip:'Nachmittagsflug wählen, dann bleibt am Morgen Zeit im Dschungel.'},
+  {leg:'Bangkok → Siem Reap',how:'ca. 1 Std., Flughafen 50 km vor der Stadt',when:'11.3.',price:'ca. 50–100 € (geschätzt)',tip:'Transfer vom neuen Flughafen Siem Reap Angkor ca. 45–60 Min. einplanen.'},
+  {leg:'Siem Reap → Hanoi',how:'Vietnam Airlines oder VietJet direkt, ca. 2 Std.',when:'13.3.',price:'ca. 90–150 €',tip:'Schnellster Weg. Auf dem Landweg wären es zwei Tage.'},
+  {leg:'Hanoi → Da Nang',how:'ca. 1 h 20, dann Transfer nach Hoi An ca. 45 Min.',when:'19.3.',price:'ca. 30–60 €',tip:'Frühen Flug wählen, dann bleibt der Nachmittag in Hoi An.'},
+  {leg:'Da Nang → Tokyo',how:'Vietnam Airlines nonstop nach Narita (nicht täglich), sonst Umstieg',when:'22.3.',price:'ca. 250–400 €',tip:'Fahrplan vor der Buchung prüfen. Narita liegt 60–90 Min. vom Zentrum.'},
+  {leg:'Osaka → Seoul',how:'ca. 2 Std.',when:'1.4.',price:'ca. 60–130 €',tip:'Viele Billigflieger, Gepäck kostet extra.'},
+  {leg:'Seoul → Zürich/München',how:'Mit Umstieg, ca. 14–16 Std.',when:'7.4.',price:'ca. 400–600 € einfach',tip:'Gehört zum Open-Jaw-Ticket.'}
+ ],
+ other:[
+  {leg:'Nachtzug Bangkok → Chiang Mai',price:'ca. 25–30 €',tip:'2. Klasse Liegewagen mit Klimaanlage, buchbar auf dticket.railway.co.th ab 60–90 Tage vorher.'},
+  {leg:'Fähren Ao Nang–Phi Phi–Krabi',price:'ca. 15–25 € je Strecke',tip:'In der Hauptsaison vorab buchen.'},
+  {leg:'Bus Hanoi ↔ Ha Giang',price:'ca. 10–15 € je Strecke',tip:'Limousinen-Bus ca. 6 Std.'},
+  {leg:'Ha-Giang-Loop (3 Tage mit Easy Rider)',price:'ca. 135–230 €',tip:'Ohne Bus, meist mit Übernachtung und Essen. Permit ca. 10 USD kommt oft dazu.'},
+  {leg:'Shinkansen Tokyo → Kyoto',price:'ca. 85 € (ca. 13.900 JPY)',tip:'Einzelticket am Automaten oder per SmartEX-App.'}
+ ],
+ cats:[
+  {n:'Langstreckenflug Open-Jaw',lo:750,mid:950,hi:1300,spar:'Flexible Daten, Dienstag oder Mittwoch fliegen, ein Gepäckstück.',mehr:'Direktflug oder Premium Economy.'},
+  {n:'Flüge, Züge, Fähren und Busse in Asien (7 Flüge)',lo:520,mid:670,hi:900,spar:'Billigflieger ohne Gepäck, Nachtzug statt Flug, Landweg wo möglich.',mehr:'Linienflüge mit Gepäck, Sitzplätze.'},
+  {n:'Unterkunft',lo:660,mid:1060,hi:1760,spar:'Klasse 1: In Thailand, Kambodscha und Vietnam ca. 20 € pro Nacht für zwei. In Japan und Seoul ab ca. 35–70 €.',mehr:'Klasse 3 auf den Inseln, in Siem Reap (dort günstig) und Kyoto.'},
+  {n:'Essen und Trinken',lo:545,mid:900,hi:1490,spar:'Streetfood, Konbini-Frühstück, Mittagsmenüs in Japan.',mehr:'Restaurants, Izakaya, Golden-Gai-Abende.'},
+  {n:'Aktivitäten und Eintritte',lo:300,mid:600,hi:1000,spar:'Angkor 1-Tages-Pass (37 USD), Tempel und Märkte statt Touren.',mehr:'Ha-Giang-Tour, teamLab, Kochkurse, Klettern, Surfen.'},
+  {n:'Lokaler Transport',lo:320,mid:450,hi:650,spar:'Metro, Bus, Songthaew, Einzeltickets.',mehr:'Taxi und Grab, Fahrer-Tag in Chiang Mai.'},
+  {n:'Visa, eSIM, Versicherung',lo:170,mid:230,hi:320,spar:'Kambodscha-Visum und Vietnam-E-Visum sind Pflicht (ca. 30 und 25 USD).',mehr:'Versicherung mit Rücktransport und Motorrad-Mitfahrer.'},
+  {n:'Puffer und Mitbringsel',lo:150,mid:300,hi:600,spar:'Nur das Nötigste kaufen.',mehr:'Souvenirs, Kleidung, Duty-Free.'}
+ ]
 };
-const ACTS=[].concat(ACTS_TH,ACTS_VN,ACTS_JP,ACTS_KR,ACTS_B,ACTS_B2);
+const B_QUELLEN=[
+ {t:'Eure Google-Maps-Liste „Asien“',u:'https://maps.app.goo.gl/i3CsMdWrLjfdiZds9',s:'Grundlage von Reise B: 49 Orte, davon 42 im Tagesplan, sieben als Idee.'},
+ {t:'Thailand: Visumfreiheit auf 30 Tage gekürzt',u:'https://www.ttgasia.com/2026/09/08/thailand-cuts-visa-free-stay-to-30-days-for-60-countries/',s:'Gilt seit 15.9.2026.'},
+ {t:'Südkorea: K-ETA und e-Arrival-Karte 2026',u:'https://blog.wego.com/south-korea-travel-rules-k-eta-waiver-2026/',s:'K-ETA-Befreiung läuft bis Ende 2026, e-Arrival-Karte ist Pflicht.'},
+ {t:'Japan: neue Duty-Free-Regel ab 1.11.2026',u:'https://www.japan-guide.com/news/tax-free-shopping.html',s:'Steuer wird erst bei der Ausreise erstattet.'},
+ {t:'Angkor-Pass: Preise 2026',u:'https://helloangkor.com/angkor-ticket-prices/',s:'1 Tag 37 USD, 3 Tage 62 USD, 7 Tage 72 USD.'},
+ {t:'Ha-Giang-Loop: Permit und Regeln 2026 (Time Out)',u:'https://www.timeout.com/asia/news/ha-giang-loop-permits-what-travellers-need-to-know-before-riding-vietnams-famous-mountain-route-061426',s:'Border Area Entry Permit, Hinweise für Reisende.'},
+ {t:'Ha-Giang-Loop: strengere Sicherheitsregeln (Tuoi Tre)',u:'https://news.tuoitre.vn/vietnam-tightens-safety-rules-on-ha-giang-loop-motorbike-tours-103260415184453028.htm',s:'Nach einem tödlichen Unfall im April 2026.'},
+ {t:'Hostelz: Japan gegen Thailand',u:'https://www.hostelz.com/backpacker-budget/compare/japan-vs-thailand',s:'Thailand ist pro Tag etwa 60 US-Dollar günstiger als Japan.'}
+];
+/* Unterkünfte pro Station in drei Klassen. Preise pro Nacht für zwei Personen im Doppelzimmer in EUR.
+   Quelle: Booking.com-Suche vom 7.–8.11.2026 für den im Feld ab genannten Zeitraum (Gesamtpreis geteilt durch die Nächte).
+   Richtwerte, vor Buchung prüfen. Felder: n Name, p Preis pro Nacht, r Bewertung von 10 (null = noch keine), a Lage und Hinweis, q Suchtext. */
+const HOTEL_CLASSES=[
+ ['k1','Klasse 1: Einfach','Gästehaus, Bungalow oder einfaches Hotel. Sauber, mit Klimaanlage oder Ventilator, wenig Komfort.'],
+ ['k2','Klasse 2: Komfort','Gutes 3-Sterne-Niveau mit Pool oder guter Lage. Für die meisten das Beste Preis-Leistungs-Verhältnis.'],
+ ['k3','Klasse 3: Gehoben','4 Sterne, Resort oder besondere Lage. Für Tage, an denen ihr es euch gut gehen lassen wollt.']
+];
+const HOTELS={
+ bkk:{ab:'25.–27.2.2027',k1:[
+   {n:'Thana Wisut Hotel',p:29,r:8.2,a:'Altstadt, einfach, Massage im Haus',q:'Thana Wisut Hotel Bangkok'},
+   {n:'SureStay by Best Western Siriraj',p:29,r:9.0,a:'Westufer des Flusses, ruhig, Pool',q:'SureStay by Best Western Siriraj Bangkok'}],
+  k2:[
+   {n:'Charlie House Pin Klao',p:36,r:8.8,a:'Westufer, Pool, ruhig',q:'Charlie House Pin Klao Bangkok'},
+   {n:'Lamphu Tree House Boutique Hotel',p:42,r:8.5,a:'Altstadt nahe Khao San und Grand Palace, Pool',q:'Lamphu Tree House Boutique Hotel Bangkok'},
+   {n:'W22 by Burasari',p:44,r:8.7,a:'Chinatown, ideal für Yaowarat am Abend',q:'W22 by Burasari Bangkok'}],
+  k3:[
+   {n:'True Siam Phayathai Hotel',p:55,r:8.9,a:'Pratunam, 4 Sterne, guter Skytrain-Anschluss',q:'True Siam Phayathai Hotel Bangkok'},
+   {n:'Queensland Hotel Bangkok',p:70,r:8.7,a:'Pratunam, 4 Sterne mit Infinity-Pool',q:'Queensland Hotel Bangkok'}]},
+ cnx:{ab:'28.2.–2.3.2027',k1:[
+   {n:'Anumat Premium Budget Hotel',p:16,r:8.6,a:'Altstadt (Phra Sing), nur Erwachsene, sehr günstig',q:'Anumat Premium Budget Hotel Chiang Mai'},
+   {n:'DPHouse center of Old Chiang Mai',p:21,r:8.8,a:'Mitten in der Altstadt',q:'DPHouse Chiang Mai'}],
+  k2:[
+   {n:'Hoh Guesthouse',p:24,r:9.5,a:'Altstadt, Garten, sehr gut bewertet',q:'Hoh Guesthouse Chiang Mai'},
+   {n:'The Opium Chiang Mai',p:25,r:8.6,a:'Nördlich der Altstadt, Pool, Massage',q:'The Opium Chiang Mai'},
+   {n:'All in 1 Guesthouse & Tours',p:27,r:9.0,a:'Altstadt, Touren buchbar',q:'All in 1 Guesthouse & Tours Chiang Mai'}],
+  k3:[
+   {n:'Le Wiang',p:43,r:null,a:'Nahe Sunday Walking Street, Garten',q:'Le Wiang Chiang Mai'},
+   {n:'Hotel De Sripoom',p:51,r:8.5,a:'Altstadt, 4 Sterne, Pool, Whirlpool',q:'Hotel De Sripoom Chiang Mai'}]},
+ pai:{ab:'6.–8.3.2027',k1:[
+   {n:'The Countryside Pai',p:17,r:9.0,a:'Am Ortsrand, Pool, 1.000+ Rezensionen',q:'The Countryside Pai'},
+   {n:'Villa De Pai',p:19,r:9.0,a:'Einfache Hütten nahe Ortszentrum',q:'Villa De Pai'},
+   {n:'Medio De Pai',p:21,r:8.4,a:'Pool, Fitness',q:'Medio De Pai'}],
+  k2:[
+   {n:'KuadKhonThoe Pai Cottage',p:25,r:9.2,a:'Cottages mit Pool, Restaurant',q:'KuadKhonThoe Pai Cottage'},
+   {n:'Luxury Farm House',p:31,r:9.2,a:'4 Sterne, Kochkurs und Fahrradtouren buchbar',q:'Luxury Farm House Pai'},
+   {n:'Pai My Guest Resort',p:32,r:8.9,a:'Resort mit Pool und Garten',q:'Pai My Guest Resort'}],
+  k3:[
+   {n:'The Quarter Pai',p:55,r:9.0,a:'4 Sterne, Pool, kostenloser Shuttle',q:'The Quarter Pai'},
+   {n:'Pai Village Boutique Resort',p:75,r:9.4,a:'4 Sterne, Pool, über 2.000 Rezensionen',q:'Pai Village Boutique Resort'}]},
+ krb:{ab:'4.–6.3.2027',k1:[
+   {n:'The dream garden',p:38,r:null,a:'Ao Nang, günstigste Option',q:'The dream garden Ao Nang'},
+   {n:'Me Mee Place & Tour Krabi',p:47,r:8.1,a:'Ao Nang, Pension mit Rezeption rund um die Uhr',q:'Me Mee Place & Tour Krabi'}],
+  k2:[
+   {n:'De Loft Hotel',p:60,r:8.8,a:'Ao Nang, Sonnenterrasse',q:'De Loft Hotel Ao Nang'},
+   {n:'Jungle Village Bungalow',p:60,r:8.8,a:'Bungalows mit Pool im Grünen',q:'Jungle Village Bungalow Ao Nang'},
+   {n:'Aonang Silver Orchid Resort',p:74,r:8.5,a:'Resort mit Pool und Kochkurs',q:'Aonang Silver Orchid Resort'}],
+  k3:[
+   {n:'@Aonang Guesthouse',p:82,r:9.8,a:'Gästehaus mit Top-Bewertung',q:'@Aonang Guesthouse Ao Nang'},
+   {n:'Andaman Breeze Resort',p:82,r:8.5,a:'4 Sterne, Pool, nah am Strand',q:'Andaman Breeze Resort Ao Nang'}]},
+ phi:{ab:'6.–8.3.2027',k1:[
+   {n:'Sunflower Boathouse',p:48,r:8.0,a:'Am Strand, günstigste Option auf der Insel',q:'Sunflower Boathouse Koh Phi Phi'}],
+  k2:[
+   {n:'Phi Phi Long Beach Bungalow',p:60,r:null,a:'Long Beach, Bungalows',q:'Phi Phi Long Beach Bungalow Had Yao'},
+   {n:'PP Insula',p:65,r:8.5,a:'Ton Sai, nur Erwachsene, zentral',q:'PP Insula Koh Phi Phi'},
+   {n:'Uphill Cottage',p:70,r:8.0,a:'Ton Sai, Pool, Aussicht von oben',q:'Uphill Cottage Koh Phi Phi'}],
+  k3:[
+   {n:'Phi Phi Indigo Hotel',p:87,r:8.4,a:'Ton Sai, 3 Sterne, 24-Std.-Rezeption',q:'Phi Phi Indigo Hotel'},
+   {n:'Phi Phi Relax Beach Resort',p:103,r:8.8,a:'Direkt am Strand, privater Strand',q:'Phi Phi Relax Beach Resort'},
+   {n:'Panmanee Hotel',p:107,r:8.9,a:'Ton Sai, frisch renoviert',q:'Panmanee Hotel Koh Phi Phi'}]},
+ lan:{ab:'15.–17.3.2027',k1:[
+   {n:'Nature Beach Resort',p:27,r:8.4,a:'Am Strand, Pool, 1.700+ Rezensionen',q:'Nature Beach Resort Koh Lanta'},
+   {n:'Gooddays Lanta Beach Resort',p:35,r:8.2,a:'Am Strand, Pool, Tauchen und Schnorcheln buchbar',q:'Gooddays Lanta Beach Resort'}],
+  k2:[
+   {n:'Lanta Fa Rung Beach Resort',p:64,r:8.8,a:'Am Strand, nur Erwachsene',q:'Lanta Fa Rung Beach Resort'},
+   {n:'Klongdao Sunset Villa',p:74,r:8.4,a:'Am Strand, Kajak, Kochkurs',q:'Klongdao Sunset Villa Koh Lanta'},
+   {n:'LaLaanta Hideaway Resort',p:88,r:8.9,a:'Privater Strand, Pool',q:'LaLaanta Hideaway Resort'}],
+  k3:[
+   {n:'Moonlight Bay Resort',p:134,r:8.9,a:'4 Sterne, privater Strand, Spa',q:'Moonlight Bay Resort Koh Lanta'},
+   {n:'TwinBay Resort',p:140,r:9.2,a:'Sehr gut bewertet, Strand, Pool',q:'TwinBay Resort Koh Lanta'}]},
+ khs:{ab:'8.–10.3.2027',k1:[
+   {n:'Khao Sok Palmview Resort',p:29,r:8.9,a:'Nahe Parkeingang, Kanu und Wandern buchbar',q:'Khao Sok Palmview Resort'}],
+  k2:[
+   {n:'Khao Sok Morning Mist Resort',p:33,r:8.2,a:'Nahe Parkeingang, Pool',q:'Khao Sok Morning Mist Resort'},
+   {n:'Tree Tops River Huts',p:36,r:8.4,a:'Hütten am Fluss, Pool, heiße Quelle',q:'Tree Tops River Huts Khao Sok'}],
+  k3:[
+   {n:'Khao Sok River & Jungle Resort',p:54,r:8.6,a:'Am Fluss, Kanusport',q:'Khao Sok River & Jungle Resort'},
+   {n:'Khao Sok Paradise Resort',p:71,r:8.5,a:'Pool, heiße Quelle',q:'Khao Sok Paradise Resort'}]},
+ rep:{ab:'11.–13.3.2027',k1:[
+   {n:'Kouprey Hotel',p:23,r:9.2,a:'Road 6, 4 Sterne mit Pool, außerhalb',q:'Kouprey Hotel Siem Reap'},
+   {n:'SAKABAN Suite',p:23,r:8.6,a:'Sok San Road, Pool',q:'SAKABAN Suite Siem Reap'}],
+  k2:[
+   {n:'Cheathata CTS Hotel',p:30,r:9.0,a:'Nahe Old Market und Pub Street, Dachpool',q:'Cheathata CTS Hotel Siem Reap'},
+   {n:'The Palace Indochine Hotel',p:30,r:9.2,a:'Viertel Wat Bo, ruhiger, Pool',q:'The Palace Indochine Hotel Siem Reap'}],
+  k3:[
+   {n:'The Community',p:38,r:9.6,a:'Richtung Angkor Wat, 5.000+ Rezensionen, Pool',q:'The Community Siem Reap hotel'},
+   {n:'Le Grande Indochine Hotel',p:50,r:9.0,a:'5 Sterne, Altes Französisches Viertel, Spa',q:'Le Grande Indochine Hotel Siem Reap'},
+   {n:'The Jungle',p:51,r:9.8,a:'4 Sterne, Zentrum, Spa',q:'The Jungle hotel Siem Reap'}]},
+ han:{ab:'13.–15.3.2027',k1:[
+   {n:'Westlake House By Jen',p:24,r:9.4,a:'Tay Ho am Westsee, Wohnung',q:'Westlake House By Jen Hanoi'},
+   {n:'Anchie Maison Hà Nội',p:27,r:9.0,a:'Aparthotel in Ba Dinh, ruhig',q:'Anchie Maison Ha Noi'}],
+  k2:[
+   {n:'Sao Mai Boutique Hotel',p:38,r:9.4,a:'Dong Da, 2.200+ Rezensionen',q:'Sao Mai Boutique Hotel Hanoi'},
+   {n:'Hanoi TrangTrang Hotel',p:45,r:9.1,a:'Altstadt, 4 Sterne, Dachterrasse',q:'Hanoi TrangTrang Hotel'},
+   {n:'Centre Point Hanoi Hotel',p:49,r:9.1,a:'Hoan Kiem, nahe Altstadt',q:'Centre Point Hanoi Hotel'}],
+  k3:[
+   {n:'Sora Hotel Hanoi',p:49,r:9.0,a:'Hoan Kiem, 4 Sterne',q:'Sora Hotel Hanoi'},
+   {n:'Hanoi Madelise Riverie Hotel & Spa',p:50,r:9.6,a:'Altstadt, 4 Sterne mit Spa (wenige Rezensionen)',q:'Hanoi Madelise Riverie Hotel & Spa'}]},
+ hoi:{ab:'19.–21.3.2027',k1:[
+   {n:'Threeway Riverside Villa',p:25,r:null,a:'Am Fluss, Pool, nahe Altstadt',q:'Threeway Riverside Villa Hoi An'},
+   {n:'Gia Huy Riverside Hotel',p:31,r:9.3,a:'Am Fluss, 4 Sterne mit Pool',q:'Gia Huy Riverside Hotel Hoi An'}],
+  k2:[
+   {n:'Ancient Haven Central Boutique Hotel',p:33,r:9.2,a:'Zentral in Cam Pho, Pool',q:'Ancient Haven Central Boutique Hotel Hoi An'},
+   {n:'Hoianan Boutique Hotel',p:36,r:9.0,a:'Im Altstadtviertel Minh An, Pool',q:'Hoianan Boutique Hotel Hoi An'},
+   {n:'Hoi An TNT Villa',p:38,r:9.3,a:'Nahe Altstadt, Pool, 1.600+ Rezensionen',q:'Hoi An TNT Villa'}],
+  k3:[
+   {n:'ZEN Boutique Hoi An',p:41,r:9.3,a:'Eco-Villa, nur Erwachsene, Pool',q:'ZEN Boutique Hoi An Eco-Friendly Villa'},
+   {n:'Happy Life Heritage Hoi An',p:43,r:9.4,a:'4 Sterne, Pool, Fitness',q:'Happy Life Heritage Hoi An Hotel'},
+   {n:'Anora Retreat Hoi An',p:48,r:9.4,a:'4 Sterne, Infinity-Pool',q:'Anora Retreat Hoi An'}]},
+ tyo:{ab:'22.–24.3.2027',k1:[
+   {n:'Hearton Hotel Higashi-Shinagawa',p:58,r:8.4,a:'Shinagawa, gut für Shinkansen und Flughafen Haneda',q:'Hearton Hotel Higashi-Shinagawa'}],
+  k2:[
+   {n:'Almont Inn Tokyo Nihonbashi',p:66,r:8.7,a:'Zentral nahe Tokyo Station, einfache Zimmer',q:'Almont Inn Tokyo Nihonbashi'},
+   {n:'Toyoko Inn Tokyo Minowa-eki',p:68,r:8.9,a:'Nähe Asakusa und Ueno, Frühstück inklusive',q:'Toyoko Inn Tokyo Minowa-eki'},
+   {n:'Toyoko Inn Tokyo Asakusa Kuramae No.2',p:71,r:8.5,a:'Nahe Senso-ji und Sumida, Frühstück inklusive',q:'Toyoko Inn Tokyo Asakusa Kuramae No.2'}],
+  k3:[
+   {n:'Hotel Keihan Asakusa',p:81,r:8.4,a:'Asakusa, Restaurant',q:'Hotel Keihan Asakusa'},
+   {n:'Tosei Hotel Cocone Asakusa Kuramae',p:96,r:8.7,a:'Asakusa, Terrasse, öffentliches Bad',q:'Tosei Hotel Cocone Asakusa Kuramae'},
+   {n:'APA Hotel PRIDE Akasaka Kokkaigijidomae',p:103,r:8.5,a:'Akasaka, Bad auf dem Dach, 10.000+ Rezensionen',q:'APA Hotel PRIDE Akasaka Kokkaigijidomae'}]},
+ kyo:{ab:'26.–28.3.2027',k1:[
+   {n:'FIRSTCABIN Kyoto Nijojo',p:68,r:8.7,a:'Kabinenhotel nahe Nijo-Schloss, nur Erwachsene',q:'FIRSTCABIN Kyoto Nijojo'}],
+  k2:[
+   {n:'Glansit Kyoto Kawaramachi',p:88,r:8.7,a:'Kapselhotel, zentral bei Pontocho',q:'Glansit Kyoto Kawaramachi'},
+   {n:'Rest inn Kyoto',p:90,r:8.8,a:'Aparthotel in Shimogyo, nahe Bahnhof',q:'Rest inn Kyoto'}],
+  k3:[
+   {n:'Kyounoyado HANA Nishijin',p:113,r:9.6,a:'Gästehaus im Kimono-Stil, Nishijin',q:'Kyounoyado HANA Nishijin Kimono no Yado'},
+   {n:'Kamon Inn Toji Higashi',p:113,r:9.1,a:'Aparthotel nahe Toji, Küche',q:'Kamon Inn Toji Higashi Kyoto'},
+   {n:'Piece Hostel Sanjo',p:120,r:9.0,a:'Zentral in Nakagyo, 7.000+ Rezensionen',q:'Piece Hostel Sanjo Kyoto'}]},
+ osa:{ab:'30.3.–1.4.2027',k1:[
+   {n:'Fawn Hotel',p:34,r:8.8,a:'Bereich Namba/Shinsaibashi, nur Erwachsene',q:'Fawn Hotel Osaka Shimodera'},
+   {n:'@RLiS_house Namba',p:38,r:8.3,a:'Wohnung in Namba',q:'RLiS house Namba Osaka'}],
+  k2:[
+   {n:'HOTEL RELIEF Namba Daikokuchou',p:56,r:8.5,a:'Namba, gute Anbindung',q:'HOTEL RELIEF Namba Daikokucho Osaka'},
+   {n:'Hotel Sobial Namba Daikokucho',p:60,r:8.8,a:'Namba, 4 Sterne mit Gemeinschaftsbad',q:'Hotel Sobial Namba Daikokucho'},
+   {n:'Hotel Hillarys Shinsaibashi',p:65,r:8.6,a:'Shinsaibashi, öffentliches Bad',q:'Hotel Hillarys Shinsaibashi Osaka'}],
+  k3:[
+   {n:'DEL style Osaka Shin Umeda by Daiwa Roynet',p:70,r:8.5,a:'Fukushima nahe Umeda, 4 Sterne, nah an der Red&Blue Street',q:'DEL style Osaka Shin Umeda by Daiwa Roynet Hotel'},
+   {n:'Henn na Hotel Express Osaka Namba Nipponbashi',p:73,r:8.6,a:'Nipponbashi, moderne Roboter-Rezeption',q:'Henn na Hotel Express Osaka Namba Nipponbashi'}]},
+ hij:{ab:'4.–6.4.2027',k1:[
+   {n:'Urbain Hiroshima Central',p:53,r:8.0,a:'Zentrum, nah an der Straßenbahn',q:'Urbain Hiroshima Central'},
+   {n:'Hotel Kuretakeso Hiroshima Otemachi',p:54,r:8.1,a:'Nahe Friedenspark, 4.600+ Rezensionen',q:'Hotel Kuretakeso Hiroshima Otemachi'}],
+  k2:[
+   {n:'Quintessa Hotel Hiroshima Kanayamacho',p:58,r:8.2,a:'Zentrum, Restaurant',q:'Quintessa Hotel Hiroshima Kanayamacho'},
+   {n:'APA Hotel Hiroshima Ekimae Ohashi',p:64,r:8.1,a:'Nahe Bahnhof, Bad auf dem Dach',q:'APA Hotel Hiroshima Ekimae Ohashi'}],
+  k3:[
+   {n:'Via Inn Prime Hiroshima Shinkansenguchi',p:78,r:8.8,a:'Am Shinkansen-Ausgang, Bad im Haus',q:'Via Inn Prime Hiroshima Shinkansenguchi'},
+   {n:'HOTEL CLA-SS HIROSHIMA-TOKAICHI',p:85,r:9.4,a:'4 Sterne, sehr gut bewertet',q:'HOTEL CLA-SS HIROSHIMA-TOKAICHI'}]},
+ sel:{ab:'1.–3.4.2027',k1:[
+   {n:'Monday Mansion Hotel',p:61,r:null,a:'Guro-gu im Westen, einfach',q:'Monday Mansion Hotel Seoul Guro'},
+   {n:'K-Grand Hostel Dongdaemun',p:68,r:8.3,a:'Dongdaemun, U-Bahn nah',q:'K-Grand Hostel Dongdaemun Seoul'}],
+  k2:[
+   {n:'Hotel Loft',p:95,r:8.7,a:'Yeongdeungpo nahe Yeouido (Kirschblütenallee)',q:'Hotel Loft Yeongdeungpo Seoul'},
+   {n:'On Stay - Hotel Quality Stay',p:100,r:9.3,a:'Hongdae, Wohnung mit Terrasse',q:'On Stay Hotel Quality Stay Seoul Hongdae'}],
+  k3:[
+   {n:'SoSi Stay',p:102,r:9.8,a:'Jung-gu nahe Myeongdong und Namsan',q:'SoSi Stay Seoul Jung-gu'},
+   {n:'Seoul DDJ STAY',p:106,r:9.3,a:'Jongno nahe Insadong und Bukchon',q:'Seoul DDJ STAY Jongno'}]}
+};
+/* Preisspanne pro Klasse und Station ergibt sich aus den Einträgen. Hinweis für Japan und Seoul: Klasse 1 beginnt dort bei ca. 35–70 € pro Nacht für zwei. */
+/* Apps für die Reise. k = Kosten, r = für welche Reise nützlich (a = Reise A, b = Reise B, ab = beide). Stand November 2026, vor der Reise kurz prüfen. */
+const APPS=[
+ {g:'Karten und Orientierung',items:[
+  {n:'Google Maps',w:'Karte, Route, Bus und Bahn, Bewertungen. In Japan der beste Weg, um Zugverbindungen mit Bahnsteig zu finden.',f:'Vor dem Flug die Karten von Bangkok, Chiang Mai, Tokyo, Kyoto und Osaka offline laden. Ihr braucht dann kein Netz.',k:'kostenlos',r:'ab'},
+  {n:'Organic Maps',w:'Offline-Karte mit Wanderwegen, ganz ohne Netz.',f:'Praktisch in Pai, Khao Sok und auf dem Ha-Giang-Loop, wo das Netz schwach ist.',k:'kostenlos',r:'ab'},
+  {n:'Naver Map oder KakaoMap',w:'Karte für Südkorea. Google Maps kennt dort keine Fußwege und keine Navigation.',f:'Beide haben englische Oberflächen. Naver Map reicht für Seoul.',k:'kostenlos',r:'b'}
+ ]},
+ {g:'Unterwegs: Taxi, Zug, Bus, Fähre',items:[
+  {n:'Grab',w:'Taxi und Motorradtaxi in Thailand, Kambodscha und Vietnam, mit Festpreis vorab.',f:'Der Preis steht vorher fest, ihr müsst nicht verhandeln. Als Zahlung geht Karte oder Bargeld.',k:'kostenlos, Fahrten je nach Strecke',r:'ab'},
+  {n:'Bolt',w:'Alternative zu Grab in Thailand.',f:'Manchmal günstiger, vergleicht beide Preise.',k:'kostenlos, Fahrten je nach Strecke',r:'ab'},
+  {n:'GO und Uber',w:'Taxi in Japan. GO ist die häufigste App der Taxis, Uber gibt es in Tokyo und Osaka.',f:'Taxis in Japan sind teuer. Meist reicht die Bahn.',k:'kostenlos, Fahrten je nach Strecke',r:'ab'},
+  {n:'KakaoT',w:'Taxi in Südkorea.',f:'Funktioniert auch mit ausländischer Karte. Wartet oft, bis ein Taxi kommt.',k:'kostenlos, Fahrten je nach Strecke',r:'b'},
+  {n:'12Go Asia',w:'Fähren, Busse, Züge und Flüge in Thailand, Vietnam und Kambodscha mit Kreditkarte buchen.',f:'Für Fähren Railay–Phi Phi–Lanta, Minivans nach Pai und Khao Sok. Spart den Weg ins Reisebüro, kostet aber eine kleine Gebühr.',k:'kostenlos, kleine Buchungsgebühr',r:'ab'},
+  {n:'dticket.railway.co.th (SRT D-Ticket)',w:'Offizielle Seite der Thailändischen Bahn für den Nachtzug.',f:'Ab 60–90 Tage vorher buchbar, Bahnpreis ohne Aufschlag. Foreign cards können abgelehnt werden, dann 12Go nutzen.',k:'Ticketpreis',r:'ab'},
+  {n:'SmartEX',w:'Shinkansen-Tickets online mit Kreditkarte buchen und am Automaten oder per Handy nutzen.',f:'Spart die Schlange am Schalter. Praktisch für Tokyo–Kyoto und Osaka–Hiroshima.',k:'kostenlos, Ticketpreis',r:'ab'},
+  {n:'Suica oder ICOCA im Apple Wallet',w:'Prepaid-Karte für Bahn, Bus, Automaten und Konbini in ganz Japan.',f:'Auf dem iPhone direkt in Apple Wallet einrichten und aufladen. Wer Android hat, holt sich eine Welcome Suica als Karte am Flughafen.',k:'Guthaben, Pfand entfällt im Wallet',r:'ab'},
+  {n:'Rome2Rio',w:'Zeigt, wie man von A nach B kommt, mit allen Verkehrsmitteln und Preisen.',f:'Gut zum Vergleichen von Flug, Zug, Bus und Fähre, bevor man bucht.',k:'kostenlos',r:'ab'}
+ ]},
+ {g:'Unterkünfte, Flüge und Touren buchen',items:[
+  {n:'Booking.com',w:'Unterkünfte weltweit, oft mit kostenloser Stornierung.',f:'Kostenlos stornierbare Zimmer wählen, solange Termine nicht feststehen (Japan zur Blüte!).',k:'kostenlos',r:'ab'},
+  {n:'Agoda',w:'Unterkünfte, stark in Thailand, Vietnam und Kambodscha.',f:'Preise sind dort oft niedriger als bei Booking. Beide vergleichen. Zahlung oft in lokaler Währung.',k:'kostenlos',r:'ab'},
+  {n:'Hostelworld',w:'Hostels, Dorms und Privatzimmer in Hostels.',f:'Gut für Klasse 1. Auf Bewertungen ab 8,5 und Details zur Klimaanlage achten.',k:'kostenlos',r:'ab'},
+  {n:'Rakuten Travel und Jalan',w:'Japanische Buchungsseiten, manchmal günstiger als die internationalen.',f:'Rakuten Travel gibt es auf Englisch, Jalan hat englische Seiten. Gut für Ryokan und kleine Hotels.',k:'kostenlos',r:'ab'},
+  {n:'Google Hotels',w:'Vergleicht Preise vieler Seiten und zeigt freie Zimmer auf der Karte.',f:'Einmal vor jeder Buchung kurz nach dem Namen suchen, oft gibt es günstigere Direktpreise.',k:'kostenlos',r:'ab'},
+  {n:'Klook und GetYourGuide',w:'Eintritte, Touren, Kochkurse, Bahn-Tickets und SIM-Karten mit Rabatten.',f:'Für Kochkurse, Kletterkurse, teamLab, Shibuya Sky und Fähren. Auf Gratis-Stornierung achten.',k:'kostenlos, Preise je Angebot',r:'ab'},
+  {n:'Skyscanner und Google Flights',w:'Flüge vergleichen und Preisverlauf beobachten.',f:'Preisalarm für Zürich–Bangkok, Bangkok–Tokyo und Osaka–Zürich setzen. Gepäckkosten der Billigflieger einrechnen.',k:'kostenlos',r:'ab'}
+ ]},
+ {g:'Geld',items:[
+  {n:'Wise oder Revolut',w:'Karte mit günstigem Wechselkurs und niedrigen Gebühren im Ausland.',f:'Mit der Karte direkt zahlen oder am Automaten abheben. Eine Kreditkarte ohne Auslandsgebühr als Reserve mitnehmen.',k:'meist kostenlos bis geringe Gebühren',r:'ab'},
+  {n:'Währungsrechner (z. B. XE)',w:'Rechnet Baht, Dong, Yen, Won und Dollar in Euro um.',f:'In dieser App rechnet das bereits mit euren Kursen, im Laden hilft eine eigene App.',k:'kostenlos',r:'ab'}
+ ]},
+ {g:'Netz und Sprache',items:[
+  {n:'Airalo, Holafly oder Ubigi (eSIM)',w:'Daten-Internet ohne Roaming, vor der Reise auf das Handy laden.',f:'Eine Asien-Regionen-eSIM mit 10–20 GB reicht meist für sechs Wochen. Vorher prüfen, ob das Handy eSIM kann.',k:'ca. 15–40 € je nach Paket',r:'ab'},
+  {n:'Google Übersetzer',w:'Übersetzt Sprache und Kamera-Bilder, auch offline mit heruntergeladenen Sprachen.',f:'Sehr hilfreich für Speisekarten und Schilder in Thailand und Japan. Thai und Japanisch vorher offline laden.',k:'kostenlos',r:'ab'},
+  {n:'Papago',w:'Übersetzer speziell für Koreanisch.',f:'Genauer als Google bei Koreanisch.',k:'kostenlos',r:'b'},
+  {n:'LINE und WhatsApp',w:'Nachrichten an Hotels, Fahrer und Kursanbieter.',f:'In Thailand und Japan nutzen viele Betriebe LINE. In Vietnam und Kambodscha auch Zalo und WhatsApp.',k:'kostenlos',r:'ab'}
+ ]},
+ {g:'Einreise und Papiere',items:[
+  {n:'TDAC (Thailand Digital Arrival Card)',w:'Pflicht-Einreisekarte für Thailand, online innerhalb von 72 Stunden vor der Ankunft.',f:'Kostenlos, nur auf der offiziellen Seite ausfüllen und den QR-Code speichern.',k:'kostenlos',r:'ab'},
+  {n:'Visit Japan Web',w:'Online-Anmeldung für Einreise und Zoll in Japan mit QR-Code.',f:'Optional, beschleunigt die Einreise. Am besten eine Woche vorher.',k:'kostenlos',r:'ab'},
+  {n:'evisa.gov.vn und evisa.gov.kh',w:'Offizielle E-Visum-Seiten für Vietnam und Kambodscha.',f:'Nur diese Adressen verwenden, es gibt viele Seiten, die mehr verlangen.',k:'ca. 25 und 30 USD',r:'b'},
+  {n:'k-eta.go.kr und e-arrivalcard.go.kr',w:'Südkorea: K-ETA (voraussichtlich Pflicht ab 2027) und kostenlose e-Arrival-Karte.',f:'Die e-Arrival-Karte innerhalb von 3 Tagen vor der Ankunft ausfüllen.',k:'K-ETA ca. 10.000 KRW',r:'b'}
+ ]},
+ {g:'Essen, Wetter, Blüte',items:[
+  {n:'Tabelog',w:'Japanische Restaurant-Bewertungen, strenger als Google.',f:'Als Zweitquelle zu Google Maps. Ein Wert über 3,5 gilt als sehr gut.',k:'kostenlos',r:'ab'},
+  {n:'tenki.jp',w:'Wetter und Kirschblüten-Prognose für Japan.',f:'Die Blüte ändert sich von Woche zu Woche. Ab Februar beobachten und Tokyo und Kyoto notfalls tauschen.',k:'kostenlos',r:'ab'},
+  {n:'Windy',w:'Wetterkarte mit Wind, Regen und Wellen.',f:'Gut für Bootstouren, Surfen und Tauchen.',k:'kostenlos',r:'ab'}
+ ]}
+];
+const BOOK_TIPS=[
+ {g:'Thailand',t:['Agoda und Booking.com sind die Standardseiten. Bei Gästehäusern lohnt oft eine Nachricht per LINE oder WhatsApp, manchmal gibt es dann einen besseren Preis.','Auf Koh Phi Phi und in Railay vorher buchen, im März ist Hauptsaison. Auf dem Festland reicht oft eine Buchung ein bis zwei Tage vorher.','Für Hostels nimmt man Hostelworld. Privatzimmer in Hostels sind eine gute Klasse-1-Option.','Preise in THB und EUR vergleichen. Prüfen, ob Steuer und Service im Preis stehen.']},
+ {g:'Japan',t:['Booking.com, Agoda, Rakuten Travel und Jalan nutzen. Ketten wie Toyoko Inn, APA, Dormy Inn und Sotetsu Fresa Inn haben eigene Seiten, oft mit Mitgliedspreisen.','Japanische Preise gelten oft pro Person (vor allem Ryokan und Kapselhotels). Prüfen, ob der Preis für zwei Personen oder ein Zimmer gilt.','Kyoto erhebt eine Übernachtungssteuer, die 2026 gestiegen ist. Sie wird meist vor Ort gezahlt.','Zur Kirschblüte so früh wie möglich buchen und kostenlos stornierbar wählen. Zimmer in Kyoto sind zuerst weg.']},
+ {g:'Vietnam, Kambodscha und Südkorea',t:['In Vietnam und Kambodscha sind Booking und Agoda üblich, in Hoi An gibt es viele Homestays, die man direkt per Nachricht bucht.','Für Ha Giang übernimmt meist die Tour die Unterkünfte (Homestays).','In Südkorea sind Booking und Agoda üblich. Dazu Yanolja und Goodchoice (koreanische Apps), die oft günstiger sind.','Vor der Buchung: Bewertungen der letzten zwölf Monate lesen und auf 8,0 oder mehr bei mindestens 100 Bewertungen achten.']}
+];
+const ACTS=[].concat(ACTS_TH,ACTS_VN,ACTS_JP,ACTS_KR,ACTS_B,ACTS_B2,ACTS_C);
 const WPM={"Akihabara":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Sotokanda%2C_Akihabara_Electric_Town_at_night_20231114.png/960px-Sotokanda%2C_Akihabara_Electric_Town_at_night_20231114.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.69833333,"lon":139.77305556},"An Bàng Beach":{"img":null,"lat":null,"lon":null},"Ao Nang":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Ao_Nang_beach_panorama_1.jpg/960px-Ao_Nang_beach_panorama_1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Ao Thalane":{"img":null,"lat":null,"lon":null},"Arashiyama Bamboo Grove":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Bamboo_Grove%2C_Arashiyama%2C_Kyoto%2C_Japan.jpg/960px-Bamboo_Grove%2C_Arashiyama%2C_Kyoto%2C_Japan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.0168,"lon":135.6716},"Ayutthaya Historical Park":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e2/Ayutthaya_World_Heritage_sign.jpg/960px-Ayutthaya_World_Heritage_sign.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":14.35,"lon":100.58333333},"Bia hơi":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0a/Bia_hoi.jpg/960px-Bia_hoi.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Bua Tong Waterfall":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%95%E0%B8%81%E0%B8%9A%E0%B8%B1%E0%B8%A7%E0%B8%95%E0%B8%AD%E0%B8%87_Buatong_Waterfall_Thailand_-_panoramio_%281%29.jpg/960px-%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%95%E0%B8%81%E0%B8%9A%E0%B8%B1%E0%B8%A7%E0%B8%95%E0%B8%AD%E0%B8%87_Buatong_Waterfall_Thailand_-_panoramio_%281%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":19.068,"lon":99.0795},"Bukchon Hanok Village":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Bukchon_Hanok_Village_01.jpg/960px-Bukchon_Hanok_Village_01.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.58305556,"lon":126.98361111},"Bukhansan National Park":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c3/Bukhansan_National_Park_2006-03-28.JPG/960px-Bukhansan_National_Park_2006-03-28.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.675,"lon":126.982},"Bún chả":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/B%C3%BAn_ch%E1%BA%A3_Vietnamese_food.jpg/960px-B%C3%BAn_ch%E1%BA%A3_Vietnamese_food.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"COEX Mall":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/Starfield_Library.jpg/960px-Starfield_Library.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.51194444,"lon":127.05888889},"Cao lầu":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Cao_l%E1%BA%A7u_H%E1%BB%99i_An_%282024%29.jpg/960px-Cao_l%E1%BA%A7u_H%E1%BB%99i_An_%282024%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Changdeokgung":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/%EC%B0%BD%EB%8D%95%EA%B6%81_%EC%A0%84%EA%B2%BD_%282012%29.jpg/960px-%EC%B0%BD%EB%8D%95%EA%B6%81_%EC%A0%84%EA%B2%BD_%282012%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.57944444,"lon":126.99277778},"Chatuchak Weekend Market":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Bangkok_-_Jatujak_Market_02.JPG/960px-Bangkok_-_Jatujak_Market_02.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.80083333,"lon":100.55138889},"Cheonggyecheon":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Cheonggyecheon_stream_at_sunrise_with_trees_in_Seoul.jpg/960px-Cheonggyecheon_stream_at_sunrise_with_trees_in_Seoul.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.57,"lon":127.00638889},"Chidorigafuchi":{"img":null,"lat":null,"lon":null},"Cát Bà Island":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/92/Cat_Ba_town.JPG/960px-Cat_Ba_town.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":20.8,"lon":106.99972222},"Cẩm Thanh":{"img":null,"lat":null,"lon":null},"Doi Inthanon National Park":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%95%E0%B8%81%E0%B8%A7%E0%B8%8A%E0%B8%B4%E0%B8%A3%E0%B8%98%E0%B8%B2%E0%B8%A3_%E0%B8%AD%E0%B8%B8%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%99%E0%B9%81%E0%B8%AB%E0%B9%88%E0%B8%87%E0%B8%8A%E0%B8%B2%E0%B8%95%E0%B8%B4%E0%B8%A5%E0%B8%B3%E0%B8%94%E0%B8%B1%E0%B8%9A%E0%B8%97%E0%B8%B5%E0%B9%8844_%E0%B8%AD%E0%B8%B8%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%99%E0%B9%81%E0%B8%AB%E0%B9%88%E0%B8%87%E0%B8%8A%E0%B8%B2%E0%B8%95%E0%B8%B4%E0%B8%94%E0%B8%AD%E0%B8%A2%E0%B8%AD%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%99%E0%B8%99%E0%B8%97%E0%B9%8C.jpg/960px-thumbnail.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":18.59222222,"lon":98.48666667},"Dongdaemun Design Plaza":{"img":"https://thumb.wikimedia.org/wikipedia/en/thumb/8/8f/Dongdaemun_Design_Plaza_at_night%2C_Seoul%2C_Korea.jpg/960px-Dongdaemun_Design_Plaza_at_night%2C_Seoul%2C_Korea.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.5669,"lon":127.0094},"Dōtonbori":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f4/Osaka_Dotonbori_Ebisu_Bridge.jpg/960px-Osaka_Dotonbori_Ebisu_Bridge.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.668708,"lon":135.501308},"Egg coffee":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/22/C%C3%A0_ph%C3%AA_tr%E1%BB%A9ng.jpg/960px-C%C3%A0_ph%C3%AA_tr%E1%BB%A9ng.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Elephant Nature Park":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Navann_was_born_at_the_park_Oct_2012.jpg/960px-Navann_was_born_at_the_park_Oct_2012.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":19.215,"lon":98.86055556},"Fushimi Inari-taisha":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg/960px-Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.96722222,"lon":135.77277778},"Ghibli Museum":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Ghibli_Museum_2024.JPG/960px-Ghibli_Museum_2024.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.69623333,"lon":139.57043056},"Ginkaku-ji":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Ginkakuji_Kyoto03-r.jpg/960px-Ginkakuji_Kyoto03-r.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.02666667,"lon":135.79833333},"Gion":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/150124_Gion_Kyoto_Japan01s3.jpg/960px-150124_Gion_Kyoto_Japan01s3.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.003496,"lon":135.775051},"Grand Palace":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/0005574_-_Wat_Phra_Kaew_006.jpg/960px-0005574_-_Wat_Phra_Kaew_006.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.7501,"lon":100.492},"Gwangjang Market":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/Gwangjang_Market%2C_Seoul_01.jpg/960px-Gwangjang_Market%2C_Seoul_01.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.57,"lon":126.999},"Gyeongbokgung":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/%EA%B4%91%ED%99%94%EB%AC%B8_%EC%9B%94%EB%8C%80.jpg/960px-%EA%B4%91%ED%99%94%EB%AC%B8_%EC%9B%94%EB%8C%80.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.579884,"lon":126.9768},"Hakone, Kanagawa":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/View_of_Mount_Fuji_from_Lake_Ashi.jpg/960px-View_of_Mount_Fuji_from_Lake_Ashi.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.18944444,"lon":139.02472222},"Han River (Korea)":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Seoul_satellite_map.jpg/960px-Seoul_satellite_map.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.75,"lon":126.18333333},"Hanoi":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/Hanoi_skyline_with_Ba_Vi_Mountain.jpg/960px-Hanoi_skyline_with_Ba_Vi_Mountain.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":21,"lon":105.85},"Heian Shrine":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Heian-jing%C5%AB_daigokuden.jpg/960px-Heian-jing%C5%AB_daigokuden.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.01666667,"lon":135.78222222},"Himeji Castle":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Himeji_castle_in_may_2015.jpg/960px-Himeji_castle_in_may_2015.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.83944444,"lon":134.69388889},"Ho Chi Minh Mausoleum":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/L%C4%83ng_B%C3%A1c_-_NKS.jpg/960px-L%C4%83ng_B%C3%A1c_-_NKS.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":21.03666667,"lon":105.83472222},"Hongdae":{"img":null,"lat":null,"lon":null},"Hozu River":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Jrballe_hozu_river_2007_001.JPG/960px-Jrballe_hozu_river_2007_001.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.021812,"lon":135.655889},"Hoàn Kiếm Lake":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/Thap_Rua.jpg/960px-Thap_Rua.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":21.02888889,"lon":105.8525},"Hwaseong Fortress":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Hwaseong_Fortress%2C_Suwon%2C_Gyeonggi-do%2C_Republic_of_Korea_%282%29.jpg/960px-Hwaseong_Fortress%2C_Suwon%2C_Gyeonggi-do%2C_Republic_of_Korea_%282%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.27222222,"lon":127.00833333},"Hạ Long Bay":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/Ha_Long_Bay_in_2019.jpg/960px-Ha_Long_Bay_in_2019.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":20.9,"lon":107.2},"Hỏa Lò Prison":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/HanoiHilton.jpg/960px-HanoiHilton.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":21.0257,"lon":105.8461},"Hội An Old Town":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/10549-Hoi-An_%2837621348460%29.jpg/960px-10549-Hoi-An_%2837621348460%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Ikseon-dong":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/View_of_Ikseon-dong_from_National_Tax_Service_Jongno_District_Office.jpg/960px-View_of_Ikseon-dong_from_National_Tax_Service_Jongno_District_Office.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Insadong":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/Insa-dong_%EC%9D%B8%EC%82%AC%EB%8F%99_October_1_2020_20.jpg/960px-Insa-dong_%EC%9D%B8%EC%82%AC%EB%8F%99_October_1_2020_20.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.572972,"lon":126.98618},"Japanese Covered Bridge":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/2024_H%E1%BB%99i_An_-_Japanese_Covered_Bridge_%28Ch%C3%B9a_C%E1%BA%A7u%29_after_renovation_-_img_11.jpg/960px-2024_H%E1%BB%99i_An_-_Japanese_Covered_Bridge_%28Ch%C3%B9a_C%E1%BA%A7u%29_after_renovation_-_img_11.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":15.87707,"lon":108.32601},"Jim Thompson House":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c0/Main_House_of_Jim_Thompson_photo_Don_Ramey_Logan.jpg/960px-Main_House_of_Jim_Thompson_photo_Don_Ramey_Logan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.74916667,"lon":100.52833333},"Jjimjilbang":{"img":"https://upload.wikimedia.org/wikipedia/commons/1/1f/Jjimjilbang.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled","lat":null,"lon":null},"Jogyesa":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/Jogyesa_Temple_%281509839597%29.jpg/960px-Jogyesa_Temple_%281509839597%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.57391389,"lon":126.98190278},"Kamakura":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Kaguraden-Hachimangu_Kamakura.jpg/960px-Kaguraden-Hachimangu_Kamakura.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.31972222,"lon":139.5525},"Kasuga-taisha":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0d/Kasuga-taisha11bs3200.jpg/960px-Kasuga-taisha11bs3200.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.68138889,"lon":135.84833333},"Khao Pra Bang Khram Wildlife Sanctuary":{"img":null,"lat":null,"lon":null},"Khao soi":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Khao_Soi_Northern_Thai_food_%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%8B%E0%B8%AD%E0%B8%A2_%E0%B8%9C%E0%B8%B1%E0%B8%81%E0%B8%94%E0%B8%AD%E0%B8%87.jpg/960px-Khao_Soi_Northern_Thai_food_%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%8B%E0%B8%AD%E0%B8%A2_%E0%B8%9C%E0%B8%B1%E0%B8%81%E0%B8%94%E0%B8%AD%E0%B8%87.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Khlong Saen Saep":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Khlong_San_Sab_Ferry.jpg/960px-Khlong_San_Sab_Ferry.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.8741,"lon":101.1419},"Kinkaku-ji":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Golden_Pavilion_Kinkaku-ji_water_mirror_2024.jpg/960px-Golden_Pavilion_Kinkaku-ji_water_mirror_2024.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.0395,"lon":135.7285},"Kiyomizu-dera":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Kiyomizu.jpg/960px-Kiyomizu.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.995,"lon":135.785},"Ko Hong (Krabi)":{"img":null,"lat":null,"lon":null},"Ko Lanta":{"img":null,"lat":null,"lon":null},"Ko Poda":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Poda_island_beach.jpg/960px-Poda_island_beach.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":7.97138889,"lon":98.80861111},"Korean Demilitarized Zone":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/070401_Panmunjeom3.jpg/960px-070401_Panmunjeom3.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":38.32,"lon":127.2},"Korean barbecue":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Korean_BBQ_Seoul.jpg/960px-Korean_BBQ_Seoul.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Krabi (town)":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/Wat_Tham_Sua_18.jpg/960px-Wat_Tham_Sua_18.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":8.05916667,"lon":98.91888889},"Kuromon Ichiba Market":{"img":null,"lat":null,"lon":null},"Lan Ha Bay":{"img":null,"lat":null,"lon":null},"Lebua at State Tower":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Lebua_at_State_Tower_IMG_1402_01.jpg/960px-Lebua_at_State_Tower_IMG_1402_01.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.72111111,"lon":100.5175},"Long Biên Bridge":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/92/Long_Bi%C3%AAn_Bridge_-_panoramio.jpg/960px-Long_Bi%C3%AAn_Bridge_-_panoramio.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":21.04333333,"lon":105.85888889},"Lotte World Tower":{"img":"https://thumb.wikimedia.org/wikipedia/en/thumb/2/28/Lotte_World_Tower_day_view_10.jpg/960px-Lotte_World_Tower_day_view_10.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.5125,"lon":127.10277778},"Lumphini Park":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Aerial_view_of_Lumphini_Park.jpg/960px-Aerial_view_of_Lumphini_Park.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.73055556,"lon":100.54166667},"Marble Mountains (Vietnam)":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/Ngu_hanh_son_toan_canh.jpg/960px-Ngu_hanh_son_toan_canh.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":16,"lon":108.26},"Maruyama Park":{"img":null,"lat":null,"lon":null},"Meguro River":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/85/Meguro_River_Spring_2014%282%29.jpg/960px-Meguro_River_Spring_2014%282%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.645927,"lon":139.698611},"Meiji Shrine":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Meiji_Jingu_2023-3.jpg/960px-Meiji_Jingu_2023-3.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.67611111,"lon":139.69916667},"Mochi":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/ff/Mochi_002.jpg/960px-Mochi_002.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Myeongdong":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/32/%EB%AA%85%EB%8F%998%EA%B8%B8_%EA%B1%B0%EB%A6%AC_%282020.03%29.jpg/960px-%EB%AA%85%EB%8F%998%EA%B8%B8_%EA%B1%B0%EB%A6%AC_%282020.03%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.5637,"lon":126.984},"Mỹ Sơn":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/X%C3%A3_M%E1%BB%B9_S%C6%A1n%2C_Ninh_S%C6%A1n.jpg/960px-X%C3%A3_M%E1%BB%B9_S%C6%A1n%2C_Ninh_S%C6%A1n.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"N Seoul Tower":{"img":"https://upload.wikimedia.org/wikipedia/en/a/a6/NamsanTower_%28Cropped%29.jpeg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled","lat":37.551216,"lon":126.988276},"Nami Island":{"img":"https://upload.wikimedia.org/wikipedia/commons/7/79/Nami_Island.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled","lat":37.79,"lon":127.5258},"Nara Park":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Nara_Park_-_panoramio_%282%29.jpg/960px-Nara_Park_-_panoramio_%282%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.685,"lon":135.85},"Naramachi":{"img":null,"lat":null,"lon":null},"Nijō Castle":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/NinomaruPalace.jpg/960px-NinomaruPalace.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.01416667,"lon":135.7475},"Nimmanhaemin Road":{"img":null,"lat":null,"lon":null},"Nishiki Market":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/Nishiki_Ichiba_by_matsuyuki.jpg/960px-Nishiki_Ichiba_by_matsuyuki.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.00502778,"lon":135.76613889},"Old Quarter, Hanoi":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Old_Quarter_Street_Scene_-_Hanoi_-_Vietnam_%2848256301206%29.jpg/960px-Old_Quarter_Street_Scene_-_Hanoi_-_Vietnam_%2848256301206%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Omoide Yokochō":{"img":null,"lat":null,"lon":null},"Osaka Aquarium Kaiyukan":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f4/Kaiy%C5%ABkan.jpg/960px-Kaiy%C5%ABkan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.65447222,"lon":135.42888889},"Osaka Castle":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Osaka_Castle_03bs3200.jpg/960px-Osaka_Castle_03bs3200.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.68722222,"lon":135.52583333},"Philosopher's Walk":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/92/Japan_Kyoto_philosophers_walk_DSC00297.jpg/960px-Japan_Kyoto_philosophers_walk_DSC00297.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.02512778,"lon":135.79616667},"Phra Nang Cave":{"img":null,"lat":null,"lon":null},"Pontochō":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/6/68/Pontocho_by_Wolfiewolf_in_Nabeyacho%2C_Kyoto.jpg/960px-Pontocho_by_Wolfiewolf_in_Nabeyacho%2C_Kyoto.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.007969,"lon":135.771111},"Railay Beach":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Railay_Beach_5.jpg/960px-Railay_Beach_5.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":8.01055556,"lon":98.83944444},"Rajadamnern Stadium":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/RajInfront.jpg/960px-RajInfront.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Rock climbing":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/1/19/Crack_climbing_in_Indian_Creek%2C_Utah.jpg/960px-Crack_climbing_in_Indian_Creek%2C_Utah.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Sensō-ji":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Sensoji_2023.jpg/960px-Sensoji_2023.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.71472222,"lon":139.79675},"Seokchon Lake":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Lotte_World_day_view_10.jpg/960px-Lotte_World_day_view_10.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.51,"lon":127.103},"Seongsu-dong":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Evening_street_in_Seongsu-dong.jpg/960px-Evening_street_in_Seongsu-dong.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.5442,"lon":127.0494},"Shibuya Crossing":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Shibuya_Crossing%2C_Aerial.jpg/960px-Shibuya_Crossing%2C_Aerial.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.6595,"lon":139.70056},"Shibuya Scramble Square":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/SHIBUYA_SCRAMBLE_SQUARE_East_Tower.jpg/960px-SHIBUYA_SCRAMBLE_SQUARE_East_Tower.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.65805556,"lon":139.70138889},"Shinjuku":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/960px-Skyscrapers_of_Shinjuku_2009_January.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.70138889,"lon":139.70972222},"Shinjuku Gyoen":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Shinjuku_Gyoen_National_Garden_-_sakura_3.JPG/960px-Shinjuku_Gyoen_National_Garden_-_sakura_3.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.685,"lon":139.71},"Shinsekai":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Shinsekai_and_Tsutenkaku_at_night_2019-04-12.jpg/960px-Shinsekai_and_Tsutenkaku_at_night_2019-04-12.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.65222222,"lon":135.50611111},"St. Joseph's Cathedral, Hanoi":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/St._Joseph%27s_Cathedral_-_Hanoi%2C_Vietnam.jpg/960px-St._Joseph%27s_Cathedral_-_Hanoi%2C_Vietnam.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":21.02861111,"lon":105.84888889},"Sumida River":{"img":"https://upload.wikimedia.org/wikipedia/commons/7/73/Sumidagawa_river.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled","lat":35.71861111,"lon":139.80722222},"Sumiyoshi-taisha":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Sumiyoshi-taisha%2C_keidai-2.jpg/960px-Sumiyoshi-taisha%2C_keidai-2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.61279722,"lon":135.49294167},"Sung Sot Cave":{"img":null,"lat":null,"lon":null},"Takeshita Street":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/JRE-Harajuku-Station-07.jpg/960px-JRE-Harajuku-Station-07.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.6685,"lon":139.7054},"Takoyaki":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%A8%E3%83%9D%E3%83%B3%E9%85%A2%E3%81%AE%E3%81%9F%E3%81%93%E7%84%BC%E3%81%8D.jpg/960px-%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%A8%E3%83%9D%E3%83%B3%E9%85%A2%E3%81%AE%E3%81%9F%E3%81%93%E7%84%BC%E3%81%8D.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"TeamLab (art collective)":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e2/Teamlab_logo_RGB_color.png/960px-Teamlab_logo_RGB_color.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Temple of Literature, Hanoi":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Hanoi_Temple_of_Literature_%28cropped%29.jpg/960px-Hanoi_Temple_of_Literature_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":21.02861111,"lon":105.83555556},"Tenryū-ji":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Tenryuji_Kyoto.jpg/960px-Tenryuji_Kyoto.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.01596389,"lon":135.67377222},"Tha Phae Gate":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/6/68/Chiang_Mai_-_East_gate_of_the_city_wall_-_0001.jpg/960px-Chiang_Mai_-_East_gate_of_the_city_wall_-_0001.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":18.78777778,"lon":98.99333333},"Thai cuisine":{"img":null,"lat":null,"lon":null},"Thai massage":{"img":"https://upload.wikimedia.org/wikipedia/commons/0/0c/Thaimassage.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled","lat":null,"lon":null},"Thăng Long Water Puppet Theatre":{"img":null,"lat":null,"lon":null},"Tokyo Metropolitan Government Building":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Tokyo_Metropolitan_Government_Building_2024.jpg/960px-Tokyo_Metropolitan_Government_Building_2024.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.68972222,"lon":139.69222222},"Tokyo Skytree":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/Tokyo_Skytree_2014_%E2%85%A2.jpg/960px-Tokyo_Skytree_2014_%E2%85%A2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.7101,"lon":139.8107},"Trà Quế":{"img":null,"lat":null,"lon":null},"Tràng An Scenic Landscape Complex":{"img":"https://upload.wikimedia.org/wikipedia/commons/0/08/Muaxuantamcoc.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled","lat":20.25666667,"lon":105.89638889},"Trấn Quốc Pagoda":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Tran_Quoc_Pagoda%2C_Hanoi%2C_Vietnam.jpg/960px-Tran_Quoc_Pagoda%2C_Hanoi%2C_Vietnam.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":21.04777778,"lon":105.83666667},"Tsukiji Fish Market":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/2018_Tsukiji_fish_market.jpg/960px-2018_Tsukiji_fish_market.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.66138889,"lon":139.76972222},"Tōdai-ji":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/T%C5%8Ddai-ji_Kon-d%C5%8D.jpg/960px-T%C5%8Ddai-ji_Kon-d%C5%8D.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.68916667,"lon":135.83972222},"Ueno Park":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Ueno_park.jpg/960px-Ueno_park.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.71222222,"lon":139.77111111},"Umeda Sky Building":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/2018_Umeda_Sky_Building.jpg/960px-2018_Umeda_Sky_Building.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.70527778,"lon":135.48972222},"Universal Studios Japan":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Universal_Studios_in_Japan.jpg/960px-Universal_Studios_in_Japan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.66472222,"lon":135.43305556},"Vietnam Museum of Ethnology":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Dan_toc_hoc_1.jpg/960px-Dan_toc_hoc_1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":21.0406,"lon":105.7987},"Vietnamese cuisine":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/2023-07-28_Cuisine_of_Hanoi_%E4%B8%80%E8%88%AC%E5%AE%B6%E5%BA%AD%E3%83%99%E3%83%88%E3%83%8A%E3%83%A0%E6%96%99%E7%90%86DSCF0706.jpg/960px-2023-07-28_Cuisine_of_Hanoi_%E4%B8%80%E8%88%AC%E5%AE%B6%E5%BA%AD%E3%83%99%E3%83%88%E3%83%8A%E3%83%A0%E6%96%99%E7%90%86DSCF0706.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Warorot Market":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Warorot_Market_01.jpg/960px-Warorot_Market_01.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":18.79022183,"lon":99.000657},"Wat Arun":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/%E0%B9%80%E0%B8%88%E0%B8%94%E0%B8%B5%E0%B8%A2%E0%B9%8C%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%98%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%A3%E0%B8%87%E0%B8%9B%E0%B8%A3%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B9%8C%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%AD%E0%B8%A3%E0%B8%B8%E0%B8%932.jpg/960px-%E0%B9%80%E0%B8%88%E0%B8%94%E0%B8%B5%E0%B8%A2%E0%B9%8C%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%98%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%A3%E0%B8%87%E0%B8%9B%E0%B8%A3%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B9%8C%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%AD%E0%B8%A3%E0%B8%B8%E0%B8%932.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.74361111,"lon":100.48888889},"Wat Chedi Luang":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e2/%E0%B9%80%E0%B8%88%E0%B8%94%E0%B8%B5%E0%B8%A2%E0%B9%8C%E0%B8%AB%E0%B8%A5%E0%B8%A7%E0%B8%87.jpg/960px-%E0%B9%80%E0%B8%88%E0%B8%94%E0%B8%B5%E0%B8%A2%E0%B9%8C%E0%B8%AB%E0%B8%A5%E0%B8%A7%E0%B8%87.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":18.78694444,"lon":98.98638889},"Wat Pho":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B8%9E%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B9%84%E0%B8%AA%E0%B8%A2%E0%B8%B2%E0%B8%AA%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%8A%E0%B8%95%E0%B8%B8%E0%B8%9E%E0%B8%99.jpg/960px-%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B8%9E%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B9%84%E0%B8%AA%E0%B8%A2%E0%B8%B2%E0%B8%AA%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%8A%E0%B8%95%E0%B8%B8%E0%B8%9E%E0%B8%99.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.74638889,"lon":100.49361111},"Wat Phra Singh":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Wat_Phra_Sing%2C_Chiang_Mai_%28I%29.jpg/960px-Wat_Phra_Sing%2C_Chiang_Mai_%28I%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":18.78875,"lon":98.98121389},"Wat Phra That Doi Suthep":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Wat_Phra_That_Doi_Suthep_-_Chiang_Mai.jpg/960px-Wat_Phra_That_Doi_Suthep_-_Chiang_Mai.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":18.80498,"lon":98.92156},"Wat Rong Khun":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/Wat_Rong_Khun_-_Chiang_Rai.jpg/960px-Wat_Rong_Khun_-_Chiang_Rai.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":19.82466667,"lon":99.76333333},"Wat Saket":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%AA%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%81%E0%B8%A8-2.jpg/960px-%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%AA%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%81%E0%B8%A8-2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.75388889,"lon":100.50833333},"Wat Tham Suea":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/Wat_Tham_Sua_15.jpg/960px-Wat_Tham_Sua_15.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":8.124,"lon":98.9252},"Yanaka, Tokyo":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Tokyo_-_Yanaka_143.jpg/960px-Tokyo_-_Yanaka_143.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.72378889,"lon":139.76842222},"Yaowarat Road":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/%282022%29_%E0%B8%95%E0%B8%B6%E0%B8%81%E0%B9%81%E0%B8%96%E0%B8%A7%E0%B8%A3%E0%B8%B4%E0%B8%A1%E0%B8%96%E0%B8%99%E0%B8%99%E0%B9%80%E0%B8%A2%E0%B8%B2%E0%B8%A7%E0%B8%A3%E0%B8%B2%E0%B8%8A_%E0%B9%80%E0%B8%82%E0%B8%95%E0%B8%AA%E0%B8%B1%E0%B8%A1%E0%B8%9E%E0%B8%B1%E0%B8%99%E0%B8%98%E0%B8%A7%E0%B8%87%E0%B8%A8%E0%B9%8C_%E0%B8%81%E0%B8%A3%E0%B8%B8%E0%B8%87%E0%B9%80%E0%B8%97%E0%B8%9E%E0%B8%A1%E0%B8%AB%E0%B8%B2%E0%B8%99%E0%B8%84%E0%B8%A3_%284%29.jpg/960px-%282022%29_%E0%B8%95%E0%B8%B6%E0%B8%81%E0%B9%81%E0%B8%96%E0%B8%A7%E0%B8%A3%E0%B8%B4%E0%B8%A1%E0%B8%96%E0%B8%99%E0%B8%99%E0%B9%80%E0%B8%A2%E0%B8%B2%E0%B8%A7%E0%B8%A3%E0%B8%B2%E0%B8%8A_%E0%B9%80%E0%B8%82%E0%B8%95%E0%B8%AA%E0%B8%B1%E0%B8%A1%E0%B8%9E%E0%B8%B1%E0%B8%99%E0%B8%98%E0%B8%A7%E0%B8%87%E0%B8%A8%E0%B9%8C_%E0%B8%81%E0%B8%A3%E0%B8%B8%E0%B8%87%E0%B9%80%E0%B8%97%E0%B8%9E%E0%B8%A1%E0%B8%AB%E0%B8%B2%E0%B8%99%E0%B8%84%E0%B8%A3_%284%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.741136,"lon":100.508305},"Yasaka Shrine":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Yasaka_jinja.jpg/960px-Yasaka_jinja.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.00361111,"lon":135.77861111},"Yeouido":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Yeouido2025.jpg/960px-Yeouido2025.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":37.52388889,"lon":126.92666667},"Angkor National Museum":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Angkor_National_Museum_%28II%29.jpg/960px-Angkor_National_Museum_%28II%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.3666,"lon":103.8599},"Angkor Wat":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Angkor_Wat.jpg/960px-Angkor_Wat.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.4125,"lon":103.86666667},"Banteay Srei":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Banteay_Srei_full2.jpg/960px-Banteay_Srei_full2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.59888889,"lon":103.96277778},"Bayon":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Bayon%2C_Angkor_Thom%2C_Camboya%2C_2013-08-17%2C_DD_37.JPG/960px-Bayon%2C_Angkor_Thom%2C_Camboya%2C_2013-08-17%2C_DD_37.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.44111111,"lon":103.85861111},"Bánh mì":{"img":"https://upload.wikimedia.org/wikipedia/commons/0/0c/B%C3%A1nh_m%C3%AC_th%E1%BB%8Bt_n%C6%B0%E1%BB%9Bng.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled","lat":null,"lon":null},"Bùi Viện Street":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Bui_Vien_Walking_Street_1.jpg/960px-Bui_Vien_Walking_Street_1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":10.767421,"lon":106.693979},"Bến Thành Market":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Ben_Thanh%2C_Ciudad_Ho_Chi_Minh%2C_Vietnam%2C_2013-08-14%2C_DD_01.JPG/960px-Ben_Thanh%2C_Ciudad_Ho_Chi_Minh%2C_Vietnam%2C_2013-08-14%2C_DD_01.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":10.77252069,"lon":106.69801918},"Cambodia Landmine Museum":{"img":null,"lat":null,"lon":null},"Cambodian cuisine":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Fish_Amok_with_Rice.jpg/960px-Fish_Amok_with_Rice.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Cholon":{"img":null,"lat":null,"lon":null},"Củ Chi tunnels":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/C%E1%BB%A7_Chi_tunnels_entrance.JPG/960px-C%E1%BB%A7_Chi_tunnels_entrance.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":11.06083333,"lon":106.52861111},"Daigo-ji":{"img":"https://upload.wikimedia.org/wikipedia/commons/3/35/DaigojiPagoda3242.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled","lat":34.9515,"lon":135.82177778},"Hiroshima Castle":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/Keep_tower%2C_Hiroshima_Castle%2C_Southwest_remote_view_20190417_1.jpg/960px-Keep_tower%2C_Hiroshima_Castle%2C_Southwest_remote_view_20190417_1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.40277778,"lon":132.45916667},"Hiroshima Peace Memorial":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/Genbaku_Dome04-r.JPG/960px-Genbaku_Dome04-r.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.39555556,"lon":132.45361111},"Hiroshima Peace Memorial Museum":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Hiroshima_Peace_Memorial_Museum_2009.jpg/960px-Hiroshima_Peace_Memorial_Museum_2009.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.39166667,"lon":132.45194444},"Hiroshima Peace Memorial Park":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/20181111_Hiroshima_Memorial_Cenotaph-1.jpg/960px-20181111_Hiroshima_Memorial_Cenotaph-1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.3927,"lon":132.4524},"Independence Palace":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/20190923_Independence_Palace-10.jpg/960px-20190923_Independence_Palace-10.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":10.77694444,"lon":106.69527778},"Itsukushima Shrine":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Itsukushima_Shrine_Torii_Gate_%2813890465459%29.jpg/960px-Itsukushima_Shrine_Torii_Gate_%2813890465459%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Jade Emperor Pagoda":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/Jade_Emperor_Pagoda_Saigon.jpg/960px-Jade_Emperor_Pagoda_Saigon.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":10.79171111,"lon":106.69788889},"Kampong Phluk":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/Houses_on_the_water_in_Kampong_Phlouk.jpg/960px-Houses_on_the_water_in_Kampong_Phlouk.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.209,"lon":103.9736},"Khaosan Road":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/2016_Bangkok%2C_Dystrykt_Phra_Nakhon%2C_Ulica_Khaosan_%2808%29.jpg/960px-2016_Bangkok%2C_Dystrykt_Phra_Nakhon%2C_Ulica_Khaosan_%2808%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.75888889,"lon":100.49722222},"Ko Phi Phi Don":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/Isla_Ko_Phi_Phi_Don%2C_Tailandia%2C_2013-08-19%2C_DD_02.JPG/960px-Isla_Ko_Phi_Phi_Don%2C_Tailandia%2C_2013-08-19%2C_DD_02.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":7.7529,"lon":98.7786},"Ko Rok":{"img":null,"lat":null,"lon":null},"Lanta Old Town":{"img":null,"lat":null,"lon":null},"Maya Bay":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Maya_Bay%2C_Thailand_by_Mike_Clegg_Photography.jpg/960px-Maya_Bay%2C_Thailand_by_Mike_Clegg_Photography.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":7.67888889,"lon":98.765},"Mekong Delta":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/C%E1%BA%A7u_Cao_L%C3%A3nh.jpg/960px-C%E1%BA%A7u_Cao_L%C3%A3nh.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":10.04,"lon":105.8},"Mount Misen":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Mt.Misen.jpg/960px-Mt.Misen.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.2825,"lon":132.31555556},"Mu Ko Lanta National Park":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d0/%E0%B8%96%E0%B9%89%E0%B8%B3%E0%B9%83%E0%B8%95%E0%B9%89%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B9%88%E0%B9%80%E0%B8%81%E0%B8%B2%E0%B8%B0%E0%B8%AB%E0%B9%89%E0%B8%B2.jpg/960px-%E0%B8%96%E0%B9%89%E0%B8%B3%E0%B9%83%E0%B8%95%E0%B9%89%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B9%88%E0%B9%80%E0%B8%81%E0%B8%B2%E0%B8%B0%E0%B8%AB%E0%B9%89%E0%B8%B2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":7.484,"lon":99.099},"Notre-Dame Cathedral Basilica of Saigon":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Bas%C3%ADlica_de_Nuestra_Se%C3%B1ora%2C_Ciudad_Ho_Chi_Minh%2C_Vietnam%2C_2013-08-14%2C_DD_03.JPG/960px-Bas%C3%ADlica_de_Nuestra_Se%C3%B1ora%2C_Ciudad_Ho_Chi_Minh%2C_Vietnam%2C_2013-08-14%2C_DD_03.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":10.77972222,"lon":106.69916667},"Okonomiyaki":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Okonomiyaki_001.jpg/960px-Okonomiyaki_001.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Phare, The Cambodian Circus":{"img":null,"lat":null,"lon":null},"Phi Phi Islands":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e7/KohPhiPhi.JPG/960px-KohPhiPhi.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":7.73333333,"lon":98.76666667},"Phnom Bakheng":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/Phnom_Bakheng_temple_at_Angkor%2C_Cambodia.jpg/960px-Phnom_Bakheng_temple_at_Angkor%2C_Cambodia.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.42418,"lon":103.85601},"Pub Street":{"img":null,"lat":null,"lon":null},"Ramen":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c3/Shoyu_Ramen%EF%BC%88Tokyo_Ramen%EF%BC%89_-_01.jpg/960px-Shoyu_Ramen%EF%BC%88Tokyo_Ramen%EF%BC%89_-_01.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Sagano Scenic Railway":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/Sagano_scenic_railway_hotsukyo.jpg/960px-Sagano_scenic_railway_hotsukyo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Saigon Central Post Office":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/03/Saigon_Central_Post_Office_%2852681461470%29.jpg/960px-Saigon_Central_Post_Office_%2852681461470%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":10.78,"lon":106.7},"Shimokitazawa":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Shimokitazawa_Street_2015.jpg/960px-Shimokitazawa_Street_2015.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.66160556,"lon":139.6665611},"Shukkei-en":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Rainbow_bridge_in_Shukkei-en_Hiroshima.jpg/960px-Rainbow_bridge_in_Shukkei-en_Hiroshima.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":34.399423,"lon":132.467241},"Ta Prohm":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8c/Ta_Prohm_%28III%29.jpg/960px-Ta_Prohm_%28III%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.435,"lon":103.88916667},"War Remnants Museum":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/War_Remnants_Museum%2C_HCMC%2C_front.JPG/960px-War_Remnants_Museum%2C_HCMC%2C_front.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":10.779475,"lon":106.692132},"Tam Cốc – Bích Động":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Tam_Coc_from_Summit_-_August_2023.jpg/960px-Tam_Coc_from_Summit_-_August_2023.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Bái Đính Pagoda":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/M%E1%BB%98T_G%C3%93C_CH%C3%99A_B%C3%81I_%C4%90%C3%8DNH_-_panoramio.jpg/960px-M%E1%BB%98T_G%C3%93C_CH%C3%99A_B%C3%81I_%C4%90%C3%8DNH_-_panoramio.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":20.27694444,"lon":105.86277778},"Wat Sam Phran":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Wat_Samphran_%282%29.jpg/960px-Wat_Samphran_%282%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":13.735,"lon":100.215},"Khao Sok National Park":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/1022_KhaoSokNationalPark_2.jpg/960px-1022_KhaoSokNationalPark_2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":8.93666667,"lon":98.53027778},"Hà Giang province":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/%C4%90%C3%A8o_M%C3%A3_P%C3%AC_L%C3%A8ng.jpg/960px-%C4%90%C3%A8o_M%C3%A3_P%C3%AC_L%C3%A8ng.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":22.75,"lon":105},"Mã Pí Lèng Pass":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Ma_Pi_Leng_Pass_winding_road_Ha_Giang_Vietnam.jpg/960px-Ma_Pi_Leng_Pass_winding_road_Ha_Giang_Vietnam.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":23.24083333,"lon":105.41083333},"Sa Pa":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Sa_Pa.jpg/960px-Sa_Pa.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":null,"lon":null},"Gōtoku-ji":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/Gotokuji.jpg/960px-Gotokuji.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.64877778,"lon":139.64741667},"Shinjuku Golden Gai":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/G2_Street_20090626_2.jpg/960px-G2_Street_20090626_2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.69388889,"lon":139.70472222},"The National Art Center, Tokyo":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/The_National_Art_Center_%2C_Tokyo_-_panoramio_%281%29.jpg/960px-The_National_Art_Center_%2C_Tokyo_-_panoramio_%281%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.66528,"lon":139.72634},"Asakusa Shrine":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Asakusa_shrine_2012.JPG/960px-Asakusa_shrine_2012.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":35.71513889,"lon":139.79743611},"Ko Tao":{"img":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/Ban_Mae_Haad_Ko_Tao.jpg/960px-Ban_Mae_Haad_Ko_Tao.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail","lat":10.09,"lon":99.83805556}}
 ;
 const ACTIMG={"hoi-anbang":"https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/2024-11-23_An_Bang_Beach_in_Hoi_An_in_November.jpg/960px-2024-11-23_An_Bang_Beach_in_Hoi_An_in_November.jpg","krb-kayak":"https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Ao_Thalane_05.jpg/960px-Ao_Thalane_05.jpg","krb-phranang":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Phra_Nang_beach_26.jpg/960px-Phra_Nang_beach_26.jpg","nar-naramachi":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Naramachi_Tenjin_SouthGate.JPG/960px-Naramachi_Tenjin_SouthGate.JPG","krb-emerald":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Emerald_pool_park%2C_Krabi_province%2C_Thailand_2018_6.jpg/960px-Emerald_pool_park%2C_Krabi_province%2C_Thailand_2018_6.jpg","krb-hong":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Lagoon_of_Hong_island.jpg/960px-Lagoon_of_Hong_island.jpg","osa-kuromon":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/KUROMON_MARKET_OSAKA_%2854676620980%29.jpg/960px-KUROMON_MARKET_OSAKA_%2854676620980%29.jpg","han-puppets":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Hanoi_Vietnam_Thang-Long-Water-Puppet-Theatre-01.jpg/960px-Hanoi_Vietnam_Thang-Long-Water-Puppet-Theatre-01.jpg","tyo-omoide":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Shinjuku-West_Omoide-Yokocho.jpg/960px-Shinjuku-West_Omoide-Yokocho.jpg","hlb-kayak":"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Sung_Sot_Cave_-_Halong_Bay_-_Vietnam.JPG/960px-Sung_Sot_Cave_-_Halong_Bay_-_Vietnam.JPG","hlb-cruise":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Lan_Ha_bay_jonques.jpg/960px-Lan_Ha_bay_jonques.jpg","tyo-chidori":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/Chidorigafuchi_sakura.JPG/960px-Chidorigafuchi_sakura.JPG","kyo-maruyama":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Kyoto-maruyama.jpg/960px-Kyoto-maruyama.jpg","sel-hongdae":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Street_hongdae_Seoul.jpg/960px-Street_hongdae_Seoul.jpg","krb-lanta":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Ba_Kantiang_Beach%2C_Ko_Lanta_Yai%2C_April%2C_2018.jpg/960px-Ba_Kantiang_Beach%2C_Ko_Lanta_Yai%2C_April%2C_2018.jpg","lan-koh-rok":"https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Beach_Koh_Rok_Yai_Thailand_Strand_%28125165085%29.jpeg/960px-Beach_Koh_Rok_Yai_Thailand_Strand_%28125165085%29.jpeg","lan-oldtown":"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Ko_Lanta_-_Lanta_Old_Town_-_0049.jpg/960px-Ko_Lanta_-_Lanta_Old_Town_-_0049.jpg","rep-pubstreet":"https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Pub_Street%2C_Siem_Reap.jpg/960px-Pub_Street%2C_Siem_Reap.jpg","rep-phare":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Phare_Circus%2C_Siem_Reap%2C_Cambodia.jpg/960px-Phare_Circus%2C_Siem_Reap%2C_Cambodia.jpg","rep-landmine":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e7/Cambodia_Landmine_Museum.jpg/960px-Cambodia_Landmine_Museum.jpg","sgn-cholon":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Binh_Tay_Market%2C_Cholon%2C_Ho_Chi_Minh_City%2C_Vietnam_%2849057698702%29.jpg/960px-Binh_Tay_Market%2C_Cholon%2C_Ho_Chi_Minh_City%2C_Vietnam_%2849057698702%29.jpg","lan-beaches":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Ba_Kantiang_Beach%2C_Ko_Lanta_Yai%2C_April%2C_2018.jpg/960px-Ba_Kantiang_Beach%2C_Ko_Lanta_Yai%2C_April%2C_2018.jpg","nbh-mua":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/View_from_Hang_Mua.jpg/960px-View_from_Hang_Mua.jpg","nbh-hoalu":"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Temple_of_Emperor_Le_Dai_Hanh%2C_Hoa_L%C6%B0%2C_Ninh_B%C3%ACnh%2C_Vietnam%2C_20240203_1527_5706.jpg/960px-Temple_of_Emperor_Le_Dai_Hanh%2C_Hoa_L%C6%B0%2C_Ninh_B%C3%ACnh%2C_Vietnam%2C_20240203_1527_5706.jpg"}
@@ -1411,10 +1716,10 @@ function calc(){
 
 /* ---------- Aktivitäten ---------- */
 const CATM={sight:['Sehenswürdigkeit','k4'],food:['Essen & Trinken','k1'],market:['Markt & Shopping','k2'],nature:['Natur & Aussicht','k3'],fun:['Erlebnis','k5'],night:['Abend & Nachtleben','k6'],trip:['Ausflug','k7']};
-const A_DAYACTS=[[],['bkk-yaowarat'],['bkk-grandpalace','bkk-watpho','bkk-watarun'],['bkk-chatuchak','bkk-rooftop'],['cnx-sunday'],['cnx-phrasing','cnx-chedi','cnx-doisuthep'],['cnx-elephant','cnx-cooking'],['cnx-inthanon','cnx-whitetemple'],['krb-railay'],['krb-climb','krb-phranang'],['krb-viewpoint','krb-kayak'],['krb-4islands','krb-hong'],['krb-aonang','krb-lanta'],[],['han-biahoi'],['han-hoankiem','han-literature','han-foodtour','han-eggcoffee'],['han-trainstreet','han-puppets','han-ninhbinh'],['hlb-cruise','hlb-kayak'],['hlb-sunrise'],['hoi-lanterns'],['hoi-cycling','hoi-cooking','hoi-tailor'],['hoi-anbang','hoi-marble','hoi-oldtown'],['tyo-shinjuku','tyo-omoide'],['tyo-sensoji','tyo-sumida','tyo-skytree'],['tyo-shibuya','tyo-harajuku','tyo-meiji','tyo-shibuyasky'],['tyo-gyoen','tyo-ueno','tyo-meguro'],['tyo-hakone','tyo-kamakura'],['kyo-gion','kyo-yasaka'],['kyo-fushimi','kyo-philosopher','kyo-ginkakuji'],['kyo-bamboo','kyo-tenryuji','kyo-hozu'],['nar-todaiji','nar-deer','nar-kasuga'],['kyo-maruyama','kyo-kiyomizu','kyo-nishiki'],['osa-castle','osa-dotonbori'],['osa-kuromon','osa-shinsekai','osa-himeji'],['osa-usj','osa-umeda','osa-streetfood'],[],['sel-myeongdong'],['sel-gyeongbok','sel-bukchon','sel-insadong'],['sel-seokchon','sel-lotte','sel-hongdae'],['sel-yeouido','sel-hanriver','sel-bbq'],['sel-dmz','sel-bukhansan'],['sel-namsan','sel-gwangjang'],[]];
 /* Koordinaten (Breite, Länge), die Wikipedia nicht liefert, null entfernt den Pin */
 const ACTLL={'nbh-mua':[20.2160,105.9200],'nbh-tamcoc':[20.2157,105.9370],'nbh-hoalu':[20.2878,105.9033],'rep-pubstreet':[13.3548,103.8547],'rep-phare':[13.3539,103.8390],'hij-miyajima':[34.2973,132.3181],'kyo-sagano':[35.0186,135.6807],'sgn-cholon':[10.7493,106.6507],'phi-viewpoint':null,'lan-beaches':null,'lan-oldtown':null,'bkk-khaosan':[13.7589,100.4971],'cnx-sunday':[18.7875,98.9937],'krb-aonang':[8.0363,98.8190],'sel-hongdae':[37.5563,126.9236],'hoi-lanterns':[15.8768,108.3290],'hoi-oldtown':[15.8795,108.3270],'sel-ikseon':[37.5746,126.9893],'krb-lanta':[7.60,99.05],'kyo-maruyama':[35.0036,135.7814],'hoi-myson':[15.7646,108.1244],'han-oldquarter':[21.0341,105.8505],'bkk-muaythai':[13.7573,100.5124],'hoi-anbang':[15.9012,108.3580],'tyo-omoide':[35.6935,139.6993],'kyo-philosopher':[35.0275,135.7955],'krb-phranang':[8.0000,98.8345],'tyo-teamlab':[35.6490,139.7897],'han-puppets':[21.0314,105.8529],'osa-kuromon':[34.6658,135.5064],'tyo-chidori':[35.6910,139.7440],'nar-naramachi':[34.6790,135.8318],'cnx-nimman':[18.7973,98.9684],'krb-viewpoint':null,'krb-climb':null,'bkk-massage':null,'cnx-cooking':null,'sel-jjimjilbang':null,'sel-bbq':null,'osa-streetfood':null,'han-foodtour':null,'han-eggcoffee':null,'han-biahoi':[21.0349,105.8517],'hoi-caolau':null,'hoi-cooking':null,'hoi-tailor':null,'cnx-khaosoi':null,'nar-mochi':null,'hlb-kayak':null};
 if(typeof ACTLL_X!=='undefined')Object.assign(ACTLL,ACTLL_X);
+if(typeof ACTLL_C!=='undefined')Object.assign(ACTLL,ACTLL_C);
 const ACTSBY={};
 ACTS.forEach(a=>{
   ACTSBY[a.id]=a;
@@ -1482,27 +1787,31 @@ function eurize(t){
 }
 
 const TRIPS={
- a:{id:'a',key:'asien27',name:'Reise A',tag:'Wie geplant',start:new Date(2027,1,24),stages:A_STAGES,order:A_ORDER,route:A_ROUTE,routeDay:A_ROUTE_DAY,segDay:A_SEG_DAY,routeMeta:A_ROUTE_META,days:A_DAYS,seed:A_SEED,frist:A_FRIST,book:A_BOOK,entry:A_ENTRY,cost:A_COST,reco:A_RECO,bkt:A_BKT,dayacts:A_DAYACTS,
-  viewkeys:['world','all','th','vn','jp','ko'],viewAll:{n:'Asien',bb:[95,3.5,143,41],lvl:0},
-  reglbl:[['th','THAILAND',99.4,11.2,'middle'],['vn','VIETNAM',110,18.6,'start'],['jp','JAPAN',140.8,32.6,'middle'],['ko','KOREA',124.6,36,'end']],
-  buckets:{lang:1800,inner:1200,th:1800,vn:900,jp:2900,ko:1200,misc:1200},first:'bkk',last:'sel',
-  costNote:'Rund 5.500 € pro Person (Spanne 4.800–6.700 €), zu zweit etwa 11.000 €. Schätzungen für Mittelklasse im Doppelzimmer, Stand Oktober 2026.',
-  costTotal:'ca. 4.800–6.700 €',
-  costTip:'Größte Hebel: Japan-Unterkünfte früh buchen (zur Blüte zwei- bis dreimal so teuer wie im Winter) und flexible Flugdaten nutzen.',
-  flight:'Open-Jaw ab Zürich oder München, hin nach Bangkok, zurück ab Seoul. Die Kirschblüte wird erst ab Februar 2027 prognostiziert, deshalb bleiben die Japan-Tage bewusst flexibel.',
-  dots:['th','vn','jp','ko']},
- b:{id:'b',key:'asien27b',name:'Reise B',tag:'Deine Orte, 6 Wochen',start:B_START,stages:B_STAGES,order:B_ORDER,route:B_ROUTE,routeDay:B_ROUTE_DAY,segDay:B_SEG_DAY,routeMeta:B_ROUTE_META,days:B_DAYS,seed:B_SEED,frist:B_FRIST,book:B_BOOK,entry:B_ENTRY,cost:B_COST,reco:B_RECO,bkt:B_BKT,dayacts:B_DAYACTS,
+ a:{id:'a',key:'asien27',name:'Reise A',tag:'So machen es andere',start:A_START,stages:A_STAGES,order:A_ORDER,route:A_ROUTE,routeDay:A_ROUTE_DAY,segDay:A_SEG_DAY,routeMeta:A_ROUTE_META,days:A_DAYS,seed:A_SEED,frist:A_FRIST,book:A_BOOK,entry:A_ENTRY,reco:A_RECO,bkt:A_BKT,dayacts:A_DAYACTS,
+  viewkeys:['world','all','th','jp'],viewAll:{n:'Asien',bb:[95,3.5,143,41],lvl:0},
+  reglbl:[['th','THAILAND',99.4,11.2,'middle'],['jp','JAPAN',140.8,32.6,'middle']],
+  buckets:A_BUCKETS,first:'bkk',last:'osa',
+  costNote:'Rund 4.600 € pro Person in der Mitte (Sparen ca. 3.050 €, Komfort ca. 7.350 €), zu zweit etwa 9.200 €. Schätzungen, Stand November 2026.',
+  costTotal:'ca. 3.050–7.350 €',
+  costTip:'Größte Hebel: In Thailand Klasse 1 und Festland statt Inseln, in Japan früh buchen und Einzeltickets statt JR Pass, und für Bangkok–Tokyo einen Billigflieger.',
+  flight:'Open-Jaw ab Zürich oder München, hin nach Bangkok, zurück ab Osaka (Kansai). Dazwischen vier Flüge: Chiang Mai–Krabi, Krabi–Bangkok, Bangkok–Tokyo und der Rückflug. Nachtzug, Fähren und Shinkansen übernehmen den Rest.',
+  costx:A_COSTX,quellen:A_QUELLEN,
+  quellenNote:'Reise A folgt der Aufteilung, die in Foren und Budget-Guides für Thailand plus Japan am häufigsten vorkommt: gut dreieinhalb Wochen Thailand, gut zweieinhalb Wochen Japan. Berichte, die genau diese Route in sechs Wochen beschreiben, habe ich kaum gefunden. Das Alter der Autoren lässt sich nicht prüfen. Die Quellen sind überwiegend Backpacker- und Budget-Berichte.',
+  dots:['th','jp']},
+ b:{id:'b',key:'asien27b',name:'Reise B',tag:'Unsere Orte aus Google Maps',start:B_START,stages:B_STAGES,order:B_ORDER,route:B_ROUTE,routeDay:B_ROUTE_DAY,segDay:B_SEG_DAY,routeMeta:B_ROUTE_META,days:B_DAYS,seed:B_SEED,frist:B_FRIST,book:B_BOOK,entry:B_ENTRY,reco:B_RECO,bkt:B_BKT,dayacts:B_DAYACTS,
   viewkeys:['world','all','th','kh','vn','jp','ko'],viewAll:{n:'Asien',bb:[95,3.5,143,41],lvl:0},
   reglbl:[['th','THAILAND',99.4,11.2,'middle'],['kh','KAMBODSCHA',104.6,12.1,'start'],['vn','VIETNAM',110,18.6,'start'],['jp','JAPAN',140.8,32.6,'middle'],['ko','KOREA',124.6,36,'end']],
   buckets:B_BUCKETS,first:'bkk',last:'sel',
-  costNote:'Rund 5.900 € pro Person (Spanne 5.100–7.000 €), zu zweit etwa 11.800 €. Schätzung für Mittelklasse im Doppelzimmer und Gästehäuser, Stand November 2026.',
-  costTotal:'ca. 5.100–7.000 €',
-  costTip:'Größte Hebel: Japan-Unterkünfte früh buchen (zur Blüte teuer), den Nachtzug statt eines Inlandsflugs nutzen und Flüge nur dort buchen, wo der Landweg über sechs Stunden dauert. Gegenüber Reise A kostet diese Route etwa 400 € mehr pro Person, dafür mit Kambodscha, Khao Sok und dem Ha-Giang-Loop.',
-  flight:'Open-Jaw ab Zürich oder München, hin nach Bangkok, zurück ab Seoul. Dazwischen sieben Flüge nur dort, wo es sich lohnt: Chiang Mai–Krabi, Surat Thani–Bangkok–Siem Reap, Siem Reap–Hanoi, Hanoi–Da Nang, Da Nang–Tokyo und Osaka–Seoul. Nachtzug, Fähren, Busse und Shinkansen übernehmen den Rest.',
+  costNote:'Rund 5.150 € pro Person in der Mitte (Sparen ca. 3.400 €, Komfort ca. 8.000 €), zu zweit etwa 10.300 €. Schätzungen, Stand November 2026.',
+  costTotal:'ca. 3.400–8.000 €',
+  costTip:'Größte Hebel: Klasse 1 in Thailand, Kambodscha und Vietnam (dort ca. 20 € pro Nacht für zwei), Nachtzug statt Inlandsflug und Flüge nur dort, wo der Landweg über sechs Stunden dauert. Gegenüber Reise A kostet diese Route etwa 500 € mehr pro Person, dafür mit Kambodscha, Khao Sok, dem Ha-Giang-Loop und Seoul.',
+  flight:'Open-Jaw ab Zürich oder München, hin nach Bangkok, zurück ab Seoul. Dazwischen sieben Flüge nur dort, wo es sich lohnt: Chiang Mai–Krabi, Surat Thani–Bangkok, Bangkok–Siem Reap, Siem Reap–Hanoi, Hanoi–Da Nang, Da Nang–Tokyo und Osaka–Seoul. Nachtzug, Fähren, Busse und Shinkansen übernehmen den Rest.',
+  costx:B_COSTX,quellen:B_QUELLEN,
+  quellenNote:'Reise B kommt aus eurer Google-Maps-Liste „Asien“: 49 Orte, davon 42 im Tagesplan. Die Quellen unten stützen die Fakten zu Einreise, Preisen und Regeln.',
   dots:['th','kh','vn','jp','ko']}
-
 };
-function useTrip(id){
+function useTrip
+(id){
   const T=TRIPS[id],prev=store;
   if(prev)save();
   TRIP=T;state.trip=id;START=T.start;VIEW.all=T.viewAll;
@@ -1822,10 +2131,7 @@ function bkCard(b){
     rows=`<div class="row"><span><b>${fmtL(date)}</b>${b.time?' · '+esc(b.time):''}</span>${b.k==='leg'?`<span>${esc(b.t)}</span>`:''}${b.total?`<span><b>${eur2(num(b.total))}</b></span>`:''}${b.ref?`<span>Nr. ${esc(b.ref)}</span>`:''}</div>`;
   }
   if(b.note)rows+=`<p class="note">${esc(b.note)}</p>`;
-  if(b.k==='stay'&&!b.name&&typeof HOTELS_B!=='undefined'&&TRIP.id==='b'&&HOTELS_B[b.stop]){
-    const H=HOTELS_B[b.stop];
-    rows+=`<details class="hotl"><summary>Ideen für Unterkünfte</summary><p class="note">Preis pro Nacht für zwei im Doppelzimmer, gesucht für ${esc(H.ab)}. Richtwerte, vor der Buchung prüfen.</p><ul>${H.items.map(h=>`<li><a href="${mapsQ(h.q)}" target="_blank" rel="noopener"><b>${esc(h.n)}</b></a><span class="hp">ca. ${h.p} € · ${String(h.r).replace('.',',')}/10</span><span class="note">${esc(h.a)}</span></li>`).join('')}</ul></details>`;
-  }
+  if(b.k==='stay'&&!b.name&&typeof HOTELS!=='undefined'&&HOTELS[b.stop])rows+=hotelIdeas(b);
   const set=b.k==='stay'?!!b.name:!!b.booked;
   const nav=b.k==='stay'&&b.name?`<a href="${mapsQ(b.name+' '+(b.addr||STOPS[b.stop].q))}" target="_blank" rel="noopener">Route ↗</a>`:'';
   return `<article class="bk" style="--sc:var(--${st})"><i></i><div class="in"><div class="cnt"><span class="tag ${set?'ok':''}">${set?(b.k==='stay'?'✓ eingetragen':'✓ gebucht'):'offen'}</span></div><h3>${esc(t)}</h3>${rows}<div class="links"><button data-editbk="${b.id}">${set?'Bearbeiten':b.k==='stay'?'Eintragen':'Buchung eintragen'}</button>${nav}${b.custom?`<button data-delbk="${b.id}">Löschen</button>`:''}</div></div></article>`;
@@ -1923,9 +2229,48 @@ function syncEnable(url){
 }
 function syncDisable(){try{localStorage.removeItem(SYNC_KEY)}catch(e){}SYNC.url='';SYNC.msg='Aus.';syncUi()}
 
+/* Unterkunftsideen in drei Klassen mit Buchungslinks */
+const bookingU=(h,b)=>'https://www.booking.com/searchresults.html?ss='+encodeURIComponent(h.q)+'&checkin='+iso(addDays(START,b.a))+'&checkout='+iso(addDays(START,b.b+1))+'&group_adults=2&no_rooms=1';
+const gHotelsU=h=>'https://www.google.com/travel/search?q='+encodeURIComponent(h.q);
+function hotelIdeas(b){
+  const H=HOTELS[b.stop],st=STOPS[b.stop].st;
+  let h=`<details class="hotl"><summary>Ideen für Unterkünfte in 3 Klassen</summary><p class="note">Preis pro Nacht für zwei im Doppelzimmer, gesucht für ${esc(H.ab)}. Richtwerte, vor der Buchung prüfen. Die Links öffnen Booking (mit euren Reisedaten), den Preisvergleich von Google und die Karte.</p>`;
+  if(st==='jp'||st==='ko')h+='<p class="note">In Japan und Seoul beginnt Klasse 1 bei ca. 35–70 € pro Nacht für zwei. Noch günstiger sind Hostel-Privatzimmer und Kapselhotels (oft ab ca. 25–35 € pro Person, nicht geprüft).</p>';
+  HOTEL_CLASSES.forEach(c=>{
+    const L=H[c[0]]||[];if(!L.length)return;
+    const lo=Math.min(...L.map(x=>x.p)),hi=Math.max(...L.map(x=>x.p));
+    h+=`<h4>${esc(c[1])} <span class="hp">ca. ${lo===hi?lo:lo+'–'+hi} €</span></h4><p class="note">${esc(c[2])}</p><ul>`+L.map(x=>`<li><b>${esc(x.n)}</b><span class="hp">ca. ${x.p} € pro Nacht · ${x.r?String(x.r).replace('.',',')+'/10':'noch keine Bewertung'}</span><span class="note">${esc(x.a)}</span><span class="lk"><a href="${bookingU(x,b)}" target="_blank" rel="noopener">Booking ↗</a><a href="${gHotelsU(x)}" target="_blank" rel="noopener">Preise vergleichen ↗</a><a href="${mapsQ(x.q)}" target="_blank" rel="noopener">Karte ↗</a></span></li>`).join('')+'</ul>';
+  });
+  return h+'</details>';
+}
+
+/* ---------- Kosten, Apps, Erfahrungen ---------- */
+function viewKosten(){
+  const X=TRIP.costx,cats=X.cats,sum=k=>cats.reduce((a,c)=>a+c[k],0);
+  let h=`<p class="note">${esc(TRIP.costNote)} Diese Werte sind die Grundlage für euer Budget in „Geld“. Alle Beträge gelten pro Person, zu zweit mal zwei.</p>`;
+  h+=`<h2 class="sec">Wo geht das Geld hin?</h2><div class="tw"><table><thead><tr><th>Posten</th><th class="num">Sparen</th><th class="num">Normal</th><th class="num">Komfort</th></tr></thead><tbody>${cats.map(c=>`<tr><td>${esc(c.n)}</td><td class="num">${eur(c.lo)}</td><td class="num">${eur(c.mid)}</td><td class="num">${eur(c.hi)}</td></tr>`).join('')}<tr class="sum"><td>Gesamt pro Person</td><td class="num">${eur(sum('lo'))}</td><td class="num">${eur(sum('mid'))}</td><td class="num">${eur(sum('hi'))}</td></tr><tr class="sum"><td>Gesamt zu zweit</td><td class="num">${eur(sum('lo')*2)}</td><td class="num">${eur(sum('mid')*2)}</td><td class="num">${eur(sum('hi')*2)}</td></tr></tbody></table></div>`;
+  h+=`<h2 class="sec">Wo könnt ihr sparen, wo mehr ausgeben?</h2>`+cats.map(c=>`<div class="card"><div class="cnt"><b>${esc(c.n)}</b><span class="mono">${eur(c.lo)} · ${eur(c.mid)} · ${eur(c.hi)}</span></div><p class="note"><b>Sparen:</b> ${esc(c.spar)}</p><p class="note"><b>Mehr ausgeben:</b> ${esc(c.mehr)}</p></div>`).join('');
+  h+=`<h2 class="sec">Flüge</h2><p class="note">${esc(TRIP.flight)}</p>`+X.flights.map(f=>`<div class="card"><div class="cnt"><b>${esc(f.leg)}</b><span class="mono">${esc(f.when)}</span></div><p class="note">${esc(f.how)}</p><p><b>${esc(f.price)}</b></p><p class="note">${esc(f.tip)}</p></div>`).join('');
+  h+=`<h2 class="sec">Weitere Wege und Ausflüge</h2>`+X.other.map(f=>`<div class="card"><div class="cnt"><b>${esc(f.leg)}</b></div><p><b>${esc(f.price)}</b></p><p class="note">${esc(f.tip)}</p></div>`).join('');
+  h+=`<p class="note">Flugpreise sind Richtwerte aus Suchportalen (Stand November 2026) und ändern sich täglich. Vor der Buchung auf Google Flights, Skyscanner oder direkt bei der Airline prüfen.</p><p class="note">${esc(TRIP.costTip)}</p><h2 class="sec">Empfehlungen</h2><ul class="reco">${RECO.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`;
+  return h;
+}
+function viewApps(){
+  let h=`<p class="note">Diese Apps helfen unterwegs. Angezeigt werden die, die für ${esc(TRIP.name)} passen. Stand November 2026, vor der Reise kurz prüfen, ob es sie noch gibt.</p>`;
+  APPS.forEach(g=>{
+    const L=g.items.filter(x=>x.r==='ab'||x.r===TRIP.id);if(!L.length)return;
+    h+=`<h2 class="sec">${esc(g.g)}</h2><div class="card"><ul class="apps">${L.map(x=>`<li><b>${esc(x.n)}</b><span>${esc(x.w)}</span><span class="note">${esc(x.f)}</span><span class="mono">${esc(x.k)}</span></li>`).join('')}</ul></div>`;
+  });
+  h+=`<h2 class="sec">So bucht man Unterkünfte</h2>`+BOOK_TIPS.map(g=>`<div class="card"><b>${esc(g.g)}</b><ul class="reco">${g.t.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`).join('');
+  return h;
+}
+function viewErfahrung(){
+  return `<p class="note">${esc(TRIP.quellenNote)}</p><h2 class="sec">Quellen</h2>`+TRIP.quellen.map(q=>`<div class="card"><a href="${esc(q.u)}" target="_blank" rel="noopener"><b>${esc(q.t)} ↗</b></a><p class="note">${esc(q.s)}</p></div>`).join('')+`<p class="note">Die Seiten stammen aus Suchergebnissen und sind teils Blogs mit Affiliate-Links. Zahlen sind Orientierung, keine Garantie.</p>`;
+}
+
 function viewMore(){
   const chip=(id,n)=>`<button class="chip" data-more="${id}" aria-pressed="${state.more===id}">${n}</button>`;
-  let h=`<div class="chips">${chip('todo','Aufgaben')}${chip('ideen','Ideen')}${chip('wetter','Wetter')}${chip('laender','Länder')}${chip('preise','Preise')}${chip('einreise','Einreise')}${chip('kosten','Plan-Kosten')}${chip('offline','Offline')}${chip('daten','Daten')}</div><div class="stack">`;
+  let h=`<div class="chips">${chip('todo','Aufgaben')}${chip('ideen','Ideen')}${chip('wetter','Wetter')}${chip('laender','Länder')}${chip('preise','Preise')}${chip('einreise','Einreise')}${chip('kosten','Plan-Kosten')}${chip('apps','Apps')}${chip('erfahrung','Erfahrungen')}${chip('offline','Offline')}${chip('daten','Daten')}</div><div class="stack">`;
   if(state.more==='todo')h+=listCard('book')+listCard('pack')+'<p class="note">Der Abhak-Stand wird nur auf diesem Gerät gespeichert.</p>';
   else if(state.more==='ideen'){
     const sc=(id,n)=>`<button class="chip" data-ifs="${id}" aria-pressed="${state.ifs===id}">${n}</button>`,cc=(id,n)=>`<button class="chip" data-ifc="${id}" aria-pressed="${state.ifc===id}">${n}</button>`;
@@ -1947,8 +2292,12 @@ function viewMore(){
     h+='<h2 class="sec" style="margin-top:0">Einreise mit österreichischem Pass</h2>'+ENTRY.map(e=>`<div class="card entry" style="--sc:var(--${e.st})"><b><i class="dot"></i>${e.n}</b><p>${esc(eurize(e.r))}</p><p class="mono">${esc(e.w)}</p></div>`).join('');
     h+=`<p class="note">Der Reisepass muss mindestens 6 Monate über das Rückreisedatum hinaus gültig sein, also bis mindestens 7.10.2027. Einreiseregeln ändern sich häufig, daher kurz vor Abreise beim Außenministerium prüfen.</p><h2 class="sec">Fristen</h2><div class="card"><ul class="deadlines">${FRIST.map(f=>`<li><span class="mono">${dl(f.d)}</span><span><b>${esc(f.t)}</b><small>${esc(eurize(f.s))}</small></span></li>`).join('')}</ul></div>`;
   }else if(state.more==='kosten'){
-    h+=`<p class="note">${TRIP.costNote} Diese Werte sind die Grundlage für euer Budget in „Geld“.</p><div class="tw"><table><thead><tr><th>Posten</th><th class="num">Tage</th><th class="num">pro Tag/Person</th><th class="num">pro Person</th></tr></thead><tbody>${COST.map(r=>`<tr><td>${esc(r[0])}</td><td class="num">${r[1]}</td><td class="num">${r[2]}</td><td class="num">${r[3]}</td></tr>`).join('')}<tr class="sum"><td>Gesamt</td><td class="num">43</td><td class="num"></td><td class="num">${TRIP.costTotal}</td></tr></tbody></table></div>`;
-    h+=`<p class="note">${TRIP.costTip}</p><h2 class="sec">Flug</h2><p class="note">${TRIP.flight}</p><h2 class="sec">Empfehlungen</h2><ul class="reco">${RECO.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`;
+    h+=viewKosten();
+  }else if(state.more==='apps'){
+    h+=viewApps();
+  }else if(state.more==='erfahrung'){
+    h+=viewErfahrung();
+
   }else if(state.more==='offline'){
     h+=offlineCard();setTimeout(offlineStat,0);
   }else{
