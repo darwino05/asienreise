@@ -352,6 +352,20 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .near button:active{transform:scale(.98);background:var(--surface2)}
 .near .note{display:block}
 .btn-det{border-color:var(--k4)!important;color:var(--k4)}
+.slots{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.slots li{display:grid;grid-template-columns:96px 1fr;gap:10px;padding:8px 10px;border-radius:10px;background:var(--surface2);align-items:start}
+.slots li.now{outline:2px solid var(--k4)}
+.slots .mono{color:var(--muted);padding-top:2px}
+.lnk{border:0;background:none;padding:0;font:inherit;font-weight:600;color:var(--ink);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;text-align:left}
+.card h3.mini{font-size:13px;margin:8px 0 0;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+#jn-t{width:100%;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);padding:10px;font:inherit;resize:vertical}
+.jnimg{width:100%;border-radius:12px;display:block;max-height:340px;object-fit:cover}
+.jnfile{display:inline-flex;align-items:center;cursor:pointer}
+
+.links button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.ms{color:var(--k1)}
+.fldm{display:flex;flex-direction:column;gap:4px}
+.fldm select{min-height:44px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:0 10px;font:inherit;width:100%}
 
 .shh{display:flex;justify-content:space-between;align-items:center}
 .shh h2{font-size:22px}
@@ -1129,17 +1143,17 @@ const A_QUELLEN=[
 /* ---------- Reise B: eure Route 2.2.–15.3.2027. Bangkok, dann Süden (Krabi, Koh Lanta, Phi Phi, Phuket), Vietnam mit 4-Tage-Loop, Japan mit Kawazu. Ohne Norden, Kambodscha und Korea. ---------- */
 const B_START=new Date(2027,1,2);
 const B_STAGES=[
- {id:'th',name:'Thailand',from:0,to:15,intro:'Bangkok mit den Tempeln aus eurer Liste und dem Chinesischen Neujahr am 6.2., dann per Flug in den Süden: Ao Nang bei Krabi, Koh Lanta, Koh Phi Phi und zum Schluss Phuket. Februar gehört an der Andamanensee zur Trockenzeit mit ruhigem Meer.',
-  tips:['Chinesisches Neujahr ist am 6.2. In Thailand sind rund um den 5.–14.2. mehr Gäste unterwegs, Unterkünfte und Flüge werden teurer. Dafür ist Yaowarat in Bangkok am Neujahrstag ein Fest.','Die Inselkette Krabi, Lanta, Phi Phi, Phuket liegt in einer Reihe. Die Strecken sind kurz, aber nur mit Fähren zu schaffen. Die Fähren zwischen den Inseln fahren in der Trockenzeit, Fahrpläne und Preise ändern sich aber je nach Anbieter. Vorab prüfen.','Fähren: Ao Nang–Koh Lanta ca. 2 h 15, Koh Lanta–Phi Phi ca. 1,5–2 Std., Phi Phi–Phuket (Rassada Pier) ca. 2 Std. für ca. 400–450 THB, Speedboat schneller und teurer.','Nur auf Phi Phi sind Unterkünfte und Essen deutlich teurer als auf dem Festland. Zwei Nächte reichen.','Sonntag 14.2. ist der Tag, an dem ihr in Phuket ankommt. Das passt zum Sunday Walking Street Market in der Altstadt.','Seit 15.9.2026 ist die visumfreie Zeit in Thailand auf 30 Tage gekürzt. Ihr bleibt mit 16 Tagen deutlich darunter.','Phuket–Hanoi: Ein durchgehender Direktflug ist nicht bestätigt, plant mit einem Stopp in Bangkok.']},
- {id:'vn',name:'Vietnam',from:16,to:25,intro:'Zehn Tage: Hanoi mit Altstadt, vier Tage Ha-Giang-Loop durch die Berge im Norden und zum Schluss drei Tage Hoi An mit Laternen, Reisfeldern und Strand. Mit österreichischem Pass braucht ihr ein E-Visum.',
-  tips:['Das vietnamesische Neujahr (Tết) ist am 6.2. Ihr seid ab dem 18.2. dort, dann haben die meisten Betriebe wieder offen. Trotzdem Touren früh buchen.','Ende Februar ist es in Hanoi und vor allem auf dem Ha-Giang-Loop kühl und oft neblig (Berge 5–12 °C). Warme Kleidung, Regenjacke und Handschuhe mitnehmen.','Der 4-Tage-Loop ist anstrengend, aber landschaftlich der Höhepunkt. Fahrt als Beifahrer mit einem Easy Rider. Wer selbst fährt, braucht einen passenden Führerschein (internationaler Führerschein, A-Klasse) und eine Versicherung, die das abdeckt.','Ha Giang: Seit Juni 2026 wird für Ausländer in den Grenzgebieten ein Permit von ca. 10 USD verlangt, die Tour regelt das meist. Nach einem tödlichen Unfall im April 2026 gelten strengere Regeln für Anbieter.','Train Street in Hanoi: Die Cafés waren im August 2026 geöffnet, es wurden aber Zugfahrten reduziert und Cafés wiederholt geschlossen. Vor Ort aktuelle Lage und Zugzeiten prüfen.','Maßschneider in Hoi An: Am ersten Tag Maße nehmen lassen, am letzten abholen und Änderungen machen lassen.']},
- {id:'jp',name:'Japan',from:26,to:41,intro:'Japan im Spätwinter, mit der frühen Blüte: Die Kawazu-Kirschen blühen im Februar und Anfang März, dazu die Pflaumenblüte (Ume). Zuerst Tokyo, dann zwei Nächte Kawazu, zurück nach Tokyo, weiter nach Kyoto mit Nara und zum Schluss Osaka. Rechnet mit kalten 3–12 °C. Die normalen Kirschen (Somei Yoshino) blühen erst Ende März, nach eurem Urlaub.',
+ {id:'th',name:'Thailand',from:0,to:14,intro:'Bangkok mit den Tempeln aus eurer Liste und dem Chinesischen Neujahr am 6.2., dann per Flug in den Süden: Ao Nang bei Krabi, Koh Lanta, Koh Phi Phi und zum Schluss Phuket. Februar gehört an der Andamanensee zur Trockenzeit mit ruhigem Meer.',
+  tips:['Chinesisches Neujahr ist am 6.2. In Thailand sind rund um den 5.–14.2. mehr Gäste unterwegs, Unterkünfte und Flüge werden teurer. Dafür ist Yaowarat in Bangkok am Neujahrstag ein Fest.','Die Inselkette Krabi, Lanta, Phi Phi, Phuket liegt in einer Reihe. Die Strecken sind kurz, aber nur mit Fähren zu schaffen. Die Fähren zwischen den Inseln fahren in der Trockenzeit, Fahrpläne und Preise ändern sich aber je nach Anbieter. Vorab prüfen.','Fähren: Ao Nang–Koh Lanta ca. 2 h 15, Koh Lanta–Phi Phi ca. 1,5–2 Std., Phi Phi–Phuket (Rassada Pier) ca. 2 Std. für ca. 400–450 THB, Speedboat schneller und teurer.','Nur auf Phi Phi sind Unterkünfte und Essen deutlich teurer als auf dem Festland. Zwei Nächte reichen.','Sonntag 14.2. ist der Tag, an dem ihr in Phuket ankommt. Das passt zum Sunday Walking Street Market in der Altstadt.','Seit 15.9.2026 ist die visumfreie Zeit in Thailand auf 30 Tage gekürzt. Ihr bleibt mit 16 Tagen deutlich darunter.','Monkey Trail in Ao Nang ist euer Muss. Railay und Phra Nang am selben Tag sind „Kann“. Phuket–Hanoi: Ein durchgehender Direktflug ist nicht bestätigt, plant mit einem Stopp in Bangkok.']},
+ {id:'vn',name:'Vietnam',from:15,to:24,intro:'Zehn Tage: Hanoi mit Altstadt, vier Tage Ha-Giang-Loop durch die Berge im Norden, eine Nacht auf dem Schiff in der Lan-Ha-Bucht und Ninh Binh mit den Booten zwischen Kalkfelsen. Danach Nachtflug nach Tokyo. Mit österreichischem Pass braucht ihr ein E-Visum.',
+  tips:['Das vietnamesische Neujahr (Tết) ist am 6.2. Ihr seid ab dem 17.2. dort, dann haben die meisten Betriebe wieder offen. Trotzdem Touren früh buchen.','Ende Februar ist es in Hanoi und vor allem auf dem Ha-Giang-Loop kühl und oft neblig (Berge 5–12 °C). Warme Kleidung, Regenjacke und Handschuhe mitnehmen.','Der 4-Tage-Loop ist anstrengend, aber landschaftlich der Höhepunkt. Fahrt als Beifahrer mit einem Easy Rider. Wer selbst fährt, braucht einen passenden Führerschein (internationaler Führerschein, A-Klasse) und eine Versicherung, die das abdeckt.','Ha Giang: Seit Juni 2026 wird für Ausländer in den Grenzgebieten ein Permit von ca. 10 USD verlangt, die Tour regelt das meist. Nach einem tödlichen Unfall im April 2026 gelten strengere Regeln für Anbieter.','Lan-Ha-Bucht: Zwei Tage und eine Nacht auf dem Schiff, meist mit Abholung in Hanoi, Mahlzeiten und Kajak. Die ruhigere Lan-Ha-Seite bei Cat Ba ist weniger überlaufen als die klassische Ha-Long-Bucht. Im Februar kann es dunstig und kühl sein, Abfahrten fallen bei schlechter Sicht manchmal aus. Anbieter mit Umbuchung wählen.','Ninh Binh: Trang An und Tam Coc per Ruderboot. Am besten früh am Vormittag, dann ist es leer und das Licht schön. Von Ninh Binh nach Hanoi gibt es Zug und Bus (ca. 2–2,5 Std.), plant am Abflugtag reichlich Puffer ein.','Hanoi–Tokyo: Nachtflug oder früher Abflug, meist als Direktflug. Fahrplan und Preise vor der Buchung prüfen.','Train Street in Hanoi: Die Cafés waren im August 2026 geöffnet, es wurden aber Zugfahrten reduziert und Cafés wiederholt geschlossen. Vor Ort aktuelle Lage und Zugzeiten prüfen.']},
+ {id:'jp',name:'Japan',from:25,to:41,intro:'Japan im Spätwinter, mit der frühen Blüte: Die Kawazu-Kirschen blühen im Februar und Anfang März, dazu die Pflaumenblüte (Ume). Zuerst zwei Tage Tokyo, dann zwei Nächte Kawazu, zurück nach Tokyo, weiter nach Kyoto mit Nara und zum Schluss Osaka. Rechnet mit kalten 3–12 °C. Die normalen Kirschen (Somei Yoshino) blühen erst Ende März, nach eurem Urlaub.',
   tips:['Kawazu: Das Fest lief 2026 vom 7.2. bis 8.3., der Höhepunkt liegt meist Ende Februar. Die Termine für 2027 sind noch nicht veröffentlicht. Zwei Nächte lassen einen Reservetag, falls es regnet oder die Blüte später kommt.','Pflaumenblüte: Atami (Januar bis März), Yushima Tenjin in Tokyo (Mitte Februar bis Mitte März) und Kitano Tenmangu in Kyoto (Ende Februar bis Anfang März).','teamLab Planets und Shibuya Sky vorab online buchen, die Zeitfenster sind oft Tage vorher ausverkauft. teamLab Planets ist laut Betreiber bis Ende 2027 geöffnet.','Dienstags geschlossen: Cup-Noodles-Museum Osaka (am Sonntag 14.3. geöffnet) und National Art Center Tokyo (Freitag 5.3. geöffnet). Der Plan berücksichtigt das.','Duty-Free läuft in Japan seit 1.11.2026 anders: Ihr zahlt den vollen Preis inklusive Steuer und bekommt sie bei der Ausreise zurück. Am Flughafen etwas mehr Zeit einplanen.','Rainbow Line (Fukui), Gulliver-Garten (Shiga) und Okuyama Ameyama liegen weit draußen und sind ohne Auto kaum sinnvoll. Sie stehen nur als Idee in der Liste.','Der Rückflug geht am Montag 15.3. Das lässt einen Tag Puffer vor dem Büro am 17.3.']}
 ];
-const B_ORDER=['bkk','krb','lan','phi','phu','han','hag','hoi','tyo','kaw','kyo','nar','osa'];
-const B_ROUTE=['home','bkk','krb','lan','phi','phu','han','hag','han','hoi','tyo','kaw','tyo','kyo','nar','kyo','osa','home'];
-const B_ROUTE_DAY=[0,1,5,7,10,12,16,18,22,23,26,27,29,33,35,36,38,41];
-const B_SEG_DAY=[0,0,5,7,10,12,16,18,22,23,26,27,29,33,35,36,38,41];
+const B_ORDER=['bkk','krb','lan','phi','phu','han','hag','hlb','nbh','tyo','kaw','kyo','nar','osa'];
+const B_ROUTE=['home','bkk','krb','lan','phi','phu','han','hag','han','hlb','nbh','tyo','kaw','tyo','kyo','nar','kyo','osa','home'];
+const B_ROUTE_DAY=[0,1,5,7,10,12,15,17,21,22,23,25,27,29,33,35,36,38,41];
+const B_SEG_DAY=[0,0,5,7,10,12,15,17,21,22,23,24,27,29,33,35,36,38,41];
 const B_ROUTE_META=[null,
  ['flug','Nonstop oder 1 Stopp, ca. 11–14 Std.'],
  ['flug','Flug ca. 1 h 25'],
@@ -1149,8 +1163,9 @@ const B_ROUTE_META=[null,
  ['flug','Mit Stopp in Bangkok, ca. 5–7 Std.'],
  ['bus','Limousinen-Bus ca. 6 Std.'],
  ['bus','Bus ca. 6 Std. zurück'],
- ['flug','nach Da Nang, dann Transfer'],
- ['flug','Vietnam Airlines nach Narita (nicht täglich), sonst mit Umstieg'],
+ ['bus','Bus und Hafentransfer ca. 3 Std.'],
+ ['bus','Rückfahrt und Transfer ca. 3,5–4 Std.'],
+ ['flug','Bus nach Hanoi, Nachtflug ca. 5 Std. 30'],
  ['zug','Odoriko ab Tokyo ca. 2 h 30'],
  ['zug','Izukyu-Linie, Shinkansen ab Atami, ca. 3 Std.'],
  ['zug','Shinkansen ca. 2 h 15'],
@@ -1174,7 +1189,6 @@ const B_DAYS=[
  ['→ Phuket','phu','Fähre nach Phuket (Rassada Pier), Altstadt; abends Sunday Walking Street (Lard Yai)'],
  ['Phuket','phu','Big Buddha und Wat Chalong, zum Sonnenuntergang Promthep Cape'],
  ['Phuket','phu','Phang-Nga-Bucht und James Bond Island (Tagestour)'],
- ['Phuket','phu','Karon Viewpoint, Kata Beach; Kochkurs oder Strandtag, packen'],
  ['→ Hanoi','han','Flug Phuket–Hanoi über Bangkok; abends Altstadt, Bia Hoi an der Straßenecke'],
  ['Hanoi','han','Hoan-Kiem-See, Literaturtempel, Streetfood-Tour; abends Train Street'],
  ['→ Ha Giang','hag','Bus Hanoi–Ha Giang (ca. 6 Std.); Tour abholen und Motorrad-Briefing'],
@@ -1182,16 +1196,17 @@ const B_DAYS=[
  ['Ha-Giang-Loop','hag','Tag 2: Dong Van, Mã Pí Lèng Pass, Nho-Que-Fluss, Meo Vac'],
  ['Ha-Giang-Loop','hag','Tag 3: Du-Già-Region mit Wasserfall und Reisterrassen; Homestay'],
  ['→ Hanoi','han','Tag 4: Rückfahrt nach Ha Giang, Abendbus nach Hanoi (Ankunft spät)'],
- ['→ Hoi An','hoi','Flug Hanoi–Da Nang, Transfer nach Hoi An (ca. 45 min); Maßschneider, abends Laternen und Chùa Cầu'],
- ['Hoi An','hoi','Duck Stop und Kokosnusswald (Korbboot), abends Bootstour mit Captain Chris'],
- ['Hoi An','hoi','Radtour durch die Reisfelder, An Bang Beach; Maßschneider abholen'],
- ['→ Tokyo','tyo','Flug ab Da Nang, Ankunft, Shinjuku am Abend: Golden-Gai und Omoide Yokocho'],
+ ['→ Lan-Ha-Bucht','hlb','Abholung in Hanoi, Fahrt zum Hafen (ca. 3 Std.); Schiff, Kajak und Sonnenuntergang, Nacht an Bord'],
+ ['Lan Ha → Ninh Binh','nbh','Sonnenaufgang an Deck, Rückfahrt aufs Festland, Transfer nach Ninh Binh (ca. 3,5–4 Std.); Abend in Tam Coc'],
+ ['Ninh Binh → Tokyo','nbh','Trang An per Boot früh am Morgen, Mua-Höhle; nachmittags Bus nach Hanoi, Nachtflug nach Tokyo'],
+ ['→ Tokyo','tyo','Ankunft am Morgen, Einchecken, Shinjuku am Abend: Golden-Gai und Omoide Yokocho'],
+ ['Tokyo','tyo','Asakusa: Senso-ji und Asakusa-Schrein, Sumida-Fluss; nachmittags teamLab Planets'],
  ['→ Kawazu','kaw','Odoriko ab Tokyo (ca. 2,5 Std.); Kirschblüte am Kawazu-Fluss, abends Onsen'],
  ['Kawazu','kaw','Wasserfälle von Kawazu (Nanadaru); Reservetag für die Blüte, falls es regnet'],
  ['Kawazu → Tokyo','tyo','Pflaumengarten in Atami, Shinkansen zurück nach Tokyo'],
- ['Tokyo','tyo','Asakusa: Senso-ji und Asakusa-Schrein, Sumida-Fluss; nachmittags teamLab Planets'],
  ['Tokyo','tyo','Chopsticks Studio, Shinjuku Gyoen, Shibuya Crossing, Shibuya Sky'],
  ['Tokyo','tyo','Gōtoku-ji (Glückskatzen-Tempel), National Art Center, Pflaumenblüte im Yushima Tenjin; Sushi-Kochkurs optional'],
+ ['Tokyo','tyo','Meiji-Schrein, Harajuku, Shimokitazawa; Abend frei'],
  ['→ Kyoto','kyo','Shinkansen (ca. 2 h 15); Gion, Kiyomizu-dera mit Nio-mon, abends Pontocho'],
  ['Kyoto','kyo','Fushimi Inari ab 7 Uhr, Philosophenweg (Nordende), Ginkaku-ji'],
  ['Nara','nar','Tagesausflug: Todai-ji, Hirsche im Nara-Park, Kasuga-Schrein'],
@@ -1202,65 +1217,70 @@ const B_DAYS=[
  ['Osaka','osa','Cup-Noodles-Museum, Bouldern, Takoyaki; letzte Einkäufe, packen'],
  ['Rückflug',null,'Flug Osaka (KIX) → Zürich/München, Ankunft am selben Tag']
 ];
+
 const B_SEED=[
  {id:'s1',k:'stay',stop:'bkk',a:1,b:4,t:'Bangkok'},
  {id:'s2',k:'stay',stop:'krb',a:5,b:6,t:'Ao Nang'},
  {id:'s3',k:'stay',stop:'lan',a:7,b:9,t:'Koh Lanta'},
  {id:'s4',k:'stay',stop:'phi',a:10,b:11,t:'Koh Phi Phi'},
- {id:'s5',k:'stay',stop:'phu',a:12,b:15,t:'Phuket (Kata)'},
- {id:'s6',k:'stay',stop:'han',a:16,b:17,t:'Hanoi'},
- {id:'s7',k:'stay',stop:'hag',a:18,b:21,t:'Ha Giang und Homestays'},
- {id:'s8',k:'stay',stop:'han',a:22,b:22,t:'Hanoi (kurz vor dem Flug)'},
- {id:'s9',k:'stay',stop:'hoi',a:23,b:25,t:'Hoi An'},
- {id:'s10',k:'stay',stop:'tyo',a:26,b:26,t:'Tokyo (erste Nacht)'},
- {id:'s11',k:'stay',stop:'kaw',a:27,b:28,t:'Kawazu (Onsen)'},
- {id:'s12',k:'stay',stop:'tyo',a:29,b:32,t:'Tokyo'},
- {id:'s13',k:'stay',stop:'kyo',a:33,b:37,t:'Kyoto'},
- {id:'s14',k:'stay',stop:'osa',a:38,b:40,t:'Osaka'},
+ {id:'s5',k:'stay',stop:'phu',a:12,b:14,t:'Phuket (Kata)'},
+ {id:'s6',k:'stay',stop:'han',a:15,b:16,t:'Hanoi'},
+ {id:'s7',k:'stay',stop:'hag',a:17,b:20,t:'Ha Giang und Homestays'},
+ {id:'s8',k:'stay',stop:'han',a:21,b:21,t:'Hanoi (spät angekommen)'},
+ {id:'s9',k:'stay',stop:'hlb',a:22,b:22,t:'Schiff in der Lan-Ha-Bucht'},
+ {id:'s10',k:'stay',stop:'nbh',a:23,b:23,t:'Ninh Binh (Tam Coc)'},
+ {id:'s11',k:'stay',stop:'tyo',a:25,b:26,t:'Tokyo (erste Nächte)'},
+ {id:'s12',k:'stay',stop:'kaw',a:27,b:28,t:'Kawazu (Onsen)'},
+ {id:'s13',k:'stay',stop:'tyo',a:29,b:32,t:'Tokyo'},
+ {id:'s14',k:'stay',stop:'kyo',a:33,b:37,t:'Kyoto'},
+ {id:'s15',k:'stay',stop:'osa',a:38,b:40,t:'Osaka'},
  {id:'l0',k:'leg',ty:'flug',a:0,from:'Zürich/München',to:'Bangkok',t:'Hinflug (Nachtflug)'},
  {id:'l1',k:'leg',ty:'flug',a:5,from:'Bangkok',to:'Krabi',t:'Flug, ca. 1 h 25'},
  {id:'l2',k:'leg',ty:'boot',a:7,from:'Ao Nang',to:'Koh Lanta',t:'Fähre, ca. 2 h 15'},
  {id:'l3',k:'leg',ty:'boot',a:10,from:'Koh Lanta',to:'Koh Phi Phi',t:'Fähre, ca. 1,5–2 Std.'},
  {id:'l4',k:'leg',ty:'boot',a:12,from:'Koh Phi Phi',to:'Phuket',t:'Fähre, ca. 2 Std.'},
- {id:'l5',k:'leg',ty:'flug',a:16,from:'Phuket',to:'Hanoi',t:'Flug mit Stopp in Bangkok'},
- {id:'l6',k:'leg',ty:'bus',a:18,from:'Hanoi',to:'Ha Giang',t:'Bus, ca. 6 Std.'},
- {id:'l7',k:'leg',ty:'bus',a:22,from:'Ha Giang',to:'Hanoi',t:'Bus, ca. 6 Std.'},
- {id:'l8',k:'leg',ty:'flug',a:23,from:'Hanoi',to:'Hoi An',t:'Flug nach Da Nang, Transfer ca. 45 min'},
- {id:'l9',k:'leg',ty:'flug',a:26,from:'Da Nang',to:'Tokyo',t:'Flug, nonstop oder mit Umstieg'},
- {id:'l10',k:'leg',ty:'zug',a:27,from:'Tokyo',to:'Kawazu',t:'Odoriko, ca. 2 h 30'},
- {id:'l11',k:'leg',ty:'zug',a:29,from:'Kawazu',to:'Tokyo',t:'Zug über Atami, Shinkansen, ca. 3 Std.'},
- {id:'l12',k:'leg',ty:'zug',a:33,from:'Tokyo',to:'Kyoto',t:'Shinkansen, ca. 2 h 15'},
- {id:'l13',k:'leg',ty:'zug',a:38,from:'Kyoto',to:'Osaka',t:'Zug, ca. 15 min'},
- {id:'l14',k:'leg',ty:'flug',a:41,from:'Osaka',to:'Zürich/München',t:'Rückflug (Montag)'},
+ {id:'l5',k:'leg',ty:'flug',a:15,from:'Phuket',to:'Hanoi',t:'Flug mit Stopp in Bangkok'},
+ {id:'l6',k:'leg',ty:'bus',a:17,from:'Hanoi',to:'Ha Giang',t:'Bus, ca. 6 Std.'},
+ {id:'l7',k:'leg',ty:'bus',a:21,from:'Ha Giang',to:'Hanoi',t:'Bus, ca. 6 Std.'},
+ {id:'l8',k:'leg',ty:'bus',a:22,from:'Hanoi',to:'Lan-Ha-Bucht',t:'Bus und Hafentransfer, ca. 3 Std.'},
+ {id:'l9',k:'leg',ty:'bus',a:23,from:'Lan-Ha-Bucht',to:'Ninh Binh',t:'Transfer, ca. 3,5–4 Std.'},
+ {id:'l10',k:'leg',ty:'flug',a:24,from:'Ninh Binh',to:'Tokyo',t:'Bus nach Hanoi, Nachtflug'},
+ {id:'l11',k:'leg',ty:'zug',a:27,from:'Tokyo',to:'Kawazu',t:'Odoriko, ca. 2 h 30'},
+ {id:'l12',k:'leg',ty:'zug',a:29,from:'Kawazu',to:'Tokyo',t:'Zug über Atami, Shinkansen, ca. 3 Std.'},
+ {id:'l13',k:'leg',ty:'zug',a:33,from:'Tokyo',to:'Kyoto',t:'Shinkansen, ca. 2 h 15'},
+ {id:'l14',k:'leg',ty:'zug',a:38,from:'Kyoto',to:'Osaka',t:'Zug, ca. 15 min'},
+ {id:'l15',k:'leg',ty:'flug',a:41,from:'Osaka',to:'Zürich/München',t:'Rückflug (Montag)'},
  {id:'a1',k:'act',a:3,t:'Thai-Kochkurs in Bangkok',stop:'bkk'},
  {id:'a2',k:'act',a:11,t:'Bootstour Maya Bay und Pileh Lagoon',stop:'phi'},
  {id:'a3',k:'act',a:14,t:'Phang-Nga-Bucht-Tour (James Bond Island)',stop:'phu'},
- {id:'a4',k:'act',a:19,t:'Ha-Giang-Loop-Tour (Easy Rider, 4 Tage)',stop:'hag'},
- {id:'a5',k:'act',a:27,t:'Kawazu-Kirschblüte und Onsen',stop:'kaw'},
- {id:'a6',k:'act',a:30,t:'teamLab Planets (Zeitfenster buchen)',stop:'tyo'},
- {id:'a7',k:'act',a:31,t:'Shibuya Sky',stop:'tyo'},
- {id:'a8',k:'act',a:37,t:'Kochkurs und Teezeremonie Kyoto',stop:'kyo'}
+ {id:'a4',k:'act',a:18,t:'Ha-Giang-Loop-Tour (Easy Rider, 4 Tage)',stop:'hag'},
+ {id:'a5',k:'act',a:22,t:'Lan-Ha-Bucht: Schiff mit Übernachtung',stop:'hlb'},
+ {id:'a6',k:'act',a:26,t:'teamLab Planets (Zeitfenster buchen)',stop:'tyo'},
+ {id:'a7',k:'act',a:27,t:'Kawazu-Kirschblüte und Onsen',stop:'kaw'},
+ {id:'a8',k:'act',a:30,t:'Shibuya Sky',stop:'tyo'},
+ {id:'a9',k:'act',a:37,t:'Kochkurs und Teezeremonie Kyoto',stop:'kyo'}
 ];
 const B_FRIST=[
- {d:'2026-11-30',t:'Flüge buchen und Tage vergleichen',s:'Open-Jaw Zürich/München → Bangkok (Di 2.2.) und Osaka → Zürich/München (Mo 15.3.). Dazu Bangkok–Krabi (7.2.), Phuket–Hanoi über Bangkok (18.2.), Hanoi–Da Nang (23.2.) und Da Nang–Tokyo (28.2.). Preise ±3 Tage mit dem Google-Flights-Kalender vergleichen, rund um den 6.2. ist es teurer.'},
+ {d:'2026-11-30',t:'Flüge buchen und Tage vergleichen',s:'Open-Jaw Zürich/München → Bangkok (Di 2.2.) und Osaka → Zürich/München (Mo 15.3.). Dazu Bangkok–Krabi (7.2.), Phuket–Hanoi über Bangkok (17.2.) und Hanoi–Tokyo (Nachtflug am 26.2.). Preise ±3 Tage mit dem Google-Flights-Kalender vergleichen, rund um den 6.2. ist es teurer.'},
  {d:'2026-12-15',t:'Unterkünfte Thailand zum Neujahr und Japan buchen',s:'Rund um das Chinesische Neujahr (5.–14.2.) sind Unterkünfte in Bangkok, Krabi und auf den Inseln schneller weg. Kostenlos stornierbar wählen.'},
- {d:'2027-01-05',t:'Ha-Giang-Loop-Tour buchen',s:'Für den 19.–22.2. (4 Tage, 3 Nächte) Anbieter mit Easy Riders und guten Bewertungen wählen, Versicherungsschutz für Motorrad-Mitfahrer prüfen.'},
+ {d:'2027-01-05',t:'Ha-Giang-Loop-Tour buchen',s:'Für den 18.–21.2. (4 Tage, 3 Nächte) Anbieter mit Easy Riders und guten Bewertungen wählen, Versicherungsschutz für Motorrad-Mitfahrer prüfen.'},
+ {d:'2027-01-10',t:'Lan-Ha-Bucht-Schiff buchen',s:'2 Tage und 1 Nacht ab 22.2., mit Abholung in Hanoi. Anbieter mit guten Bewertungen und Umbuchung bei schlechter Sicht wählen.'},
  {d:'2027-01-15',t:'Kawazu: Festtermine und Blütenprognose prüfen',s:'Die Termine des Festes für 2027 werden im Herbst und Winter veröffentlicht. Ende Februar die Prognose ansehen, im Zweifel den Reservetag nutzen. Odoriko-Platz früh reservieren.'},
  {d:'2027-01-20',t:'Fähren prüfen und buchen',s:'Ao Nang–Koh Lanta (7.2.), Koh Lanta–Phi Phi (10.2.) und Phi Phi–Phuket (12.2.). Fahrpläne und Preise ändern sich je nach Anbieter, in der Hochsaison vorab buchen.'},
- {d:'2027-01-30',t:'Vietnam-E-Visum beantragen',s:'25 USD, ca. 3 Werktage. Spätestens 2–3 Wochen vor Einreise (18.2.).'},
+ {d:'2027-01-30',t:'Vietnam-E-Visum beantragen',s:'25 USD, ca. 3 Werktage. Spätestens 2–3 Wochen vor Einreise (17.2.).'},
  {d:'2027-01-31',t:'Thailand: Einreisekarte TDAC',s:'Pflicht, innerhalb von 72 h vor Ankunft (3.2.) ausfüllen.'},
- {d:'2027-02-10',t:'teamLab Planets und Shibuya Sky buchen',s:'teamLab für den 4.3., Shibuya Sky für den 5.3. Die Zeitfenster sind oft Tage vorher ausverkauft.'},
- {d:'2027-02-21',t:'Japan: Visit Japan Web',s:'Optional, beschleunigt die Einreise. Vor dem Flug nach Tokyo (28.2.).'}
+ {d:'2027-02-10',t:'teamLab Planets und Shibuya Sky buchen',s:'teamLab für den 28.2. (Sonntag, früh buchen), Shibuya Sky für den 4.3. Die Zeitfenster sind oft Tage vorher ausverkauft.'},
+ {d:'2027-02-21',t:'Japan: Visit Japan Web',s:'Optional, beschleunigt die Einreise. Vor dem Flug nach Tokyo (26.2.).'}
 ];
-const B_BOOK=['Urlaub 1.2.–16.3.2027 fixieren, Rückflug am Montag 15.3. (Büro am 17.3.)','Open-Jaw-Flug buchen: Zürich/München → Bangkok (Di 2.2.), Osaka → Zürich/München (Mo 15.3.). Preise ±3 Tage vergleichen','Unterkünfte Thailand rund um Neujahr (5.–14.2.) früh buchen','Unterkünfte Japan 26.2.–15.3. buchen (kostenlos stornierbar). Kawazu mit Onsen früh reservieren','Ha-Giang-Loop-Tour (4 Tage) mit Easy Rider und Versicherungsklärung buchen','Zwischenflüge: Bangkok–Krabi, Phuket–Hanoi (über Bangkok), Hanoi–Da Nang, Da Nang–Tokyo','Fähren Ao Nang–Lanta, Lanta–Phi Phi und Phi Phi–Phuket prüfen und in der Hauptsaison vorab buchen','teamLab Planets und Shibuya Sky vorab buchen','Vietnam-E-Visum beantragen','Reiseversicherung inkl. Auslandskranken, Motorrad-Mitfahrer und Sportschutz'];
+const B_BOOK=['Urlaub 1.2.–16.3.2027 fixieren, Rückflug am Montag 15.3. (Büro am 17.3.)','Open-Jaw-Flug buchen: Zürich/München → Bangkok (Di 2.2.), Osaka → Zürich/München (Mo 15.3.). Preise ±3 Tage vergleichen','Unterkünfte Thailand rund um Neujahr (5.–14.2.) früh buchen','Unterkünfte Japan 26.2.–15.3. buchen (kostenlos stornierbar). Kawazu mit Onsen früh reservieren','Ha-Giang-Loop-Tour (4 Tage) mit Easy Rider und Versicherungsklärung buchen','Lan-Ha-Bucht-Schiff (2 Tage, 1 Nacht) buchen','Zwischenflüge: Bangkok–Krabi, Phuket–Hanoi (über Bangkok), Hanoi–Tokyo (Nachtflug)','Fähren Ao Nang–Lanta, Lanta–Phi Phi und Phi Phi–Phuket prüfen und in der Hauptsaison vorab buchen','teamLab Planets und Shibuya Sky vorab buchen','Vietnam-E-Visum beantragen','Reiseversicherung inkl. Auslandskranken, Motorrad-Mitfahrer und Sportschutz'];
 const B_ENTRY=[
  {st:'th',n:'Thailand',r:'Visumfrei, seit 15.9.2026 nur noch bis 30 Tage (vorher 60). Digitale Einreisekarte TDAC ist Pflicht.',w:'TDAC innerhalb von 72 h vor Ankunft'},
  {st:'vn',n:'Vietnam',r:'E-Visum nötig (25 USD, ca. 3 Werktage). Österreich steht nicht auf der Liste der Länder mit 45 Tagen visumfrei.',w:'Mindestens 2–3 Wochen vorher auf evisa.gov.vn'},
  {st:'jp',n:'Japan',r:'Visumfrei bis 90 Tage. Visit Japan Web ist optional und beschleunigt die Einreise. Die geplante Einreise-Genehmigung JESTA kommt frühestens 2028.',w:'Vor dem Flug nach Tokyo'}
 ];
-const B_RECO=['Dieser Plan ist für euren Urlaub vom 1.2. bis 16.3. gebaut: Südostasien zuerst, Japan zuletzt, weil die frühe Blüte (Kawazu, Pflaumen) Ende Februar und Anfang März am schönsten ist und Japan dann etwas milder ist.','Die Route geht von Bangkok nach Süden, nicht nach Norden: Bangkok, Krabi, Koh Lanta, Koh Phi Phi, Phuket. Kurze Strecken, wenig Fliegen, Meer und Inseln im Februar, wenn die Trockenzeit ruhiges Wasser bringt.','Einen Flug-Dienstag-Trick gibt es nicht mehr sicher: Aktuelle Auswertungen sehen mal Mittwoch, mal Donnerstag oder Freitag vorn. Dienstag ist vor allem leerer. Vergleicht die Preise ±3 Tage mit dem Google-Flights-Kalender.','Flüge nur dort, wo der Landweg über sechs Stunden dauert: Bangkok–Krabi, Phuket–Hanoi, Hanoi–Da Nang und Da Nang–Tokyo. Dazwischen Fähre, Bus und Shinkansen.','Aus eurer Liste (49 verschiedene Orte) sind die meisten im Tagesplan. Einige stehen mit Begründung unter „Ideen und Aktivitäten“, aber nicht im Plan: Ko Tao, Sa Pa, Bạch Long Glass Bridge, Wat Samphran, Rainbow Line Fukui, Gulliver-Garten Shiga und Okuyama Ameyama Nature Park. Chiang Mai, Khao Sok und Angkor sind mit dem neuen Plan rausgefallen, bleiben aber als Ideen in der App.','Seoul ist aus dem Plan genommen, die Kirschblüte dort ist erst im April. Dafür gibt es Kawazu, die früheste Kirschblüte Japans, mit zwei Nächten und Onsen.','Chinesisches Neujahr (6.2.) fällt in euren Bangkok-Teil: mehr Gäste, höhere Preise. Dafür ist Yaowarat in Bangkok ein Fest.','Der Ha-Giang-Loop dauert jetzt vier Tage und ist die größte Abenteuer-Station der Reise. Wer nicht selbst Motorrad fährt, fährt als Beifahrer mit einem Easy Rider. Vorher klären, ob die Versicherung das abdeckt.','Fushimi Inari und Nishiki-Markt vor 9 Uhr besuchen, danach wird es sehr voll.','Golden-Gai in Tokyo am besten ab etwa 20 Uhr. Viele Bars haben eine kleine Sitzgebühr und nur wenige Plätze.'];
+const B_RECO=['Dieser Plan ist für euren Urlaub vom 1.2. bis 16.3. gebaut: Südostasien zuerst, Japan zuletzt, weil die frühe Blüte (Kawazu, Pflaumen) Ende Februar und Anfang März am schönsten ist und Japan dann etwas milder ist.','Die Route geht von Bangkok nach Süden, nicht nach Norden: Bangkok, Krabi, Koh Lanta, Koh Phi Phi, Phuket. Kurze Strecken, wenig Fliegen, Meer und Inseln im Februar, wenn die Trockenzeit ruhiges Wasser bringt.','Einen Flug-Dienstag-Trick gibt es nicht mehr sicher: Aktuelle Auswertungen sehen mal Mittwoch, mal Donnerstag oder Freitag vorn. Dienstag ist vor allem leerer. Vergleicht die Preise ±3 Tage mit dem Google-Flights-Kalender.','Flüge nur dort, wo der Landweg über sechs Stunden dauert: Bangkok–Krabi, Phuket–Hanoi und Hanoi–Tokyo (Nachtflug, meist direkt). Dazwischen Fähre, Bus und Shinkansen.','Aus eurer Liste (49 verschiedene Orte) sind die meisten im Tagesplan. Einige stehen mit Begründung unter „Ideen und Aktivitäten“, aber nicht im Plan: Ko Tao, Sa Pa, Bạch Long Glass Bridge, Wat Samphran, Rainbow Line Fukui, Gulliver-Garten Shiga und Okuyama Ameyama Nature Park. Chiang Mai, Khao Sok, Angkor und Hoi An sind mit dem neuen Plan rausgefallen.','Seoul ist aus dem Plan genommen, die Kirschblüte dort ist erst im April. Dafür gibt es Kawazu, die früheste Kirschblüte Japans, mit zwei Nächten und Onsen.','Chinesisches Neujahr (6.2.) fällt in euren Bangkok-Teil: mehr Gäste, höhere Preise. Dafür ist Yaowarat in Bangkok ein Fest.','Vietnam statt Hoi An: Lan-Ha-Bucht mit einer Nacht auf dem Schiff und Ninh Binh sind die klassischen Highlights im Norden, und der Flug nach Tokyo geht von Hanoi direkt.','Der Ha-Giang-Loop dauert jetzt vier Tage und ist die größte Abenteuer-Station der Reise. Wer nicht selbst Motorrad fährt, fährt als Beifahrer mit einem Easy Rider. Vorher klären, ob die Versicherung das abdeckt.','Fushimi Inari und Nishiki-Markt vor 9 Uhr besuchen, danach wird es sehr voll.','Golden-Gai in Tokyo am besten ab etwa 20 Uhr. Viele Bars haben eine kleine Sitzgebühr und nur wenige Plätze.'];
 const B_BKT=[['lang','Langstreckenflug'],['inner','Flüge, Züge & Fähren Asien'],['th','Thailand'],['vn','Vietnam'],['jp','Japan'],['misc','Versicherung, Visa, Puffer']];
-const B_BUCKETS={lang:1900,inner:1070,th:1790,vn:1280,jp:2850,misc:940};
+const B_BUCKETS={lang:1900,inner:1070,th:1790,vn:1380,jp:2850,misc:940};
 const B_DAYACTS=[
  [],
  ['bkk-yaowarat'],
@@ -1277,7 +1297,6 @@ const B_DAYACTS=[
  ['phu-oldtown','phu-sunday'],
  ['phu-bigbuddha','phu-chalong','phu-promthep'],
  ['phu-phangnga'],
- ['phu-viewpoint','phu-cooking'],
  ['han-biahoi'],
  ['han-hoankiem','han-literature','han-foodtour','han-trainstreet'],
  [],
@@ -1285,16 +1304,17 @@ const B_DAYACTS=[
  ['hag-mapileng'],
  [],
  [],
- ['hoi-tailor','hoi-lanterns','hoi-bridge'],
- ['hoi-duckstop','hoi-coconut','hoi-captainchris','hoi-oldtown'],
- ['hoi-cycling','hoi-anbang'],
+ ['hlb-cruise','hlb-kayak'],
+ ['hlb-sunrise','nbh-tamcoc'],
+ ['nbh-trangan','nbh-mua'],
  ['tyo-goldengai','tyo-omoide'],
+ ['tyo-sensoji','tyo-asakusashrine','tyo-sumida','tyo-teamlab'],
  ['kaw-sakura'],
  ['kaw-falls'],
  ['kaw-atami'],
- ['tyo-sensoji','tyo-asakusashrine','tyo-sumida','tyo-teamlab'],
  ['tyo-chopsticks','tyo-gyoen','tyo-shibuya','tyo-shibuyasky'],
  ['tyo-gotokuji','tyo-nact','tyo-plum','tyo-sushi'],
+ ['tyo-meiji','tyo-harajuku','tyo-shimokita'],
  ['kyo-gion','kyo-kiyomizu','kyo-pontocho'],
  ['kyo-fushimi','kyo-philosopher','kyo-ginkakuji'],
  ['nar-todaiji','nar-deer','nar-kasuga'],
@@ -1310,15 +1330,15 @@ const B_COSTX={
  flights:[
   {leg:'Zürich/München → Bangkok',how:'Nonstop oder 1 Stopp, ca. 11–14 Std.',when:'2.2.',price:'ca. 400–550 € einfach (Rückflug ab Osaka kommt dazu)',tip:'Open-Jaw buchen: hin nach Bangkok, zurück ab Osaka. Thai Airways nonstop ab Zürich ab ca. CHF 770 hin und zurück im Februar. Preise ±3 Tage vergleichen, ein Dienstag ist nicht mehr sicher der günstigste Tag.'},
   {leg:'Bangkok → Krabi',how:'Mehrere Billigflieger, ca. 1 h 25',when:'7.2.',price:'ca. 35–70 €',tip:'Rund um Chinesisches Neujahr (5.–14.2.) früh buchen. Vom Flughafen Krabi nach Ao Nang ca. 45 Min. mit Minibus oder Taxi.'},
-  {leg:'Phuket → Hanoi',how:'Mit Stopp in Bangkok, ca. 5–7 Std. (kein bestätigter Nonstop)',when:'18.2.',price:'ca. 120–220 € (geschätzt)',tip:'Prüfen, ob VietJet die Strecke Hanoi–Phuket wieder direkt fliegt. Nonstop nach Vietnam gibt es bestätigt nur ab Ho-Chi-Minh-Stadt.'},
-  {leg:'Hanoi → Da Nang',how:'ca. 1 h 20, dann Transfer nach Hoi An ca. 45 Min.',when:'23.2.',price:'ca. 30–60 €',tip:'Frühen Flug wählen, dann bleibt der Nachmittag in Hoi An. Der Bus aus Ha Giang kommt am Vorabend spät an.'},
-  {leg:'Da Nang → Tokyo',how:'Vietnam Airlines nonstop nach Narita (nicht täglich), sonst Umstieg',when:'28.2.',price:'ca. 250–400 €',tip:'Fahrplan vor der Buchung prüfen. Narita liegt 60–90 Min. vom Zentrum.'},
+  {leg:'Phuket → Hanoi',how:'Mit Stopp in Bangkok, ca. 5–7 Std. (kein bestätigter Nonstop)',when:'17.2.',price:'ca. 120–220 € (geschätzt)',tip:'Prüfen, ob VietJet die Strecke Hanoi–Phuket wieder direkt fliegt. Nonstop nach Vietnam gibt es bestätigt nur ab Ho-Chi-Minh-Stadt.'},
+  {leg:'Hanoi → Tokyo',how:'Nachtflug oder früher Abflug, meist nonstop, ca. 5 Std. 30',when:'26.2. (Nachtflug)',price:'ca. 200–350 €',tip:'Fahrplan und Preise vor der Buchung prüfen. Ihr kommt am Morgen in Tokyo an. Von Ninh Binh nach Hanoi rechnet mit 2–2,5 Std. Fahrt, plant reichlich Puffer.'},
   {leg:'Osaka → Zürich/München',how:'Mit Umstieg, ca. 15–17 Std.',when:'15.3. (Montag)',price:'ca. 400–600 € einfach',tip:'Gehört zum Open-Jaw-Ticket. Landung am selben Tag, ein Tag Puffer vor dem Büro am 17.3.'}
  ],
  other:[
   {leg:'Fähre Ao Nang → Koh Lanta',price:'ca. 15–30 €',tip:'Ca. 2 h 15. Preise und Fahrplan je nach Anbieter, in der Hochsaison vorab buchen.'},
   {leg:'Fähre Koh Lanta → Koh Phi Phi',price:'ca. 15–30 €',tip:'Ca. 1,5–2 Std., Saisonfähre. Fahrplan vorher prüfen, Alternative über Ao Nang oder Krabi.'},
   {leg:'Fähre Koh Phi Phi → Phuket (Rassada Pier)',price:'ca. 11–13 € (400–450 THB)',tip:'Ca. 2 Std., Speedboat ca. 600–900 THB und 45–60 Min.'},
+  {leg:'Lan-Ha-Bucht: Schiff, 2 Tage mit Übernachtung',price:'ca. 100–200 €',tip:'Meist mit Abholung in Hanoi, Mahlzeiten und Kajak. Preise nach Schiffsklasse sehr unterschiedlich.'},
   {leg:'Bus Hanoi ↔ Ha Giang',price:'ca. 10–15 € je Strecke',tip:'Limousinen-Bus ca. 6 Std.'},
   {leg:'Ha-Giang-Loop (4 Tage mit Easy Rider)',price:'ca. 180–300 €',tip:'Ohne Bus, meist mit Übernachtung und Essen. Permit ca. 10 USD kommt oft dazu.'},
   {leg:'Odoriko Tokyo ↔ Kawazu',price:'ca. 25–45 € je Strecke',tip:'Direktzug, Sitzplatz reservieren. Rückweg über Atami und Shinkansen ist ähnlich teuer.'},
@@ -1326,10 +1346,10 @@ const B_COSTX={
  ],
  cats:[
   {n:'Langstreckenflug Open-Jaw',lo:750,mid:950,hi:1300,spar:'Flexible Daten, Mittwoch oder Donnerstag fliegen, ein Gepäckstück.',mehr:'Direktflug oder Premium Economy.'},
-  {n:'Flüge, Züge, Fähren und Busse in Asien (4 Flüge, 3 Fähren)',lo:420,mid:540,hi:760,spar:'Billigflieger ohne Gepäck, Fähren statt Speedboat, Bus wo es passt.',mehr:'Linienflüge mit Gepäck, Speedboat, Sitzplätze.'},
+  {n:'Flüge, Züge, Fähren und Busse in Asien (3 Flüge, 3 Fähren)',lo:420,mid:540,hi:760,spar:'Billigflieger ohne Gepäck, Fähren statt Speedboat, Bus wo es passt.',mehr:'Linienflüge mit Gepäck, Speedboat, Sitzplätze.'},
   {n:'Unterkunft',lo:620,mid:1040,hi:1780,spar:'Klasse 1: In Thailand und Vietnam ca. 20–35 € pro Nacht für zwei. In Japan ab ca. 35–70 €. Nur eine teure Nacht in Kawazu.',mehr:'Klasse 3 auf den Inseln, in Phuket, Kawazu-Ryokan und Kyoto.'},
   {n:'Essen und Trinken',lo:520,mid:860,hi:1420,spar:'Streetfood, Konbini-Frühstück, Mittagsmenüs in Japan.',mehr:'Restaurants, Izakaya, Golden-Gai-Abende, Ryokan-Dinner.'},
-  {n:'Aktivitäten und Eintritte',lo:300,mid:600,hi:1000,spar:'Tempel, Märkte und Strände statt Touren.',mehr:'Phang-Nga-Tour, Maya-Bay-Boot, Ha-Giang-Tour, teamLab, Kochkurse, Klettern, Surfen.'},
+  {n:'Aktivitäten und Eintritte',lo:380,mid:700,hi:1150,spar:'Tempel, Märkte und Strände statt Touren.',mehr:'Phang-Nga-Tour, Maya-Bay-Boot, Ha-Giang-Tour, Schiff in der Lan-Ha-Bucht, teamLab, Kochkurse, Klettern, Surfen.'},
   {n:'Lokaler Transport',lo:320,mid:470,hi:670,spar:'Metro, Bus, Songthaew, Einzeltickets.',mehr:'Taxi und Grab, Mietroller auf Phuket und Lanta.'},
   {n:'Visa, eSIM, Versicherung',lo:140,mid:200,hi:290,spar:'Nur das Vietnam-E-Visum (ca. 25 USD) ist Pflicht.',mehr:'Versicherung mit Rücktransport und Motorrad-Mitfahrer.'},
   {n:'Puffer und Mitbringsel',lo:150,mid:300,hi:600,spar:'Nur das Nötigste kaufen.',mehr:'Souvenirs, Kleidung, Duty-Free.'}
@@ -1430,6 +1450,16 @@ const HOTELS={
    {n:'Oh\'tel Kata',p:85,r:9.5,a:'Neu, 24-Std.-Sicherheit, Gemeinschaftsküche',q:'Oh\'tel Kata Phuket'},
    {n:'Kata Bai D',p:89,r:9.4,a:'Gästehaus, sehr gut bewertet',q:'Kata Bai D Phuket'},
    {n:'Casa E Mare',p:115,r:9.5,a:'Café, Tauchen und Schnorcheln möglich',q:'Casa E Mare Kata Phuket'}]},
+ nbh:{ab:'25.–26.2.2027',k1:[
+   {n:'Tam Coc Catalina Hotel',p:20,r:9.1,a:'Tam Coc, einfach und sehr gut bewertet',q:'Tam Coc Catalina Hotel Ninh Binh'},
+   {n:'Tam Coc Tropical Homestay',p:22,r:null,a:'Homestay mit Pool und Gemeinschaftsküche',q:'Tam Coc Tropical Homestay Ninh Binh'}],
+  k2:[
+   {n:'Tam Coc Serenity Hotel & Bungalow',p:33,r:9.0,a:'Bungalows mit Pool, über 2.000 Rezensionen',q:'Tam Coc Serenity Hotel Bungalow Ninh Binh'},
+   {n:'The Sun Tam Coc Hotel',p:34,r:9.1,a:'4 Sterne, Pool',q:'The Sun Tam Coc Hotel Ninh Binh'},
+   {n:'Tam Coc Windy Fields',p:45,r:null,a:'Lodge mit Infinity-Pool',q:'Tam Coc Windy Fields Ninh Binh'}],
+  k3:[
+   {n:'Tam Coc Holiday Hotel & Spa',p:67,r:9.8,a:'4 Sterne, Spa und Pool, fast 2.000 Rezensionen',q:'Tam Coc Holiday Hotel Spa Ninh Binh'},
+   {n:'Tam Coc Peaceful Nature',p:91,r:9.6,a:'Hotel mit Pool, Top-Bewertung',q:'Tam Coc Peaceful Nature Ninh Binh'}]},
  khs:{ab:'8.–10.3.2027',k1:[
    {n:'Khao Sok Palmview Resort',p:29,r:8.9,a:'Nahe Parkeingang, Kanu und Wandern buchbar',q:'Khao Sok Palmview Resort'}],
   k2:[
@@ -1669,12 +1699,13 @@ const tempI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
 /* ---------- Zustand ---------- */
 const ND=()=>DAYS.length;
 const state={trip:'a',tab:'heute',day:Math.min(42,Math.max(0,realDay())),pf:'all',mv:'world',sel:null,more:'todo',bkv:'stay',ifs:'all',ifc:'all',iq:'',iqRaw:'',mc:'all',act:null};
-const DEF=()=>({done:{},vis:{},custom:{book:[],pack:[]},bk:{},cbk:[],exp:[],set:{n1:'Person 1',n2:'Person 2',buckets:Object.assign({},BUCKETS_DEF),rates:{THB:38,VND:29000,JPY:165,KRW:1550,USD:1.1},ratesAt:''}});
+const DEF=()=>({done:{},vis:{},pl:{},custom:{book:[],pack:[]},bk:{},cbk:[],exp:[],set:{n1:'Person 1',n2:'Person 2',buckets:Object.assign({},BUCKETS_DEF),rates:{THB:38,VND:29000,JPY:165,KRW:1550,USD:1.1},ratesAt:''}});
 let store=null;
 function loadStore(j){
   if(!j||typeof j!=='object')return;
   if(j.done&&typeof j.done==='object')store.done=j.done;
   if(j.vis&&typeof j.vis==='object')store.vis=j.vis;
+  if(j.pl&&typeof j.pl==='object')store.pl=j.pl;
   if(j.custom)store.custom=Object.assign({book:[],pack:[]},j.custom);
   if(j.bk&&typeof j.bk==='object')store.bk=j.bk;
   if(Array.isArray(j.cbk))store.cbk=j.cbk;
@@ -1695,6 +1726,7 @@ function syncFlat(st){
   const o={},put=(p,v)=>{o[p]=JSON.stringify(v)};
   Object.keys(st.done).forEach(k=>put('d:'+syncKey(k),st.done[k]));
   Object.keys(st.vis).forEach(k=>put('v:'+syncKey(k),st.vis[k]));
+  Object.keys(st.pl||{}).forEach(k=>put('p:'+syncKey(k),st.pl[k]));
   Object.keys(st.bk).forEach(k=>put('b:'+syncKey(k),st.bk[k]));
   st.cbk.forEach(x=>put('c:'+syncKey(x.id),x));
   st.exp.forEach(x=>put('x:'+syncKey(x.id),x));
@@ -1709,7 +1741,7 @@ function syncApply(flat,old){
   for(const p in flat){
     let v;try{v=JSON.parse(flat[p])}catch(e){continue}
     const i=p.indexOf(':'),t=p.slice(0,i),k=p.slice(i+1);
-    if(t==='d')s.done[k]=v;else if(t==='v')s.vis[k]=v;else if(t==='b')s.bk[k]=v;
+    if(t==='d')s.done[k]=v;else if(t==='v')s.vis[k]=v;else if(t==='p')s.pl[k]=v;else if(t==='b')s.bk[k]=v;
     else if(t==='c')cbk.push(v);else if(t==='x')exp.push(v);else if(t==='lb')lb.push(v);else if(t==='lp')lp.push(v);
     else if(t==='s'){if(k==='n1')s.set.n1=v;else if(k==='n2')s.set.n2=v;else if(k==='ra')s.set.ratesAt=v}
     else if(t==='sb')s.set.buckets[k]=v;else if(t==='sr')s.set.rates[k]=v;
@@ -1820,20 +1852,35 @@ ACTS.forEach(a=>{
 });
 const mapsU=a=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(a.q||a.t);
 const dirU=a=>'https://www.google.com/maps/dir/?api=1&destination='+(a.ll?a.ll[0]+','+a.ll[1]:encodeURIComponent(a.q||a.t));
+/* ---------- Planung: Muss/Kann und Tag wechseln ---------- */
+const MUST_DEF=new Set(['krb-monkeytrail','phi-maya','phu-phangnga','hag-loop','kaw-sakura','kyo-fushimi','tyo-teamlab','bkk-grandpalace','hoi-lanterns','tyo-shibuyasky','nar-deer','osa-dotonbori','bkk-yaowarat']);
+const prioOf=id=>{const p=store&&store.pl&&store.pl[id];return (p&&p.p)||(MUST_DEF.has(id)?'must':'can')};
+function DA(i){
+  const pl=(store&&store.pl)||{};
+  const base=(DAYACTS[i]||[]).filter(id=>!(pl[id]&&pl[id].d!=null&&pl[id].d!==i));
+  const add=Object.keys(pl).filter(id=>pl[id].d===i&&!base.includes(id)&&ACTSBY[id]);
+  return base.concat(add);
+}
+function setPl(id,patch){
+  store.pl=store.pl||{};const o=Object.assign({},store.pl[id]||{},patch);
+  if(o.p===undefined&&o.d===undefined)delete store.pl[id];else store.pl[id]=o;
+  save();
+}
+function refreshActSheet(id){const a=ACTSBY[id];const c=sheetEl&&sheetEl.querySelector('.asc');if(a&&c){const y=sheetEl.querySelector('.sh2').scrollTop;c.innerHTML=actSheetBody(a);sheetEl.querySelector('.sh2').scrollTop=y}}
 function dayRouteUrl(i){
-  const L=(DAYACTS[i]||[]).map(id=>ACTSBY[id]).filter(a=>a&&(a.ll||a.q));
+  const L=DA(i).map(id=>ACTSBY[id]).filter(a=>a&&(a.ll||a.q));
   if(L.length<2)return '';
   const pt=a=>a.ll?a.ll[0]+','+a.ll[1]:a.q,sy=stayAt(i),org=sy&&sy.name?sy.name+' '+(sy.addr||STOPS[sy.stop].q):'';
   return 'https://www.google.com/maps/dir/?api=1'+(org?'&origin='+encodeURIComponent(org):'')+'&destination='+encodeURIComponent(pt(L[L.length-1]))+'&waypoints='+encodeURIComponent(L.slice(0,-1).map(pt).join('|'));
 }
 function actsOfStop(stop){
-  const planned=new Set();DAYS.forEach((d,i)=>{if(d[1]===stop)(DAYACTS[i]||[]).forEach(id=>planned.add(id))});
+  const planned=new Set();DAYS.forEach((d,i)=>{if(d[1]===stop)DA(i).forEach(id=>planned.add(id))});
   return ACTS.filter(a=>a.s===stop).sort((x,y)=>(planned.has(y.id)?1:0)-(planned.has(x.id)?1:0));
 }
 function actHtml(a,open){
   const cm=CATM[a.c]||['Ort','k7'],seen=store.vis[a.id];
   const facts=[['Zeiten',a.h],['Eintritt',a.p],['Dauer',a.z],['Anfahrt',a.w]].filter(x=>x[1]);
-  return `<details class="act${seen?' seen':''}" data-act="${a.id}"${open?' open':''}><summary><span class="ci" style="--c:var(--${cm[1]})"></span><span><span class="at">${esc(a.t)}</span><span class="am">${cm[0]}${a.z?' · '+esc(a.z):''}</span></span></summary><div class="ab">`+
+  return `<details class="act${seen?' seen':''}" data-act="${a.id}"${open?' open':''}><summary><span class="ci" style="--c:var(--${cm[1]})"></span><span><span class="at">${prioOf(a.id)==='must'?'<span class="ms" title="Muss">★</span> ':''}${esc(a.t)}</span><span class="am">${cm[0]}${a.z?' · '+esc(a.z):''}</span></span></summary><div class="ab">`+
    (a.img?`<figure class="af"><img loading="lazy" decoding="async" src="${esc(a.img)}" alt="${esc(a.t)}"><figcaption>Foto: Wikipedia</figcaption></figure>`:'')+
    `<p>${esc(eurize(a.d))}</p>`+
    (facts.length?`<dl class="kv">${facts.map(f=>`<dt>${f[0]}</dt><dd>${esc(f[0]==='Zeiten'?f[1]:eurize(f[1]))}</dd>`).join('')}</dl>`:'')+
@@ -1856,7 +1903,7 @@ const klookU=a=>'https://www.klook.com/en-US/search/result/?query='+encodeURICom
 const gygU=a=>'https://www.getyourguide.com/s/?q='+encodeURIComponent(a.t+' '+STOPS[a.s].n);
 function actSheetBody(a){
   const cm=CATM[a.c]||['Ort','k7'],stop=STOPS[a.s];
-  const days=[];DAYACTS.forEach((l,i)=>{if(l.includes(a.id))days.push(i)});
+  const days=[];for(let i=0;i<ND();i++){if(DA(i).includes(a.id))days.push(i)}
   const planTxt=days.length?'Im Plan: '+days.map(i=>'Tag '+(i+1)+' ('+fmtL(addDays(START,i))+')').join(', '):'Noch nicht im Plan, als Idee für '+stop.n;
   const stay=bks().find(b=>b.k==='stay'&&b.stop===a.s&&(!days.length||(days[0]>=b.a&&days[0]<=b.b)))||bks().find(b=>b.k==='stay'&&b.stop===a.s);
   const near=actsNear(a,6);
@@ -1877,6 +1924,7 @@ function actSheetBody(a){
    (bookable?`<h3>Vorab buchen</h3><p class="note">Preise und Termine bei Anbietern vergleichen. Beim Veranstalter direkt ist es oft günstiger.</p><div class="links"><a href="${klookU(a)}" target="_blank" rel="noopener">Klook ↗</a><a href="${gygU(a)}" target="_blank" rel="noopener">GetYourGuide ↗</a></div>`:'')+
    (rainy&&alt.length?`<h3>Bei Regen</h3><p class="note">Wenn das Wetter nicht passt, wechselt auf: ${alt.map(x=>esc(x.t)).join(', ')}.</p>`:'')+
    `<h3>Mehr Fotos</h3><div class="links"><a href="${gImg(a)}" target="_blank" rel="noopener">Mehr Fotos beim Anbieter ↗</a></div><p class="note">Die App zeigt nur freie Fotos von Wikipedia. Fotos der Anbieter sind urheberrechtlich geschützt.</p>`+
+   `<h3>Planung</h3><div class="links"><button type="button" class="${prioOf(a.id)==='must'?'on':''}" data-prio="${a.id}|must">★ Muss</button><button type="button" class="${prioOf(a.id)==='can'?'on':''}" data-prio="${a.id}|can">Kann</button></div><label class="fldm"><span class="note">Auf einen anderen Tag legen</span><select data-mvsel="${a.id}"><option value="">Tag wählen …</option>${Array.from({length:ND()},(_,i)=>`<option value="${i}"${days.includes(i)?' selected':''}>Tag ${i+1} · ${fmtL(addDays(START,i))} · ${esc(DAYS[i][0])}</option>`).join('')}<option value="-1">Aus dem Plan nehmen</option></select></label>`+
    `<label class="chk"><input type="checkbox" data-vis="${a.id}" ${store.vis[a.id]?'checked':''}> Schon besucht</label></div>`;
 }
 function openActSheet(id){
@@ -1927,12 +1975,12 @@ const TRIPS={
   viewkeys:['world','all','th','vn','jp'],viewAll:{n:'Asien',bb:[95,3.5,143,41],lvl:0},
   reglbl:[['th','THAILAND',99.4,11.2,'middle'],['vn','VIETNAM',110,18.6,'start'],['jp','JAPAN',140.8,32.6,'middle']],
   buckets:B_BUCKETS,first:'bkk',last:'osa',
-  costNote:'Rund 5.000 € pro Person in der Mitte (Sparen ca. 3.200 €, Komfort ca. 7.800 €), zu zweit etwa 10.000 €. Schätzungen, Stand November 2026.',
-  costTotal:'ca. 3.200–7.800 €',
-  costTip:'Größte Hebel: Klasse 1 in Thailand und Vietnam (ca. 20–35 € pro Nacht für zwei), Fähren statt Speedboat und Flüge nur dort, wo der Landweg über sechs Stunden dauert. Gegenüber Reise A kostet diese Route etwa 350 € mehr pro Person, dafür mit Koh Lanta, Phuket und dem Ha-Giang-Loop.',
-  flight:'Open-Jaw ab Zürich oder München, hin nach Bangkok (Di 2.2.), zurück ab Osaka (Mo 15.3.). Dazwischen vier Flüge: Bangkok–Krabi, Phuket–Hanoi (mit Stopp), Hanoi–Da Nang und Da Nang–Tokyo. Fähren, Busse, Odoriko und Shinkansen übernehmen den Rest.',
+  costNote:'Rund 5.100 € pro Person in der Mitte (Sparen ca. 3.300 €, Komfort ca. 8.000 €), zu zweit etwa 10.200 €. Schätzungen, Stand November 2026.',
+  costTotal:'ca. 3.300–8.000 €',
+  costTip:'Größte Hebel: Klasse 1 in Thailand und Vietnam (ca. 20–35 € pro Nacht für zwei), Fähren statt Speedboat und Flüge nur dort, wo der Landweg über sechs Stunden dauert. Gegenüber Reise A kostet diese Route etwa 350 € mehr pro Person, dafür mit Koh Lanta, Phuket, dem Ha-Giang-Loop und der Lan-Ha-Bucht.',
+  flight:'Open-Jaw ab Zürich oder München, hin nach Bangkok (Di 2.2.), zurück ab Osaka (Mo 15.3.). Dazwischen drei Flüge: Bangkok–Krabi, Phuket–Hanoi (mit Stopp) und Hanoi–Tokyo (Nachtflug). Fähren, Busse, Odoriko und Shinkansen übernehmen den Rest.',
   costx:B_COSTX,quellen:B_QUELLEN,
-  quellenNote:'Reise B kommt aus eurer Google-Maps-Liste „Asien“ und eurer Route: Bangkok, Süden mit Inseln, Vietnam mit Ha-Giang-Loop, Japan mit Kawazu. Der Zeitplan ist für euren Urlaub vom 1.2. bis 16.3. gebaut. Die Quellen unten stützen die Fakten zu Fähren, Einreise, Blüte, Preisen und Regeln.',
+  quellenNote:'Reise B kommt aus eurer Google-Maps-Liste „Asien“ und eurer Route: Bangkok, Süden mit Inseln, Vietnam mit Ha-Giang-Loop und Lan-Ha-Bucht, Japan mit Kawazu. Der Zeitplan ist für euren Urlaub vom 1.2. bis 16.3. gebaut. Die Quellen unten stützen die Fakten zu Fähren, Einreise, Blüte, Preisen und Regeln.',
   dots:['th','vn','jp']},
  a:{id:'a',key:'asien27',name:'Reise A',tag:'So machen es andere',start:A_START,stages:A_STAGES,order:A_ORDER,route:A_ROUTE,routeDay:A_ROUTE_DAY,segDay:A_SEG_DAY,routeMeta:A_ROUTE_META,days:A_DAYS,seed:A_SEED,frist:A_FRIST,book:A_BOOK,entry:A_ENTRY,reco:A_RECO,bkt:A_BKT,dayacts:A_DAYACTS,
   viewkeys:['world','all','th','jp'],viewAll:{n:'Asien',bb:[95,3.5,143,41],lvl:0},
@@ -1959,7 +2007,7 @@ function useTrip
   if(prev){store.set.n1=prev.set.n1;store.set.n2=prev.set.n2;Object.assign(store.set.rates,prev.set.rates);store.set.ratesAt=prev.set.ratesAt}
   state.day=Math.min(ND()-1,Math.max(0,realDay()));state.pf='all';state.mv='world';state.sel=null;state.act=null;state.ifs='all';state.ifc='all';state.bkv='stay';
   try{localStorage.setItem('asien27trip',id)}catch(e){}
-  metaLoad();if(SYNC.url)syncSoon();
+  metaLoad();jnLoad();if(SYNC.url)syncSoon();
 }
 function renderTrips(){
   const ai=$('#appinfo');if(ai)ai.textContent=fmt(START)+' – '+fmt(addDays(START,ND()-1))+' · '+ND()+' Tage';
@@ -2009,7 +2057,7 @@ function dayItems(i){
 }
 /* ---------- Design-Hilfen: Tagesfoto, Kosten, Zeit, Ruhetage, Bewegung ---------- */
 function dayImg(i){
-  const l=(DAYACTS[i]||[]).map(id=>ACTSBY[id]).find(a=>a&&a.img);
+  const l=DA(i).map(id=>ACTSBY[id]).find(a=>a&&a.img);
   if(l)return l.img;
   const st=DAYS[i][1];if(!st)return null;
   const o=ACTS.find(a=>a.s===st&&a.img&&a.c!=='fun');
@@ -2037,7 +2085,7 @@ function actHours(a){
   return null;
 }
 function dayStats(i){
-  const L=(DAYACTS[i]||[]).map(id=>ACTSBY[id]).filter(Boolean),date=addDays(START,i);
+  const L=DA(i).map(id=>ACTSBY[id]).filter(Boolean),date=addDays(START,i);
   let c0=0,c1=0,h0=0,h1=0;const closed=[];
   L.forEach(a=>{const c=actCost(a),h=actHours(a);if(c){c0+=c[0];c1+=c[1]}if(h){h0+=h[0];h1+=h[1]}if(closedOn(a,date))closed.push(a)});
   return {c0,c1,h0,h1,closed,n:L.length};
@@ -2047,6 +2095,8 @@ function dayStatChips(i){
   const s=dayStats(i);let o='';
   if(s.c1>=5)o+=`<span class="ct">€ Aktivitäten ca. ${r5(s.c0)===r5(s.c1)?r5(s.c0):r5(s.c0)+'–'+r5(s.c1)} pro Person</span>`;
   if(s.h1>0)o+=`<span class="${s.h1>10?'wn':''}">${s.h1>10?'⚠ ':''}ca. ${Math.round(s.h0)===Math.round(s.h1)?Math.round(s.h0):Math.round(s.h0)+'–'+Math.round(s.h1)} Std. geplant${s.h1>10?', viel für einen Tag':''}</span>`;
+  const mu=DA(i).filter(id=>prioOf(id)==='must').length;if(mu)o+=`<span class="ct"><span class="ms">★</span> ${mu} Muss</span>`;
+  if(s.h1<=5)o+=`<span>Zeit für Spontanes</span>`;
   s.closed.forEach(a=>{o+=`<span class="wn">⚠ ${esc(a.t)}: an diesem Wochentag geschlossen</span>`});
   return o;
 }
@@ -2073,6 +2123,56 @@ function applyTheme(t){
   if(b)b.innerHTML=isDark()?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>';
 }
 {let t=null;try{t=localStorage.getItem('asien27theme')}catch(e){}if(t)document.documentElement.setAttribute('data-theme',t)}
+/* ---------- Was jetzt?, Tagebuch, Rückblick ---------- */
+function slotOf(a){
+  if(a.c==='night'||/Sonnenuntergang|Abend/i.test(a.t))return 2;
+  if(a.c==='food'||a.c==='market')return 1;
+  return 0;
+}
+function nowCard(i,stop,live){
+  const acts=DA(i).map(id=>ACTSBY[id]).filter(Boolean),names=['Vormittag','Nachmittag','Abend'];
+  const rows=[[],[],[]];acts.forEach(a=>rows[slotOf(a)].push(a));
+  /* Wenn der Vormittag leer, aber der Nachmittag voll ist, nach vorne rücken */
+  if(!rows[0].length&&rows[1].length>1)rows[0].push(rows[1].shift());
+  const hr=new Date().getHours(),cur=hr<12?0:hr<17?1:2;
+  const lines=rows.map((r,k)=>`<li class="${live&&k===cur?'now':''}"><span class="mono">${names[k]}</span><span>${r.length?r.map(a=>`<button type="button" class="lnk" data-sheet="${a.id}">${prioOf(a.id)==='must'?'<span class="ms">★</span> ':''}${esc(a.t)}</button>`).join(', '):'<span class="note">Frei, Zeit für Spontanes</span>'}</span></li>`).join('');
+  const w=wxFor(stop,i),rainy=w.ic==='rain';
+  const ref=(acts.find(a=>a.ll)||{}).ll||(STOPS[stop]?[STOPS[stop].ll[1],STOPS[stop].ll[0]]:null);
+  let near=[];
+  if(ref){
+    const used=new Set();for(let k=0;k<ND();k++)DA(k).forEach(id=>used.add(id));
+    near=ACTS.filter(a=>a.s===stop&&a.ll&&!used.has(a.id)&&!store.vis[a.id]).map(a=>({a,km:kmBetween(ref,a.ll),ok:rainy?(a.c==='sight'||a.c==='market'||a.c==='food'||a.c==='fun'):true})).filter(o=>o.ok&&o.km<=12).sort((x,y)=>x.km-y.km).slice(0,3);
+  }
+  return `<article class="card"><div class="cnt"><h2 class="lbl">${live?'Was jetzt?':'Tagesablauf'}</h2><span class="mono">${rainy?'Regen möglich':''}</span></div><ul class="slots">${lines}</ul>`+
+   (near.length?`<h3 class="mini">Spontan in der Nähe${rainy?' (auch bei Regen)':''}</h3><ul class="near">${near.map(o=>{const c2=CATM[o.a.c]||['Ort','k7'];return `<li><button type="button" data-sheet="${o.a.id}"><span class="ci" style="--c:var(--${c2[1]})"></span><span><b>${esc(o.a.t)}</b><span class="note">${hopText(o.km)}</span></span></button></li>`}).join('')}</ul>`:'')+`</article>`;
+}
+/* Tagebuch: nur auf diesem Gerät */
+var JN={};
+const jnKey=()=>TRIP.key+'jn';
+function jnLoad(){try{JN=JSON.parse(localStorage.getItem(jnKey())||'{}')||{}}catch(e){JN={}}}
+function jnSave(){try{localStorage.setItem(jnKey(),JSON.stringify(JN));return true}catch(e){return false}}
+function jnCard(i){
+  const e=JN[i]||{};
+  return `<article class="card"><h2 class="lbl">Tagebuch</h2><textarea id="jn-t" data-jn="${i}" rows="3" placeholder="Ein Satz zum Tag …" aria-label="Tagebuch">${esc(e.t||'')}</textarea>${e.img?`<img class="jnimg" src="${e.img}" alt="Foto vom Tag">`:''}<div class="links"><label class="btn sm jnfile">${e.img?'Foto ändern':'Foto hinzufügen'}<input type="file" accept="image/*" data-jnimg="${i}" hidden></label>${e.img?`<button type="button" data-jnrm="${i}">Foto entfernen</button>`:''}</div><p class="note" id="jn-n">Wird nur auf diesem Gerät gespeichert.</p></article>`;
+}
+function jnShrink(file,cb){
+  const r=new FileReader();
+  r.onload=()=>{const im=new Image();im.onload=()=>{const m=900,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.7))};im.onerror=()=>cb(null);im.src=r.result};
+  r.onerror=()=>cb(null);r.readAsDataURL(file);
+}
+function viewRueck(){
+  const rl=realDay(),upto=Math.max(0,Math.min(ND()-1,rl<0?ND()-1:rl));
+  const c=calc();let km=0,fl=0;
+  for(let k=1;k<ROUTE.length;k++){const a=STOPS[ROUTE[k-1]],b=STOPS[ROUTE[k]];if(a&&b){km+=kmBetween([a.ll[1],a.ll[0]],[b.ll[1],b.ll[0]]);if(ROUTE_META[k]&&ROUTE_META[k][0]==='flug')fl++}}
+  const nv=Object.keys(store.vis).length,nm=Object.keys(store.pl||{}).filter(k=>store.pl[k].p==='must').length;
+  const pre=rl<0?'Geplant: ':'';
+  let h=`<div class="card"><h2 style="font-size:22px">Rückblick</h2><p class="note">${rl<0?'So sieht die Reise aus, wenn alles läuft. Nach dem Start füllt sich die Seite mit euren Einträgen.':'Eure Reise in Zahlen und Bildern.'}</p>
+   <div class="afacts"><div><b>${pre}Tage</b><span>${rl<0?ND():upto+1}</span></div><div><b>${pre}Länder</b><span>${STAGES.length}</span></div><div><b>${pre}Stationen</b><span>${ORDER.length}</span></div><div><b>Strecke Luftlinie</b><span>ca. ${nf0.format(Math.round(km/100)*100)} km</span></div><div><b>Flüge</b><span>${fl}</span></div><div><b>Besuchte Orte</b><span>${nv}</span></div><div><b>Ausgegeben</b><span>${eur(c.spent)}</span></div></div></div>`;
+  const ents=Object.keys(JN).map(Number).filter(i=>JN[i]&&(JN[i].t||JN[i].img)).sort((a,b)=>a-b);
+  if(!ents.length)h+='<p class="note">Noch keine Tagebuch-Einträge. Unter „Heute“ gibt es für jeden Tag ein Feld für einen Satz und ein Foto.</p>';
+  ents.forEach(i=>{const e=JN[i];h+=`<article class="card"><div class="cnt"><h3>${esc(DAYS[i][0])}</h3><span class="mono">Tag ${i+1} · ${fmtL(addDays(START,i))}</span></div>${e.img?`<img class="jnimg" src="${e.img}" alt="">`:''}${e.t?`<p>${esc(e.t)}</p>`:''}</article>`});
+  return h;
+}
 function viewHeute(){
   const i=state.day,d=DAYS[i],st=stageOf(i),date=addDays(START,i),rl=realDay(),live=i===rl,stop=stopAt(i);
   const w=wxFor(stop,i),cur=WXC[stop]&&WXC[stop].cur;
@@ -2087,11 +2187,12 @@ function viewHeute(){
   h+=`<div class="nav"><button class="btn" data-nav="-1" ${i<1?'disabled':''}>‹ Vortag</button><button class="btn pri" data-nav="0" ${live||rl<0&&i===0?'disabled':''}>${rl<0?'Tag 1':'Heute'}</button><button class="btn" data-nav="1" ${i>ND()-2?'disabled':''}>Nächster ›</button></div>`;
   const moved=d[0].startsWith('→')||i===0||i===ND()-1,sg=segsOn(i);
   h+=`<article class="card" style="--sc:var(--${st.id})"><h2 class="lbl">${live?'Heute':'Programm'}</h2>${sg.length?sg.map(segTag).join(''):moved?`<span class="tag">Ortswechsel</span>`:''}<ul class="prog">${d[2].split('; ').map(x=>`<li>${esc(x)}</li>`).join('')}</ul></article>`;
-  const ai=(DAYACTS[i]||[]).map(id=>ACTSBY[id]).filter(Boolean),rt=dayRouteUrl(i);
+  h+=nowCard(i,stop,live);
+  const ai=DA(i).map(id=>ACTSBY[id]).filter(Boolean).sort((x,y)=>(prioOf(x.id)==='must'?0:1)-(prioOf(y.id)==='must'?0:1)),rt=dayRouteUrl(i);
   if(ai.length)h+=`<article class="card"><div class="cnt"><h2 class="lbl">Aktivitäten im Detail</h2><span class="mono">${ai.length}</span></div><div>${ai.map(a=>actHtml(a)).join('')}</div>${rt?`<div class="links"><a href="${rt}" target="_blank" rel="noopener">Tagesroute in Google Maps ↗</a></div>`:''}</article>`;
-  const ideas=ACTS.filter(a=>a.s===stop&&!(DAYACTS[i]||[]).includes(a.id));
+  const ideas=ACTS.filter(a=>a.s===stop&&!DA(i).includes(a.id));
   if(ideas.length)h+=`<details class="tips"><summary>Weitere Ideen in ${esc(STOPS[stop].n)} (${ideas.length})</summary><div style="padding-bottom:12px">${ideas.map(a=>actHtml(a)).join('')}</div></details>`;
-  h+=stayCard(i)+dayItems(i)+wxCard(stop,i,rl);
+  h+=stayCard(i)+dayItems(i)+wxCard(stop,i,rl)+jnCard(i);
   if(i<ND()-1){
     const n=DAYS[i+1],ns=stageOf(i+1),ch=n[1]!==d[1]&&n[1];
     h+=`<article class="card" style="--sc:var(--${ns.id})"><h2 class="lbl">${live?'Morgen':'Am Tag danach'} · ${fmtL(addDays(START,i+1))}</h2><h3>${esc(n[0])}</h3>${ch?`<span class="tag">Weiterreise nach ${esc(STOPS[n[1]].n)}</span>`:''}<p>${esc(n[2])}</p></article>`;
@@ -2112,7 +2213,7 @@ function dayRow(i){
   return `<li class="day${i===rl?' today':''}${i<rl?' past':''}" id="d${i}"><div class="dn"><b>${i+1}</b><span class="mono">${fmtL(date)}</span></div><div class="db"><h3>${esc(d[0])}</h3><p>${esc(d[2])}</p>
    <div class="meta"><span>${tempI}${w.hi}° / ${w.lo}°</span>${segsOn(i).map(k=>`<span>${trI(ROUTE_META[k][0],15)}${TRN[ROUTE_META[k][0]]}</span>`).join('')}${sy?`<span>${bedI}${sy.name?esc(sy.name):'Unterkunft offen'}</span>`:''}${dayStatChips(i)}</div>
    </div>${d[1]?`<button class="pin" data-map="${d[1]}" aria-label="${esc(STOPS[d[1]].n)} auf der Karte zeigen">${pinI}</button>`:'<span></span>'}
-   ${(DAYACTS[i]||[]).length?`<details class="dayacts"><summary>${DAYACTS[i].length} ${DAYACTS[i].length===1?'Aktivität':'Aktivitäten'} mit Fotos, Infos und Maps-Links</summary><div>${DAYACTS[i].map(id=>ACTSBY[id]).filter(Boolean).map(a=>actHtml(a)).join('')}</div></details>`:''}</li>`;
+   ${DA(i).length?`<details class="dayacts"><summary>${DA(i).length} ${DA(i).length===1?'Aktivität':'Aktivitäten'} mit Fotos, Infos und Maps-Links</summary><div>${DA(i).map(id=>ACTSBY[id]).filter(Boolean).map(a=>actHtml(a)).join('')}</div></details>`:''}</li>`;
 }
 function viewPlan(){
   const chip=(id,n)=>`<button class="chip" data-pf="${id}" aria-pressed="${state.pf===id}">${n}</button>`;
@@ -2473,7 +2574,7 @@ function viewErfahrung(){
 
 function viewMore(){
   const chip=(id,n)=>`<button class="chip" data-more="${id}" aria-pressed="${state.more===id}">${n}</button>`;
-  let h=`<div class="chips">${chip('todo','Aufgaben')}${chip('ideen','Ideen')}${chip('wetter','Wetter')}${chip('laender','Länder')}${chip('preise','Preise')}${chip('einreise','Einreise')}${chip('kosten','Plan-Kosten')}${chip('apps','Apps')}${chip('erfahrung','Erfahrungen')}${chip('offline','Offline')}${chip('daten','Daten')}</div><div class="stack">`;
+  let h=`<div class="chips">${chip('todo','Aufgaben')}${chip('ideen','Ideen')}${chip('wetter','Wetter')}${chip('laender','Länder')}${chip('preise','Preise')}${chip('einreise','Einreise')}${chip('kosten','Plan-Kosten')}${chip('apps','Apps')}${chip('erfahrung','Erfahrungen')}${chip('offline','Offline')}${chip('rueck','Rückblick')}${chip('daten','Daten')}</div><div class="stack">`;
   if(state.more==='todo')h+=listCard('book')+listCard('pack')+'<p class="note">Der Abhak-Stand wird nur auf diesem Gerät gespeichert.</p>';
   else if(state.more==='ideen'){
     const sc=(id,n)=>`<button class="chip" data-ifs="${id}" aria-pressed="${state.ifs===id}">${n}</button>`,cc=(id,n)=>`<button class="chip" data-ifc="${id}" aria-pressed="${state.ifc===id}">${n}</button>`;
@@ -2501,6 +2602,8 @@ function viewMore(){
   }else if(state.more==='erfahrung'){
     h+=viewErfahrung();
 
+  }else if(state.more==='rueck'){
+    h+=viewRueck();
   }else if(state.more==='offline'){
     h+=offlineCard();setTimeout(offlineStat,0);
   }else{
@@ -2637,10 +2740,11 @@ async function liveRates(btn){
 
 /* ---------- Ereignisse ---------- */
 document.addEventListener('click',e=>{
-  const t=e.target.closest('[data-trip],[data-sheet],[data-thm],[data-showact],[data-mc],[data-ifs],[data-ifc],[data-tab],[data-nav],[data-pf],[data-mv],[data-stop],[data-map],[data-gomap],[data-goplan],[data-del],[data-addexp],[data-editbk],[data-addact],[data-delbk],[data-delexp],[data-bkv],[data-more],[data-budget],[data-rates],[data-ratesedit],[data-wx],[data-export],[data-import],[data-pack],[data-packdel],[data-syncsave],[data-syncnow],[data-syncoff],[data-reset],[data-resetyes],[data-mm],[data-mmtoggle],[data-tour]');
+  const t=e.target.closest('[data-trip],[data-sheet],[data-prio],[data-thm],[data-showact],[data-mc],[data-ifs],[data-ifc],[data-tab],[data-nav],[data-pf],[data-mv],[data-stop],[data-map],[data-gomap],[data-goplan],[data-del],[data-addexp],[data-editbk],[data-addact],[data-delbk],[data-delexp],[data-bkv],[data-more],[data-budget],[data-rates],[data-ratesedit],[data-wx],[data-export],[data-import],[data-pack],[data-packdel],[data-syncsave],[data-syncnow],[data-syncoff],[data-reset],[data-resetyes],[data-mm],[data-mmtoggle],[data-tour]');
   if(!t)return;const D=t.dataset;
   if(D.trip){if(D.trip!==state.trip){useTrip(D.trip);state.tab='heute';render();scrollTo(0,0)}}
   else if(D.sheet)openActSheet(D.sheet);
+  else if(D.prio){const [id,p]=D.prio.split('|');setPl(id,{p:p});refreshActSheet(id);keep()}
   else if(D.thm!==undefined){const nt=isDark()?'light':'dark';try{localStorage.setItem('asien27theme',nt)}catch(e){}applyTheme(nt)}
   else if(D.showact){const a=ACTSBY[D.showact];if(a){state.sel=a.s;state.act=a.id;state.mv=STOPS[a.s].st;if(state.tab==='karte'&&LM.map)showAct(a.id);else go('karte')}}
   else if(D.mc){state.mc=D.mc;const c=$('#kcats');if(c)c.innerHTML=catChips();if(LM.map)buildActs()}
@@ -2684,8 +2788,32 @@ document.addEventListener('keydown',e=>{
   if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('.mk')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}
 });
 document.addEventListener('error',e=>{const t=e.target;if(t&&t.tagName==='IMG'){const f=t.closest&&t.closest('.af');if(f)f.classList.add('noimg')}},true);
+
+document.addEventListener('input',e=>{
+  const t=e.target;if(t&&t.dataset&&t.dataset.jn!==undefined){
+    const i=t.dataset.jn;JN[i]=Object.assign({},JN[i]||{},{t:t.value});if(!JN[i].t&&!JN[i].img)delete JN[i];
+    clearTimeout(t._jt);t._jt=setTimeout(()=>{const n=document.getElementById('jn-n');if(n)n.textContent=jnSave()?'Gespeichert, nur auf diesem Gerät.':'Speicher voll, bitte Fotos entfernen.'},500);
+  }
+});
+document.addEventListener('change',e=>{
+  const f=e.target&&e.target.dataset&&e.target.dataset.jnimg;
+  if(f!==undefined&&e.target.files&&e.target.files[0]){
+    const i=f;jnShrink(e.target.files[0],u=>{if(!u)return;JN[i]=Object.assign({},JN[i]||{},{img:u});if(!jnSave()){delete JN[i].img;alert('Der Speicher ist voll. Entfernt ein altes Foto und versucht es noch einmal.')}keep()});
+  }
+});
+document.addEventListener('click',e=>{
+  const b=e.target.closest&&e.target.closest('[data-jnrm]');
+  if(b){const i=b.dataset.jnrm;if(JN[i]){delete JN[i].img;if(!JN[i].t)delete JN[i];jnSave();keep()}}
+});
+/* Wischen zwischen den Tagen (nur auf „Heute“) */
+{let sx=0,sy=0,ok=false;
+ document.addEventListener('touchstart',e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;ok=state.tab==='heute'&&!document.body.classList.contains('noscroll')&&!e.target.closest('.wxrow,.chips,.mapcard,.tw,textarea,input,select,.lmap')},{passive:true});
+ document.addEventListener('touchend',e=>{if(!ok)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;ok=false;if(Math.abs(dx)>90&&Math.abs(dy)<45){const b=document.querySelector('[data-nav="'+(dx<0?1:-1)+'"]');if(b&&!b.disabled)b.click()}},{passive:true});
+}
 document.addEventListener('change',e=>{
   if(e.target.id==='kview'){const v=e.target.value;if(LM.map)setView(v);else{state.mv=v;state.sel=null;render(true)}return}
+  const mv=e.target.closest('[data-mvsel]');
+  if(mv){if(mv.value!==''){setPl(mv.dataset.mvsel,{d:parseInt(mv.value,10)});refreshActSheet(mv.dataset.mvsel);keep()}return}
   const v=e.target.closest('[data-vis]');
   if(v){if(v.checked)store.vis[v.dataset.vis]=1;else delete store.vis[v.dataset.vis];save();const d=v.closest('details.act');if(d)d.classList.toggle('seen',v.checked);return}
   const c=e.target.closest('[data-chk]');if(c){
