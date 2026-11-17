@@ -65,7 +65,7 @@ a{color:inherit}
 .btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;min-height:44px;padding:0 14px;font-weight:600}
 .btn:disabled{opacity:.4;cursor:default}
 .btn.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.btn.sm{min-height:36px;padding:0 12px;font-size:14px}
+.btn.sm{min-height:44px;padding:0 14px;font-size:14px}
 .links{display:flex;flex-wrap:wrap;gap:8px}
 .links a,.links button{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface2);font-weight:600;text-decoration:none}
 .tag{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;border-radius:6px;padding:2px 8px;font:500 12px var(--f-mono);background:color-mix(in srgb,var(--sc,var(--muted)) 20%,var(--surface))}
@@ -344,6 +344,15 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .kc .kn{position:absolute;z-index:1;left:8px;top:8px;width:24px;height:24px;border-radius:50%;background:var(--sc);display:grid;place-items:center;font:700 12px var(--f-mono);color:#fff;border:2px solid #fff}
 .kc .kt{position:absolute;z-index:1;left:10px;right:8px;bottom:7px;display:flex;flex-direction:column;line-height:1.15}
 
+.tourbar{position:absolute;z-index:710;left:10px;right:62px;top:104px;display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:99px;background:var(--ink);color:var(--bg);box-shadow:0 3px 12px rgba(0,0,0,.4);font-weight:600;font-size:14px}
+.tourbar[hidden]{display:none}
+.tourbar button{width:40px;height:40px;border-radius:50%;border:0;background:transparent;color:inherit;font-size:16px;flex:none}
+.tourbar button#tourtoggle{background:var(--bg);color:var(--ink)}
+.tourbar .tt{flex:1;min-width:0;display:flex;align-items:center;gap:6px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;padding:0 6px}
+.kmsg{position:absolute;z-index:710;left:10px;right:62px;top:104px;padding:8px 14px;border-radius:99px;background:var(--ink);color:var(--bg);font-weight:600;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.kmsg[hidden]{display:none}
+.ltrav{pointer-events:auto!important}
+.ltrav .tv{cursor:pointer}
 .kb{width:48px;height:48px;border-radius:14px;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 94%,transparent);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;font:600 10px var(--f-body);backdrop-filter:blur(6px);box-shadow:0 2px 8px rgba(0,0,0,.25);transition:transform .15s}
 .kb .g{font-size:18px;line-height:1}
 .kb:active{transform:scale(.92)}
@@ -375,7 +384,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .dn2{flex:none;width:28px;height:28px;border-radius:50%;background:var(--c,var(--k7));color:#fff;display:grid;place-items:center;font:700 12px var(--f-mono)}
 .me .ring{fill:#2f6df6;fill-opacity:.15;stroke:#2f6df6;stroke-width:1}
 .leaflet-container .me-dot{fill:#2f6df6;stroke:#fff;stroke-width:3;fill-opacity:1}
-.chip.sm{min-height:34px;padding:0 12px;font-size:14px}
+.chip.sm{min-height:40px;padding:0 12px;font-size:14px}
 
 /* Sheet */
 .ov{position:fixed;inset:0;z-index:50;background:color-mix(in srgb,var(--ink) 45%,transparent);display:flex;align-items:flex-end;justify-content:center}
@@ -478,7 +487,7 @@ body.noscroll .fab,body.nofab .fab{display:none}
 .stage>.sh{position:sticky;top:calc(env(safe-area-inset-top,0px) + 74px);z-index:6;background:var(--bg);padding:8px 0}
 .meta .wn{color:var(--warn);font-weight:600}
 .meta .ct{color:var(--ink)}
-.thm{width:38px;height:38px;flex:none;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--ink);display:inline-flex;align-items:center;justify-content:center;transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+.thm{width:44px;height:44px;flex:none;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--ink);display:inline-flex;align-items:center;justify-content:center;transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
 .thm:active{transform:rotate(180deg) scale(.9)}
 .thm svg{width:20px;height:20px}
 .abr{display:flex;align-items:center;gap:10px}
@@ -749,7 +758,7 @@ const ACTS_JP=[
 {id:"tyo-hakone",s:"tyo",c:"trip",t:"Hakone (Onsen und Fuji-Blick)",wp:"Hakone, Kanagawa",q:"Hakone, Kanagawa",d:"Bergregion mit heißen Quellen, Seilbahn, Vulkantal Owakudani und Blick auf den Fuji, wenn das Wetter mitspielt. Gut als Tages- oder Übernachtungsausflug.",h:"Je nach Attraktion ca. 9:00–17:00",p:"Hakone Free Pass ca. 6.100 ¥ (2 Tage, ab Shinjuku)",z:"Ganzer Tag oder Übernachtung",w:"Odakyu Romancecar ab Shinjuku, ca. 85 Min.",tips:["Ein Tag mit klarer Sicht ist entscheidend, Wettervorhersage prüfen.","Onsen: Tätowierungen sind in manchen Bädern ein Problem, vorher fragen.","Free Pass lohnt sich meist durch Seilbahn, Bus und Boot."]},
 {id:"tyo-kamakura",s:"tyo",c:"trip",t:"Kamakura (Großer Buddha)",wp:"Kamakura",q:"Kamakura Great Buddha Kotoku-in",d:"Küstenstadt mit Tempeln, Wanderwegen und dem 13 m großen Bronze-Buddha. Gut als Tagesausflug mit Stopp am Strand und der Romanbahn Enoden.",h:"Großer Buddha ca. 8:00–17:30",p:"Großer Buddha ca. 300 ¥, Zug ca. 950 ¥ ab Tokyo",z:"Ganzer Tag",w:"JR Yokosuka oder Shonan Shinjuku Line ab Tokyo, ca. 1 Std.",tips:["Der Hasedera-Tempel hat einen schönen Meerblick.","Die Wanderung von Kita-Kamakura zum Daibutsu dauert ca. 3 Std."]},
 {id:"tyo-tsukiji",s:"tyo",c:"food",t:"Tsukiji Outer Market",wp:"Tsukiji Fish Market",q:"Tsukiji Outer Market, Tokyo",d:"Der Außenmarkt des früheren Fischmarkts: frische Sushi, Tamagoyaki, Meeresfrüchte-Spieße und Kaffee. Gut für ein spätes Frühstück.",h:"Meist ca. 6:00–14:00 (Mi oft geschlossen)",p:"Essen ca. 500–2.500 ¥",z:"1,5 Std.",w:"Metro Tsukiji oder Tsukijishijo",tips:["Früh kommen, mittags sind viele Stände leer.","Gehen und Essen gleichzeitig ist verpönt, bitte am Stand essen."]},
-{id:"tyo-teamlab",s:"tyo",c:"fun",t:"teamLab Planets",wp:"TeamLab (art collective)",q:"teamLab Planets, Tokyo",d:"Barfuß durch Wasser und Spiegel, durch Räume voller Licht und Blumen. Eine Kunst-Ausstellung zum Eintauchen, die man nicht vergisst.",h:"Meist ca. 9:00–22:00, Einlass mit festem Zeitfenster",p:"ca. 3.800–4.400 ¥",z:"2 Std.",w:"Metro Shin-Toyosu, 1 Min. zu Fuß",tips:["Tickets früh online buchen, Zeitfenster sind begrenzt.","Hosen die man hochkrempeln kann, keine Röcke, Handtuch vorhanden."]},
+{id:"tyo-teamlab",s:"tyo",c:"fun",t:"teamLab Planets",wp:"TeamLab (art collective)",q:"teamLab Planets, Tokyo",d:"Barfuß durch Wasser und Spiegel, durch Räume voller Licht und Blumen. Eine Kunst-Ausstellung zum Eintauchen, die man nicht vergisst.",h:"Meist ca. 9:00–22:00, Einlass mit festem Zeitfenster",p:"ca. 3.800–4.400 ¥. GetYourGuide (17.11.2026): Eintrittsticket ca. 21 €, 4,6 von 5 bei über 15.000 Bewertungen",z:"2 Std.",w:"Metro Shin-Toyosu, 1 Min. zu Fuß",tips:["Tickets früh online buchen, Zeitfenster sind begrenzt.","Hosen die man hochkrempeln kann, keine Röcke, Handtuch vorhanden."]},
 {id:"tyo-akihabara",s:"tyo",c:"fun",t:"Akihabara",wp:"Akihabara",q:"Akihabara, Tokyo",d:"Elektronik, Retro-Spiele, Anime, Manga und Spielhallen auf mehreren Etagen. Für Spiele- und Technik-Fans ein Paradies.",h:"Läden meist ca. 10:00–21:00",p:"Eintritt frei",z:"2 Std.",w:"JR Akihabara, Electric Town Ausgang",tips:["Gachapon-Automaten (Kapselspielzeug) kosten ca. 300–500 ¥.","Läden für Retro-Games gibt es auf den oberen Etagen."]},
 {id:"tyo-yanaka",s:"tyo",c:"sight",t:"Yanaka: alte Gassen und Tempel",wp:"Yanaka, Tokyo",q:"Yanaka Ginza, Tokyo",d:"Ruhiges Viertel, das viel vom alten Tokyo bewahrt hat. Kleine Läden, Katzen, Friedhof mit Kirschbäumen und die Einkaufsgasse Yanaka Ginza.",h:"Läden meist ca. 10:00–18:00",p:"Eintritt frei",z:"2 Std.",w:"JR Nippori, 5 Min. zu Fuß",tips:["Kombinierbar mit Ueno-Park.","Auf dem Yanaka-Friedhof blühen Kirschbäume schön."]},
 {id:"tyo-chidori",s:"tyo",c:"nature",t:"Chidorigafuchi (Kirschblüte am Wassergraben)",wp:"Chidorigafuchi",q:"Chidorigafuchi, Tokyo",d:"Kirschbäume hängen über den Graben des Kaiserpalastes. Man kann kleine Ruderboote leihen und unter den Blüten fahren. Eines der meistfotografierten Hanami-Motive.",h:"Park ganztags, Boote meist ca. 11:00–17:30",p:"Boote ca. 800 ¥ pro 30 Min. (Warteschlange!)",z:"1–2 Std.",w:"Metro Kudanshita, 5 Min. zu Fuß",tips:["Wartezeit für Boote kann 1–2 Stunden betragen.","Abends gibt es eine Beleuchtung, aber sehr voll."]},
@@ -909,7 +918,7 @@ const ACTS_B2=[
 /* ---------- VIETNAM ---------- */
 {id:"han-sapa",s:"han",c:"trip",t:"Sa Pa (Idee, nicht im Plan)",wp:"Sa Pa",q:"Sa Pa, Lao Cai, Vietnam",d:"Bergstadt im Nordwesten mit Reisterrassen und Dörfern der Bergvölker. Von Hanoi per Bus oder Nachtzug ca. 5–6 Std. Weil ihr den Ha-Giang-Loop als Berg-Abenteuer macht, würde Sa Pa dasselbe Thema doppeln. Nur eine Option, wenn der Loop wegfällt.",h:"Ganzjährig",p:"Nachtzug ca. 600.000–1.000.000 VND, Trekking mit Guide ca. 400.000–900.000 VND",z:"mind. 2 Tage",w:"Nachtzug oder Limousinen-Bus ab Hanoi, ca. 5–6 Std.",tips:["Im März oft Nebel und Nieselregen, die Terrassen sind noch nicht grün.","Ein Entweder-oder: Ha-Giang-Loop oder Sa Pa, beides würde zu viel Zeit kosten.","Warme Kleidung mitnehmen."]},
 {id:"han-glassbridge",s:"han",c:"trip",t:"Bạch Long Glass Bridge (Idee, nicht im Plan)",q:"Bach Long Glass Bridge, Moc Chau, Son La",d:"Eine der längsten Glasbrücken der Welt mit rund 630 m, bei Mộc Châu im Nordwesten. Beeindruckend, aber weit weg: ca. 4 Std. Fahrt ab Hanoi in eine Richtung. Als Tagesausflug würde das rund 9 Std. im Auto bedeuten.",h:"Täglich ca. 7–17 Uhr (vor Ort prüfen)",p:"Eintritt ca. 300.000–500.000 VND (vor Ort prüfen)",z:"1–2 Std. plus Anreise",w:"Ca. 4 Std. ab Hanoi per Auto oder Bus",tips:["Nur mit Übernachtung in Mộc Châu oder Mai Châu sinnvoll, nicht als Tagesausflug.","Bei Nebel oder Regen ist die Aussicht schlecht.","Wer Höhenangst hat, lässt es besser weg."]},
-{id:"hag-loop",s:"hag",c:"trip",t:"Ha-Giang-Loop (4 Tage Motorrad-Tour)",wp:"Hà Giang province",q:"Ha Giang Loop, Vietnam",d:"Die berühmteste Bergstrecke Vietnams: ca. 350 km durch Kalkgebirge, Pässe und Dörfer an der Grenze zu China. Ihr fahrt als Beifahrer mit einem Easy Rider, übernachtet in Homestays und esst mit den Familien. Auf Google Maps ist die Tour mit 4,9 Sternen bewertet. Der Pin in eurer Liste liegt in Hanoi, dort ist vermutlich der Anbieter.",h:"4 Tage (3 Nächte), Start meist morgens in Ha Giang",p:"Easy-Rider-Tour (4 Tage) ca. 4.500.000–7.500.000 VND pro Person, Bus Hanoi–Ha Giang ca. 250.000–400.000 VND",z:"4 Tage plus Hin- und Rückfahrt (ca. 6 Std. je Strecke)",w:"Limousinen-Bus ab Hanoi nach Ha Giang, ca. 6 Std.",tips:["Fahrt als Beifahrer. Selbst zu fahren ist riskant, es gibt viele Unfälle.","Klärt vor der Buchung, ob eure Reiseversicherung Motorrad-Mitfahrer abdeckt. Viele Policen schließen das aus.","Warme Kleidung, Regenjacke und Handschuhe für die kühlen Berge einpacken, Helme stellt meist der Anbieter.","Rucksack klein halten, großes Gepäck bleibt im Hotel in Hanoi.","Seit Juni 2026 wird für Ausländer in den Grenzgebieten ein Permit von ca. 10 USD verlangt (Quellen weichen ab). Der Anbieter regelt das meist. Nach einem tödlichen Unfall im April 2026 gelten strengere Regeln für Anbieter, deshalb nur seriöse Veranstalter mit Versicherung und Helmen wählen."]},
+{id:"hag-loop",s:"hag",c:"trip",t:"Ha-Giang-Loop (4 Tage Motorrad-Tour)",wp:"Hà Giang province",q:"Ha Giang Loop, Vietnam",d:"Die berühmteste Bergstrecke Vietnams: ca. 350 km durch Kalkgebirge, Pässe und Dörfer an der Grenze zu China. Ihr fahrt als Beifahrer mit einem Easy Rider, übernachtet in Homestays und esst mit den Familien. Auf Google Maps ist die Tour mit 4,9 Sternen bewertet. Der Pin in eurer Liste liegt in Hanoi, dort ist vermutlich der Anbieter.",h:"4 Tage (3 Nächte), Start meist morgens in Ha Giang",p:"Easy-Rider-Tour (4 Tage) ca. 4.500.000–7.500.000 VND pro Person, Bus Hanoi–Ha Giang ca. 250.000–400.000 VND. GetYourGuide (17.11.2026): 4-Tage-Touren ca. 210–241 € pro Person, alle mit 4,9 von 5 bei 104 bis 506 Bewertungen",z:"4 Tage plus Hin- und Rückfahrt (ca. 6 Std. je Strecke)",w:"Limousinen-Bus ab Hanoi nach Ha Giang, ca. 6 Std.",tips:["Fahrt als Beifahrer. Selbst zu fahren ist riskant, es gibt viele Unfälle.","Klärt vor der Buchung, ob eure Reiseversicherung Motorrad-Mitfahrer abdeckt. Viele Policen schließen das aus.","Warme Kleidung, Regenjacke und Handschuhe für die kühlen Berge einpacken, Helme stellt meist der Anbieter.","Rucksack klein halten, großes Gepäck bleibt im Hotel in Hanoi.","Seit Juni 2026 wird für Ausländer in den Grenzgebieten ein Permit von ca. 10 USD verlangt (Quellen weichen ab). Der Anbieter regelt das meist. Nach einem tödlichen Unfall im April 2026 gelten strengere Regeln für Anbieter, deshalb nur seriöse Veranstalter mit Versicherung und Helmen wählen."]},
 {id:"hag-mapileng",s:"hag",c:"nature",t:"Mã Pí Lèng Pass",wp:"Mã Pí Lèng Pass",q:"Ma Pi Leng Pass, Ha Giang",d:"Der spektakulärste Abschnitt des Ha-Giang-Loops: eine Passstraße hoch über der Schlucht des Nho-Que-Flusses. Blick auf tiefgrüne Schluchten und endlose Bergketten. Meist am zweiten Tag der Tour.",h:"Ganzjährig, am besten bei klarer Sicht am Vormittag",p:"Im Tourpreis enthalten",z:"1–2 Std. mit Stopps",w:"Teil der Loop-Tour, zwischen Dong Van und Meo Vac",tips:["Am frühen Vormittag ist die Sicht oft klarer als am Nachmittag.","Nach Regen kann die Straße rutschig sein.","Für Fotos einen der Aussichtspunkte nutzen, nicht auf der Straße anhalten."]},
 {id:"hoi-duckstop",s:"hoi",c:"fun",t:"Duck Stop: Entenfarm in Hoi An",q:"Duck Stop Hoi An, Hoi An Dong, Da Nang",d:"Eine kleine Ökofarm mit hunderten Enten bei Hoi An. Ihr füttert die Tiere, lauft als „Duck Leader“ mit der Herde und bekommt die berühmte Enten-Fußmassage. Beliebt bei Familien und Paaren, Bewertung 5,0. Liegt nahe am Cam-Thanh-Kokosnusswald.",h:"Täglich, meist 8–17 Uhr (vor Ort prüfen)",p:"Ab ca. 350.000 VND pro Person, Kaffee-Kurs zusätzlich",z:"1–2 Std.",w:"Ca. 10 Min. mit dem Fahrrad oder Taxi von der Altstadt, in An My (Hoi An Dong)",tips:["Gut mit dem Kokosnusswald (Korbboot) kombinierbar, beides liegt nah beieinander.","Es gibt mehrere „Duck Stop“-Orte in Vietnam, in Hoi An auf die richtige Adresse achten.","Feste Schuhe oder Sandalen, die nass werden dürfen."]},
 {id:"hoi-captainchris",s:"hoi",c:"trip",t:"Bootstour mit Captain Chris",q:"Captain Chris, Bach Dang, Hoi An",d:"Bootstouren auf dem Fluss in Hoi An, Treffpunkt an der Bạch-Đằng-Straße in der Altstadt. Auf Google Maps 5,0 bei 122 Bewertungen. Programm und Preise konnte ich nicht verlässlich recherchieren, bitte auf der Google-Maps-Seite oder vor Ort erfragen.",h:"Meist am späten Nachmittag und Abend (vor Ort prüfen)",p:"Fluss-Bootstouren in Hoi An meist ca. 150.000–400.000 VND",z:"1–2 Std.",w:"Anlegestelle an der Bạch Đằng, Altstadt",tips:["Abends fahren, wenn die Laternen leuchten.","Preis und Dauer vor der Abfahrt klären.","Zum Sonnenuntergang kommen, dann ist das Licht am schönsten."]},
@@ -937,7 +946,7 @@ const ACTLL_C={
 };
 const ACTS_C=[
 /* ---------- THAILAND ---------- */
-{id:"bkk-cooking",s:"bkk",c:"fun",t:"Thai-Kochkurs mit Marktbesuch",q:"Thai cooking class Bangkok",d:"Halbtags-Kochkurs: erst Markt mit Kräutern und Gewürzen, dann kocht ihr vier bis fünf Gerichte selbst, zum Beispiel Tom Yum, Curry, Pad Thai und ein Dessert. Das Essen esst ihr danach. Eine der beliebtesten Aktivitäten bei Reisenden.",h:"Meist Vormittag oder Nachmittag, 3–4 Std.",p:"ca. 1.200–1.800 THB pro Person",z:"3–4 Std.",w:"Abholung vom Hotel oder Treffpunkt an einer Skytrain-Station",tips:["Schulen mit kleinen Gruppen und guten aktuellen Bewertungen wählen.","Vegetarische Variante vorher ankündigen.","Am Anfang der Reise machen, dann kocht ihr zu Hause nach."]},
+{id:"bkk-cooking",s:"bkk",c:"fun",t:"Thai-Kochkurs mit Marktbesuch",q:"Thai cooking class Bangkok",d:"Halbtags-Kochkurs: erst Markt mit Kräutern und Gewürzen, dann kocht ihr vier bis fünf Gerichte selbst, zum Beispiel Tom Yum, Curry, Pad Thai und ein Dessert. Das Essen esst ihr danach. Eine der beliebtesten Aktivitäten bei Reisenden.",h:"Meist Vormittag oder Nachmittag, 3–4 Std.",p:"ca. 1.200–1.800 THB pro Person. GetYourGuide (17.11.2026): ca. 25–38 € pro Person, 4,9 bis 5,0 von 5 bei 1.200 bis 1.800 Bewertungen",z:"3–4 Std.",w:"Abholung vom Hotel oder Treffpunkt an einer Skytrain-Station",tips:["Schulen mit kleinen Gruppen und guten aktuellen Bewertungen wählen.","Vegetarische Variante vorher ankündigen.","Am Anfang der Reise machen, dann kocht ihr zu Hause nach."]},
 {id:"bkk-muaythaiclass",s:"bkk",c:"fun",t:"Muay-Thai-Probetraining",q:"Muay Thai gym trial class Bangkok",d:"Ein bis zwei Stunden Pratzen, Tritte und Kondition im Gym, geführt von einem Trainer. Anfänger sind willkommen, es wird nicht gekämpft. Gut, um das Nationalsport-Erlebnis selbst zu spüren und nicht nur zuzuschauen.",h:"Meist Vormittags und am späten Nachmittag",p:"ca. 500–1.000 THB für eine Stunde Probetraining",z:"1,5–2 Std.",w:"Gyms liegen in vielen Stadtvierteln, meist mit Grab oder Skytrain erreichbar",tips:["Bequeme Sportkleidung mitnehmen, Handtuch und Wasser gibt es oft vor Ort.","Vorher klären, ob Gebühr für Handschuhe und Bandagen anfällt.","Nicht am selben Tag wie lange Fahrten legen, ihr werdet müde sein."]},
 {id:"cnx-climbing",s:"cnx",c:"fun",t:"Klettern am Crazy Horse Buttress",q:"Crazy Horse Buttress climbing Chiang Mai",d:"Klettern am Fels in der Nähe von Chiang Mai, geeignet für Anfänger mit Guide und Fortgeschrittene. Die Saison ist von November bis April am besten, also genau in eurem Zeitraum. Halbtags-Touren mit Material und Transport.",h:"Meist Vormittag, Abholung in der Stadt",p:"ca. 1.800–2.500 THB für eine Halbtagestour",z:"4–6 Std. inklusive Anfahrt",w:"Ca. 45–60 Min. von Chiang Mai, mit dem Anbieter-Bus",tips:["Anbieter mit zertifizierten Guides und Sicherungsmaterial prüfen.","Sonnenschutz, Wasser und feste Schuhe mitnehmen.","Wer Klettern in Railay plant, kann hier schon üben."]},
 {id:"pai-walking",s:"pai",c:"night",t:"Pai Walking Street",q:"Pai Walking Street",d:"Jeden Abend füllt sich die Hauptstraße von Pai mit Streetfood, Kunsthandwerk und Livemusik. Entspannter und kleiner als die Märkte in Bangkok oder Chiang Mai, typisch für die Backpacker-Stimmung der Stadt.",h:"Täglich ab ca. 17–18 Uhr bis spät",p:"Eintritt frei, Gerichte ab ca. 30–80 THB",z:"1,5–2 Std.",w:"Zu Fuß vom Zentrum",tips:["Bargeld in kleinen Scheinen mitnehmen.","Nach Sonnenuntergang wird es kühl, eine Jacke einpacken.","Die vielen Stände mit gegrilltem Essen und Süßem lohnen den Umweg über die Seitengassen."]},
@@ -953,7 +962,7 @@ const ACTS_C=[
 {id:"phu-chalong",s:"phu",c:"sight",t:"Wat Chalong",wp:"Wat Chalong",q:"Wat Chalong Phuket",d:"Der bedeutendste Tempel der Insel mit reich verzierter Pagode und Mönchsunterricht. Ruhig, kostenlos und gut kombinierbar mit Big Buddha.",h:"Täglich ca. 7:00–17:00",p:"Eintritt frei",z:"45–60 Min.",w:"Von Kata ca. 20 Min. mit Taxi oder Grab",tips:["Angemessen kleiden (Schultern und Knie bedeckt).","Mit Big Buddha in einem Halbtag verbinden."]},
 {id:"phu-promthep",s:"phu",c:"nature",t:"Promthep Cape: Sonnenuntergang am Südzipfel",wp:"Promthep Cape",q:"Promthep Cape Phuket",d:"Der klassische Sonnenuntergangsort der Insel auf einer Klippe am südlichen Ende von Phuket. Weiter Blick über das Meer, Leuchtturm und kleine Stände.",h:"Täglich, kommt bis Sonnenuntergang (ca. 18:15 im Februar)",p:"Eintritt frei",z:"1–1,5 Std.",w:"Von Kata ca. 20 Min. mit Taxi oder Grab",tips:["30 Minuten vor Sonnenuntergang kommen, dann bekommt ihr einen guten Platz.","Rückfahrt im Dunkeln vorher klären, Grab ist nach Sonnenuntergang oft knapp."]},
 {id:"phu-viewpoint",s:"phu",c:"nature",t:"Karon Viewpoint (Drei-Buchten-Blick)",wp:"Karon Beach",q:"Karon Viewpoint Phuket",d:"Aussichtspunkt oberhalb von Kata Noi, Kata und Karon mit dem berühmten Blick auf drei Strände. Perfekt für ein Foto, dauert nur 15–20 Minuten.",h:"Den ganzen Tag, am besten Vormittag oder Sonnenuntergang",p:"Eintritt frei",z:"30 Min.",w:"Von Kata ca. 10 Min. mit Roller, Taxi oder Grab",tips:["Mit Promthep Cape zum Sonnenuntergang verbinden.","Wenig Platz, deshalb nicht zur Hauptzeit kommen."]},
-{id:"phu-phangnga",s:"phu",c:"trip",t:"Phang-Nga-Bucht und James Bond Island",wp:"Phang Nga Bay",q:"Phang Nga Bay James Bond Island tour Phuket",d:"Ganztagestour in die Bucht mit steilen Kalkfelsen, Mangroven, Höhlen und dem berühmten James-Bond-Felsen. Meist per Speedboat oder Longtail, oft mit Kanu und Mittagessen.",h:"Ganztags, Abholung ca. 7:30–8:30",p:"Gruppentour ca. 1.400–3.000 THB pro Person",z:"8–10 Std.",w:"Abholung vom Hotel, Fahrt zum Pier ca. 1–1,5 Std.",tips:["Kleine Gruppen oder Privatboot wählen, die großen Boote sind überfüllt.","Der Februar ist Hochsaison, bucht ein paar Tage vorher.","Sonnenschutz und Badesachen mitnehmen."]},
+{id:"phu-phangnga",s:"phu",c:"trip",t:"Phang-Nga-Bucht und James Bond Island",wp:"Phang Nga Bay",q:"Phang Nga Bay James Bond Island tour Phuket",d:"Ganztagestour in die Bucht mit steilen Kalkfelsen, Mangroven, Höhlen und dem berühmten James-Bond-Felsen. Meist per Speedboat oder Longtail, oft mit Kanu und Mittagessen.",h:"Ganztags, Abholung ca. 7:30–8:30",p:"Gruppentour ca. 1.400–3.000 THB pro Person. GetYourGuide (17.11.2026): ca. 40–90 € pro Person, zum Beispiel Großboot 41 € (4,7 von 5 bei über 4.200 Bewertungen) oder Longtail-Kleingruppe 61 € (4,7 von 5 bei über 1.800 Bewertungen)",z:"8–10 Std.",w:"Abholung vom Hotel, Fahrt zum Pier ca. 1–1,5 Std.",tips:["Kleine Gruppen oder Privatboot wählen, die großen Boote sind überfüllt.","Der Februar ist Hochsaison, bucht ein paar Tage vorher.","Sonnenschutz und Badesachen mitnehmen."]},
 {id:"phu-racha",s:"phu",c:"trip",t:"Schnorcheln an den Racha-Inseln",wp:"Ko Racha Yai",q:"Racha Island snorkeling Phuket",d:"Klares Wasser, Korallen und Fischschwärme rund um Racha Yai und Racha Noi, ca. 45 Minuten mit dem Speedboat von Phuket. Gut als Tagesausflug, wenn ihr schnorcheln wollt.",h:"Ganztags oder halber Tag",p:"Ganztägig ca. 1.800–2.800 THB, Halbtags ca. 1.300–1.800 THB",z:"6–8 Std.",w:"Abfahrt vom Chalong Pier, Abholung vom Hotel möglich",tips:["Februar ist beste Sicht im Wasser.","Bei Bedarf Schnorchelausrüstung vor Ort leihen.","Alternative zu Phi Phi, wenn ihr die Insel schon hattet."]},
 {id:"phu-cooking",s:"phu",c:"fun",t:"Thai-Kochkurs in Kata",q:"Thai cooking class Kata Phuket",d:"Halbtagskurs mit Marktbesuch und vier bis fünf Gerichten, die ihr danach esst. Gut für einen Tag, an dem ihr nicht an den Strand wollt.",h:"Vormittags oder nachmittags, 3–4 Std.",p:"ca. 1.200–1.800 THB pro Person",z:"3–4 Std.",w:"Abholung vom Hotel meist inklusive",tips:["Falls ihr in Bangkok schon gekocht habt, hier auslassen.","Vegetarische Variante vorher ansagen."]},
 {id:"phu-muaythai",s:"phu",c:"fun",t:"Muay Thai in Phuket (Probetraining oder Kampf ansehen)",q:"Muay Thai gym Chalong Phuket trial class",d:"Phuket ist ein Zentrum für Muay Thai mit vielen Gyms. Probetraining als Anfänger oder abends ein Kampf im Stadion ansehen.",h:"Training meist morgens und spät nachmittags, Kämpfe abends",p:"Probetraining ca. 500–1.000 THB, Kampf-Tickets ca. 1.000–1.800 THB",z:"1,5–2 Std.",w:"Gyms vor allem rund um Chalong, mit Taxi/Grab ca. 25 Min. von Kata",tips:["Probetraining nicht am Tag vor einer Fahrt, ihr werdet müde sein.","Kampf-Tickets im Voraus buchen, an den Kassen kostet es oft mehr."]},
@@ -1451,9 +1460,34 @@ const B_QUELLEN=[
  {t:'Ha-Giang-Loop: Permit und Regeln 2026 (Time Out)',u:'https://www.timeout.com/asia/news/ha-giang-loop-permits-what-travellers-need-to-know-before-riding-vietnams-famous-mountain-route-061426',s:'Border Area Entry Permit, Hinweise für Reisende.'},
  {t:'Ha-Giang-Loop: strengere Sicherheitsregeln (Tuoi Tre)',u:'https://news.tuoitre.vn/vietnam-tightens-safety-rules-on-ha-giang-loop-motorbike-tours-103260415184453028.htm',s:'Nach einem tödlichen Unfall im April 2026.'}
 ];
+/* Echte Fahrzeiten mit dem Auto (TomTom Routing, 17.11.2026, Werktag 10 Uhr, übliche Verkehrslage). Schlüssel "von|nach", Werte [Minuten, Kilometer].
+   Nicht enthalten: Kambodscha (TomTom liefert dort keine brauchbaren Zeiten) und Strecken über Wasser. Dort bleibt die Schätzung. */
+const DAYLEG={
+'bkk-grandpalace|bkk-watpho':[10,1.6],'bkk-watpho|bkk-watarun':[13,6.0],'bkk-watsaket|bkk-khlong':[1,0.3],
+'bkk-lumphini|bkk-jimthompson':[18,5.2],
+'cnx-phrasing|cnx-sunday':[7,1.9],'cnx-inthanon|cnx-buatong':[181,171.1],'cnx-doisuthep|cnx-nimman':[30,14.3],
+'phu-oldtown|phu-sunday':[5,1.4],'phu-chalong|phu-viewpoint':[22,10.1],'phu-viewpoint|phu-muaythai':[23,9.4],
+'phu-muaythai|phu-promthep':[25,11.4],'phu-viewpoint|phu-promthep':[14,6.1],
+'sgn-warmuseum|sgn-reunification':[5,0.9],'sgn-reunification|sgn-notredame':[4,0.9],'sgn-notredame|sgn-postoffice':[3,0.5],
+'sgn-cuchi|sgn-cholon':[89,43.0],
+'hoi-lanterns|hoi-bridge':[5,1.0],'hoi-myson|hoi-marble':[72,41.4],
+'han-hoankiem|han-literature':[12,2.6],'nbh-trangan|nbh-mua':[62,27.4],'nbh-mua|nbh-hoalu':[32,18.6],
+'han-hoalo|han-oldquarter':[7,1.3],'han-westlake|han-cathedral':[15,3.5],'han-cathedral|han-longbien':[15,3.0],
+'tyo-goldengai|tyo-omoide':[7,0.8],'tyo-sensoji|tyo-asakusashrine':[1,0.1],'tyo-asakusashrine|tyo-sumida':[15,2.1],
+'tyo-sumida|tyo-teamlab':[28,13.8],'tyo-chopsticks|tyo-gyoen':[14,2.7],'tyo-gyoen|tyo-shibuya':[20,3.6],
+'tyo-shibuya|tyo-shibuyasky':[2,0.3],'tyo-gotokuji|tyo-nact':[30,9.8],'tyo-nact|tyo-plum':[30,11.2],
+'tyo-meiji|tyo-harajuku':[12,2.5],'tyo-harajuku|tyo-shimokita':[14,4.5],
+'kyo-gion|kyo-kiyomizu':[12,2.3],'kyo-kiyomizu|kyo-pontocho':[20,3.3],'kyo-fushimi|kyo-philosopher':[31,9.1],
+'nar-todaiji|nar-deer':[16,3.2],'nar-deer|nar-kasuga':[15,1.2],
+'kyo-kinkakuji|kyo-nijo':[28,5.7],'kyo-nijo|kyo-kitano':[22,3.9],'kyo-kitano|kyo-nishiki':[20,5.7],
+'kyo-bamboo|kyo-tenryuji':[8,1.1],'kyo-tenryuji|kyo-cooking':[38,10.5],'kyo-cooking|kyo-tea':[12,1.9],
+'osa-sumiyoshi|osa-kuromon':[26,7.8],'osa-kuromon|osa-dotonbori':[9,1.7],'osa-castle|osa-shinsekai':[27,6.9],'osa-shinsekai|osa-redblue':[13,6.7]
+};
+/* Strecken ohne Straße: Railay erreicht man nur mit dem Boot (Angabe aus dem Eintrag "Railay Beach", ca. 15 Min. ab Ao Nang) */
+const DAYLEG_TXT={'krb-monkeytrail|krb-railay':{m:15,t:'ca. 15 Min. mit dem Longtail-Boot ab Ao Nang (Railay hat keine Straße)'}};
 /* Unterkünfte pro Station in drei Klassen. Preise pro Nacht für zwei Personen im Doppelzimmer in EUR.
    Quelle: Booking.com-Suche vom 7.–8.11.2026 für den im Feld ab genannten Zeitraum (Gesamtpreis geteilt durch die Nächte).
-   Richtwerte, vor Buchung prüfen. Felder: n Name, p Preis pro Nacht, r Bewertung von 10 (null = noch keine), a Lage und Hinweis, q Suchtext. */
+   Richtwerte, vor Buchung prüfen. Tripadvisor-Bewertungen (Stand 17.11.2026) stehen in der Datei hotels_ta.js; sechs Häuser mit Tripadvisor-Note unter 3,8 wurden ersetzt (Ersatz: r leer, Preis aus der Tripadvisor-Suche). Felder: n Name, p Preis pro Nacht, r Bewertung von 10 (null = noch keine), a Lage und Hinweis, q Suchtext. */
 const HOTEL_CLASSES=[
  ['k1','Klasse 1: Einfach','Gästehaus, Bungalow oder einfaches Hotel. Sauber, mit Klimaanlage oder Ventilator, wenig Komfort.'],
  ['k2','Klasse 2: Komfort','Gutes 3-Sterne-Niveau mit Pool oder guter Lage. Für die meisten das Beste Preis-Leistungs-Verhältnis.'],
@@ -1482,18 +1516,18 @@ const HOTELS={
    {n:'Hotel De Sripoom',p:51,r:8.5,a:'Altstadt, 4 Sterne, Pool, Whirlpool',q:'Hotel De Sripoom Chiang Mai'}]},
  pai:{ab:'6.–8.3.2027',k1:[
    {n:'The Countryside Pai',p:17,r:9.0,a:'Am Ortsrand, Pool, 1.000+ Rezensionen',q:'The Countryside Pai'},
-   {n:'Villa De Pai',p:19,r:9.0,a:'Einfache Hütten nahe Ortszentrum',q:'Villa De Pai'},
+   {n:'Pai Yard Guesthouse',p:15,r:null,a:'Einfaches Gästehaus in Pai (Preis laut Tripadvisor-Suche)',q:'Pai Yard Guesthouse Pai'},
    {n:'Medio De Pai',p:21,r:8.4,a:'Pool, Fitness',q:'Medio De Pai'}],
   k2:[
    {n:'KuadKhonThoe Pai Cottage',p:25,r:9.2,a:'Cottages mit Pool, Restaurant',q:'KuadKhonThoe Pai Cottage'},
    {n:'Luxury Farm House',p:31,r:9.2,a:'4 Sterne, Kochkurs und Fahrradtouren buchbar',q:'Luxury Farm House Pai'},
    {n:'Pai My Guest Resort',p:32,r:8.9,a:'Resort mit Pool und Garten',q:'Pai My Guest Resort'}],
   k3:[
-   {n:'The Quarter Pai',p:55,r:9.0,a:'4 Sterne, Pool, kostenloser Shuttle',q:'The Quarter Pai'},
+   {n:'Pura Vida Pai Resort',p:33,r:null,a:'Resort in Pai (Preis laut Tripadvisor-Suche)',q:'Pura Vida Pai Resort'},
    {n:'Pai Village Boutique Resort',p:75,r:9.4,a:'4 Sterne, Pool, über 2.000 Rezensionen',q:'Pai Village Boutique Resort'}]},
  krb:{ab:'4.–6.3.2027',k1:[
    {n:'The dream garden',p:38,r:null,a:'Ao Nang, günstigste Option',q:'The dream garden Ao Nang'},
-   {n:'Me Mee Place & Tour Krabi',p:47,r:8.1,a:'Ao Nang, Pension mit Rezeption rund um die Uhr',q:'Me Mee Place & Tour Krabi'}],
+   {n:'Nongthale Mountain View',p:40,r:null,a:'Ao Nang (Preis laut Tripadvisor-Suche)',q:'Nongthale Mountain View Ao Nang'}],
   k2:[
    {n:'De Loft Hotel',p:60,r:8.8,a:'Ao Nang, Sonnenterrasse',q:'De Loft Hotel Ao Nang'},
    {n:'Jungle Village Bungalow',p:60,r:8.8,a:'Bungalows mit Pool im Grünen',q:'Jungle Village Bungalow Ao Nang'},
@@ -1512,10 +1546,10 @@ const HOTELS={
    {n:'Phi Phi Relax Beach Resort',p:103,r:8.8,a:'Direkt am Strand, privater Strand',q:'Phi Phi Relax Beach Resort'},
    {n:'Panmanee Hotel',p:107,r:8.9,a:'Ton Sai, frisch renoviert',q:'Panmanee Hotel Koh Phi Phi'}]},
  lan:{ab:'15.–17.3.2027',k1:[
-   {n:'Nature Beach Resort',p:27,r:8.4,a:'Am Strand, Pool, 1.700+ Rezensionen',q:'Nature Beach Resort Koh Lanta'},
+   {n:'Thai House Beach Resort',p:20,r:null,a:'Koh Lanta (Preis laut Tripadvisor-Suche)',q:'Thai House Beach Resort Koh Lanta'},
    {n:'Gooddays Lanta Beach Resort',p:35,r:8.2,a:'Am Strand, Pool, Tauchen und Schnorcheln buchbar',q:'Gooddays Lanta Beach Resort'}],
   k2:[
-   {n:'Lanta Fa Rung Beach Resort',p:64,r:8.8,a:'Am Strand, nur Erwachsene',q:'Lanta Fa Rung Beach Resort'},
+   {n:'i-Style Lanta Boutique House',p:34,r:null,a:'Koh Lanta (Preis laut Tripadvisor-Suche)',q:'i-Style Lanta Boutique House Koh Lanta'},
    {n:'Klongdao Sunset Villa',p:74,r:8.4,a:'Am Strand, Kajak, Kochkurs',q:'Klongdao Sunset Villa Koh Lanta'},
    {n:'LaLaanta Hideaway Resort',p:88,r:8.9,a:'Privater Strand, Pool',q:'LaLaanta Hideaway Resort'}],
   k3:[
@@ -1525,7 +1559,7 @@ const HOTELS={
    {n:'Nonnee Hotel Kata Beach',p:33,r:9.0,a:'Kata, Pool, 24-Std.-Rezeption, 940 Rezensionen',q:'Nonnee Hotel Kata Beach Phuket'},
    {n:'Coco Mountain View Guest House',p:36,r:9.2,a:'Kata, Gästehaus mit Flughafentransfer auf Anfrage',q:'Coco Mountain View Guest House Kata'}],
   k2:[
-   {n:'Kata Place Hotel',p:63,r:8.4,a:'3 Sterne, Pool, Restaurant',q:'Kata Place Hotel Phuket'},
+   {n:'Beach Breeze Guesthouse',p:45,r:null,a:'Kata Beach, einfaches Gästehaus (Preis laut Tripadvisor-Suche)',q:'Beach Breeze Guesthouse Kata Phuket'},
    {n:'Little Mermaid Boutique Hotel',p:67,r:9.0,a:'Aparthotel, nah am Strand',q:'Little Mermaid Boutique Hotel Kata'},
    {n:'Purepamvillage',p:71,r:9.0,a:'Infinity-Pool, ruhig, Garten',q:'Purepamvillage Kata Phuket'}],
   k3:[
@@ -1644,6 +1678,97 @@ const HOTELS={
    {n:'Seoul DDJ STAY',p:106,r:9.3,a:'Jongno nahe Insadong und Bukchon',q:'Seoul DDJ STAY Jongno'}]}
 };
 /* Preisspanne pro Klasse und Station ergibt sich aus den Einträgen. Hinweis für Japan und Seoul: Klasse 1 beginnt dort bei ca. 35–70 € pro Nacht für zwei. */
+/* Tripadvisor-Bewertungen (Stand 17.11.2026): Schlüssel Station|Hotelname, Wert [Bewertung von 5, Anzahl Bewertungen].
+   Nur Häuser, bei denen der Name bei Tripadvisor eindeutig zum Hotel passt. Wo Tripadvisor ein anderes Haus lieferte oder keine Bewertung hat, steht kein Eintrag. */
+const HOTEL_TA={
+ "bkk|Thana Wisut Hotel":[3.9,25],
+ "bkk|SureStay by Best Western Siriraj":[5.0,14],
+ "bkk|Lamphu Tree House Boutique Hotel":[4.3,2130],
+ "bkk|W22 by Burasari":[4.6,466],
+ "bkk|True Siam Phayathai Hotel":[4.0,377],
+ "bkk|Queensland Hotel Bangkok":[4.5,15],
+ "cnx|Anumat Premium Budget Hotel":[4.0,61],
+ "cnx|Hoh Guesthouse":[4.9,20],
+ "cnx|The Opium Chiang Mai":[4.5,555],
+ "cnx|All in 1 Guesthouse & Tours":[4.5,960],
+ "cnx|Le Wiang":[5.0,1],
+ "cnx|Hotel De Sripoom":[4.1,23],
+ "pai|The Countryside Pai":[3.9,105],
+ "pai|Medio De Pai":[4.5,2],
+ "pai|Luxury Farm House":[5.0,5],
+ "pai|Pai My Guest Resort":[4.7,209],
+ "pai|Pai Village Boutique Resort":[4.5,658],
+ "krb|De Loft Hotel":[4.7,37],
+ "krb|Jungle Village Bungalow":[4.0,133],
+ "krb|Aonang Silver Orchid Resort":[3.8,194],
+ "krb|@Aonang Guesthouse":[4.8,165],
+ "krb|Andaman Breeze Resort":[3.9,84],
+ "phi|Sunflower Boathouse":[2.9,35],
+ "phi|Phi Phi Long Beach Bungalow":[3.2,48],
+ "phi|PP Insula":[4.1,401],
+ "phi|Uphill Cottage":[3.4,159],
+ "phi|Phi Phi Indigo Hotel":[3.6,42],
+ "phi|Phi Phi Relax Beach Resort":[3.8,1679],
+ "phi|Panmanee Hotel":[3.9,311],
+ "lan|Moonlight Bay Resort":[4.5,678],
+ "phu|Nonnee Hotel Kata Beach":[4.5,17],
+ "phu|Coco Mountain View Guest House":[5.0,2],
+ "phu|Kata Bai D":[4.8,337],
+ "phu|Casa E Mare":[4.8,322],
+ "nbh|Tam Coc Tropical Homestay":[4.9,94],
+ "nbh|Tam Coc Serenity Hotel & Bungalow":[4.0,5],
+ "nbh|The Sun Tam Coc Hotel":[3.7,3],
+ "nbh|Tam Coc Windy Fields":[2.5,2],
+ "nbh|Tam Coc Peaceful Nature":[4.9,22],
+ "sgn|Jan Hostel Central Point":[4.0,14],
+ "sgn|Chez Mimosa Petite":[4.9,70],
+ "sgn|Chez Mimosa Local":[4.7,53],
+ "sgn|Sanouva Saigon Hotel":[4.2,1951],
+ "rep|Kouprey Hotel":[4.6,269],
+ "rep|SAKABAN Suite":[4.9,2028],
+ "rep|Cheathata CTS Hotel":[4.7,755],
+ "rep|The Palace Indochine Hotel":[4.9,84],
+ "rep|The Community":[4.7,933],
+ "rep|Le Grande Indochine Hotel":[4.9,338],
+ "rep|The Jungle":[4.9,112],
+ "han|Sao Mai Boutique Hotel":[4.5,81],
+ "han|Centre Point Hanoi Hotel":[4.5,294],
+ "han|Sora Hotel Hanoi":[5.0,2],
+ "hoi|Threeway Riverside Villa":[4.6,73],
+ "hoi|Gia Huy Riverside Hotel":[5.0,4],
+ "hoi|Hoianan Boutique Hotel":[4.7,27],
+ "hoi|Hoi An TNT Villa":[4.7,607],
+ "hoi|ZEN Boutique Hoi An":[4.9,299],
+ "hoi|Happy Life Heritage Hoi An":[5.0,1],
+ "hoi|Anora Retreat Hoi An":[4.0,3],
+ "tyo|Hearton Hotel Higashi-Shinagawa":[3.9,404],
+ "tyo|Almont Inn Tokyo Nihonbashi":[4.0,220],
+ "tyo|Toyoko Inn Tokyo Asakusa Kuramae No.2":[4.0,13],
+ "tyo|Hotel Keihan Asakusa":[4.0,374],
+ "tyo|Tosei Hotel Cocone Asakusa Kuramae":[4.5,10],
+ "tyo|APA Hotel PRIDE Akasaka Kokkaigijidomae":[3.9,116],
+ "kyo|Glansit Kyoto Kawaramachi":[4.1,21],
+ "kyo|Rest inn Kyoto":[4.0,2],
+ "kyo|Kamon Inn Toji Higashi":[4.0,1],
+ "kyo|Piece Hostel Sanjo":[4.8,655],
+ "osa|Fawn Hotel":[4.0,1],
+ "osa|@RLiS_house Namba":[5.0,1],
+ "osa|HOTEL RELIEF Namba Daikokuchou":[3.8,162],
+ "osa|Hotel Sobial Namba Daikokucho":[4.0,15],
+ "osa|Hotel Hillarys Shinsaibashi":[3.8,60],
+ "osa|DEL style Osaka Shin Umeda by Daiwa Roynet":[4.0,27],
+ "osa|Henn na Hotel Express Osaka Namba Nipponbashi":[4.0,1],
+ "kaw|Izu Imaihama Tokyu Hotel":[4.2,499],
+ "kaw|Zen no Yu":[4.1,52],
+ "kaw|Kaiyutei":[4.1,20],
+ "kaw|Mizumari":[4.4,19],
+ "pai|Pai Yard Guesthouse":[4.6,49],
+ "pai|Pura Vida Pai Resort":[4.8,363],
+ "krb|Nongthale Mountain View":[5.0,107],
+ "lan|Thai House Beach Resort":[4.6,341],
+ "lan|i-Style Lanta Boutique House":[4.9,108],
+ "phu|Beach Breeze Guesthouse":[4.6,205],
+};
 /* Apps für die Reise. k = Kosten, r = für welche Reise nützlich (a = Reise A, b = Reise B, ab = beide). Stand November 2026, vor der Reise kurz prüfen. */
 const APPS=[
  {g:'Karten und Orientierung',items:[
@@ -1927,7 +2052,7 @@ function calc(){
 /* ---------- Aktivitäten ---------- */
 const CATM={sight:['Sehenswürdigkeit','k4'],food:['Essen & Trinken','k1'],market:['Markt & Shopping','k2'],nature:['Natur & Aussicht','k3'],fun:['Erlebnis','k5'],night:['Abend & Nachtleben','k6'],trip:['Ausflug','k7']};
 /* Koordinaten (Breite, Länge), die Wikipedia nicht liefert, null entfernt den Pin */
-const ACTLL={'nbh-mua':[20.2160,105.9200],'nbh-tamcoc':[20.2157,105.9370],'nbh-hoalu':[20.2878,105.9033],'rep-pubstreet':[13.3548,103.8547],'rep-phare':[13.3539,103.8390],'hij-miyajima':[34.2973,132.3181],'kyo-sagano':[35.0186,135.6807],'sgn-cholon':[10.7493,106.6507],'phi-viewpoint':null,'lan-beaches':null,'lan-oldtown':null,'bkk-khaosan':[13.7589,100.4971],'cnx-sunday':[18.7875,98.9937],'krb-aonang':[8.0363,98.8190],'sel-hongdae':[37.5563,126.9236],'hoi-lanterns':[15.8768,108.3290],'hoi-oldtown':[15.8795,108.3270],'sel-ikseon':[37.5746,126.9893],'krb-lanta':[7.60,99.05],'kyo-maruyama':[35.0036,135.7814],'hoi-myson':[15.7646,108.1244],'han-oldquarter':[21.0341,105.8505],'bkk-muaythai':[13.7573,100.5124],'hoi-anbang':[15.9012,108.3580],'tyo-omoide':[35.6935,139.6993],'kyo-philosopher':[35.0275,135.7955],'krb-phranang':[8.0000,98.8345],'tyo-teamlab':[35.6490,139.7897],'han-puppets':[21.0314,105.8529],'osa-kuromon':[34.6658,135.5064],'tyo-chidori':[35.6910,139.7440],'nar-naramachi':[34.6790,135.8318],'cnx-nimman':[18.7973,98.9684],'krb-viewpoint':null,'krb-climb':null,'bkk-massage':null,'cnx-cooking':null,'sel-jjimjilbang':null,'sel-bbq':null,'osa-streetfood':null,'han-foodtour':null,'han-eggcoffee':null,'han-biahoi':[21.0349,105.8517],'hoi-caolau':null,'hoi-cooking':null,'hoi-tailor':null,'cnx-khaosoi':null,'nar-mochi':null,'hlb-kayak':null};
+const ACTLL={'bkk-khlong':[13.7546,100.5100],'nbh-mua':[20.2160,105.9200],'nbh-tamcoc':[20.2157,105.9370],'nbh-hoalu':[20.2878,105.9033],'rep-pubstreet':[13.3548,103.8547],'rep-phare':[13.3539,103.8390],'hij-miyajima':[34.2973,132.3181],'kyo-sagano':[35.0186,135.6807],'sgn-cholon':[10.7493,106.6507],'phi-viewpoint':null,'lan-beaches':null,'lan-oldtown':null,'bkk-khaosan':[13.7589,100.4971],'cnx-sunday':[18.7875,98.9937],'krb-aonang':[8.0363,98.8190],'sel-hongdae':[37.5563,126.9236],'hoi-lanterns':[15.8768,108.3290],'hoi-oldtown':[15.8795,108.3270],'sel-ikseon':[37.5746,126.9893],'krb-lanta':[7.60,99.05],'kyo-maruyama':[35.0036,135.7814],'hoi-myson':[15.7646,108.1244],'han-oldquarter':[21.0341,105.8505],'bkk-muaythai':[13.7573,100.5124],'hoi-anbang':[15.9012,108.3580],'tyo-omoide':[35.6935,139.6993],'kyo-philosopher':[35.0275,135.7955],'krb-phranang':[8.0000,98.8345],'tyo-teamlab':[35.6490,139.7897],'han-puppets':[21.0314,105.8529],'osa-kuromon':[34.6658,135.5064],'tyo-chidori':[35.6910,139.7440],'nar-naramachi':[34.6790,135.8318],'cnx-nimman':[18.7973,98.9684],'krb-viewpoint':null,'krb-climb':null,'bkk-massage':null,'cnx-cooking':null,'sel-jjimjilbang':null,'sel-bbq':null,'osa-streetfood':null,'han-foodtour':null,'han-eggcoffee':null,'han-biahoi':[21.0349,105.8517],'hoi-caolau':null,'hoi-cooking':null,'hoi-tailor':null,'cnx-khaosoi':null,'nar-mochi':null,'hlb-kayak':null};
 if(typeof ACTLL_X!=='undefined')Object.assign(ACTLL,ACTLL_X);
 if(typeof ACTLL_C!=='undefined')Object.assign(ACTLL,ACTLL_C);
 const ACTSBY={};
@@ -1982,6 +2107,23 @@ const kmBetween=(p,q)=>{const R=6371,r=x=>x*Math.PI/180,a=Math.sin(r(q[0]-p[0])/
 function hopText(km){
   if(km<1.3)return 'ca. '+Math.max(2,Math.round(km*12))+' Min. zu Fuß';
   return 'ca. '+(km<10?String(Math.round(km*10)/10).replace('.',','):Math.round(km))+' km, mit Taxi oder Grab ca. '+Math.max(8,Math.round(km*2.4+6))+' Min.';
+}
+/* Echte Fahrzeit zwischen zwei Orten (DAYLEG aus TomTom), sonst Schätzung. m = Fahrminuten, null = zu Fuß */
+const fmtKmDe=km=>km<10?String(Math.round(km*10)/10).replace('.',','):String(Math.round(km));
+const fmtMin=m=>m<60?m+' Min.':Math.floor(m/60)+' Std.'+(m%60?' '+(m%60)+' Min.':'');
+function legInfo(a,b){
+  const km=kmBetween(a.ll,b.ll),k=a.id+'|'+b.id,k2=b.id+'|'+a.id;
+  const x=typeof DAYLEG_TXT!=='undefined'&&(DAYLEG_TXT[k]||DAYLEG_TXT[k2]);
+  if(x)return {m:x.m,t:x.t};
+  if(km<1.3)return {m:null,t:hopText(km)};
+  const l=typeof DAYLEG!=='undefined'&&(DAYLEG[k]||DAYLEG[k2]);
+  if(l)return {m:l[0],t:fmtMin(l[0])+' mit dem Auto, '+fmtKmDe(l[1])+' km'};
+  return {m:Math.max(8,Math.round(km*2.4+6)),t:hopText(km)};
+}
+function dayDrive(i){
+  const acts=DA(i).map(id=>ACTSBY[id]).filter(a=>a&&a.ll);let m=0;
+  for(let n=0;n<acts.length-1;n++){const v=legInfo(acts[n],acts[n+1]).m;if(v)m+=v}
+  return m;
 }
 function actsNear(a,max){
   if(!a.ll)return [];
@@ -2184,6 +2326,8 @@ function dayStatChips(i){
   const s=dayStats(i);let o='';
   if(s.c1>=5)o+=`<span class="ct">€ Aktivitäten ca. ${r5(s.c0)===r5(s.c1)?r5(s.c0):r5(s.c0)+'–'+r5(s.c1)} pro Person</span>`;
   if(s.h1>0)o+=`<span class="${s.h1>10?'wn':''}">${s.h1>10?'⚠ ':''}ca. ${Math.round(s.h0)===Math.round(s.h1)?Math.round(s.h0):Math.round(s.h0)+'–'+Math.round(s.h1)} Std. geplant${s.h1>10?', viel für einen Tag':''}</span>`;
+  const dr=dayDrive(i);
+  if(dr>=20)o+=`<span class="${dr>120?'wn':''}">${dr>120?'⚠ ':''}ca. ${fmtMin(dr)} Fahrzeit${dr>120?', mehr als 2 Std. unterwegs':''}</span>`;
   const mu=DA(i).filter(id=>prioOf(id)==='must').length;if(mu)o+=`<span class="ct"><span class="ms">★</span> ${mu} Muss</span>`;
   if(s.h1<=5)o+=`<span>Zeit für Spontanes</span>`;
   s.closed.forEach(a=>{o+=`<span class="wn">⚠ ${esc(a.t)}: an diesem Wochentag geschlossen</span>`});
@@ -2338,14 +2482,14 @@ const daysPills=()=>`<button type="button" data-kday="-1" aria-pressed="${state.
 function dayDetail(i){
   const d=DAYS[i],acts=DA(i).map(id=>ACTSBY[id]).filter(Boolean),rt=dayRouteUrl(i);
   return `<article class="card" style="--sc:var(--${stageOf(i).id})"><div class="cnt"><h2 class="lbl">Tag ${i+1} · ${fmtL(addDays(START,i))}</h2><span class="mono">${esc(d[0])}</span></div><p>${esc(d[2])}</p>`+
-   (acts.length?`<ol class="dlist">${acts.map((a,n)=>`<li><button type="button" data-sheet="${a.id}"><span class="dn2" style="--c:var(--${(CATM[a.c]||['','k7'])[1]})">${n+1}</span><span><b>${esc(a.t)}</b><span class="note">${esc(a.z||'')}${a.p?' · '+esc(eurize(a.p)):''}</span></span></button></li>`+(n<acts.length-1&&a.ll&&acts[n+1].ll?`<li class="hop"><span class="note">↓ ${hopText(kmBetween(a.ll,acts[n+1].ll))}</span></li>`:'')).join('')}</ol>`:'<p class="note">Für diesen Tag sind keine Orte eingetragen.</p>')+
+   (acts.length?`<ol class="dlist">${acts.map((a,n)=>`<li><button type="button" data-sheet="${a.id}"><span class="dn2" style="--c:var(--${(CATM[a.c]||['','k7'])[1]})">${n+1}</span><span><b>${esc(a.t)}</b><span class="note">${esc(a.z||'')}${a.p?' · '+esc(eurize(a.p)):''}</span></span></button></li>`+(n<acts.length-1&&a.ll&&acts[n+1].ll?`<li class="hop"><span class="note">↓ ${legInfo(a,acts[n+1]).t}</span></li>`:'')).join('')}</ol>`:'<p class="note">Für diesen Tag sind keine Orte eingetragen.</p>')+
    `<div class="links">${rt?`<a href="${rt}" target="_blank" rel="noopener">Tagesroute in Google Maps ↗</a>`:''}<button type="button" data-goplan="${i}">Im Plan zeigen</button></div></article>`;
 }
 function viewKarte(){
   const sel=state.sel,mm=mapMode(),real=mm!=='svg'&&typeof L!=='undefined';
   let h='';
   if(state.mmNote)h+=`<p class="note" style="margin-bottom:10px">${esc(state.mmNote)}</p>`;
-  h+=`<div class="stack"><div class="kmap${real?'':' svgm'}">${real?'<div id="lmap" class="lmap" role="application" aria-label="Interaktive Karte der Reiseroute"></div><div class="tourinfo" id="tourinfo" hidden></div>':mapSVG(state.mv==='world'?'all':state.mv,{sel,day:state.day,here:stopAt(state.day)})}`+
+  h+=`<div class="stack"><div class="kmap${real?'':' svgm'}">${real?'<div id="lmap" class="lmap" role="application" aria-label="Interaktive Karte der Reiseroute"></div><div class="tourbar" id="tourinfo" hidden></div><div class="kmsg" id="kmsg" hidden></div>':mapSVG(state.mv==='world'?'all':state.mv,{sel,day:state.day,here:stopAt(state.day)})}`+
    `<div class="kov kov-top">${viewSel()}<div class="kdays" id="kdays" aria-label="Tag wählen">${daysPills()}</div></div>`+
    `<div class="kside">${real?`<button class="kb pri" id="tourbtn" data-tour aria-pressed="false" aria-label="Rundflug abspielen"><span class="g">▶</span><span>Tour</span></button><button class="kb" data-fit aria-label="Ganze Reise zeigen"><span class="g">⤢</span><span>Alles</span></button><button class="kb" data-today aria-label="Aktuellen Tag zeigen"><span class="g">◎</span><span>Heute</span></button><button class="kb" data-locate aria-label="Mein Standort"><span class="g">⌖</span><span>Ich</span></button><button class="kb" data-mmtoggle aria-label="Satellit oder Karte"><span class="g">◐</span><span>${mm==='sat'?'Karte':'Sat'}</span></button>`:`<button class="btn sm" data-mmtoggle>Echte Karte</button>`}</div>`+
    `<div class="kinfo" id="kinfo" ${infoHtml()?'':'hidden'}>${infoHtml()}</div><div class="kcar" id="kcar">${carHtml(sel)}</div></div>`;
@@ -2392,7 +2536,7 @@ function unmountMap(){
   LM.tid++;LM.busy=false;cancelAnimationFrame(LM.raf);
   if(LM.ro){try{LM.ro.disconnect()}catch(e){}LM.ro=null}
   if(LM.map){try{LM.map.remove()}catch(e){}LM.map=null}
-  LM.mk={};LM.trav=null;LM.ttype='';LM.tl=null;LM.tlr=null;LM.dayL=null;LM.me=null;LM.legM=[];
+  LM.mk={};LM.trav=null;LM.tour=null;LM.ttype='';LM.tl=null;LM.tlr=null;LM.dayL=null;LM.me=null;LM.legM=[];
 }
 function mapFallback(){
   if(!LM.map)return;
@@ -2429,12 +2573,12 @@ function mountMap(){
   }
   {const hp=STOPS.home,hm=L.marker([hp.ll[1],hp.ll[0]],{icon:L.divIcon({className:'lmk lhome'+(state.sel==='home'?' sel':''),html:`<div class="lpin hm" style="--sc:var(--ink)">${trI('home',16)}</div><span class="llab">Zürich · Start und Ziel</span>`,iconSize:[30,30],iconAnchor:[15,15]}),title:'Zürich',keyboard:true}).addTo(map);
    hm.on('click',()=>selectStop('home'));LM.mk.home=hm}
-  LM.stopL=L.layerGroup().addTo(map);renderStops();legIcons();map.on('zoomend',()=>{renderStops();legIcons()});
+  LM.stopL=L.layerGroup().addTo(map);renderStops();legIcons();map.on('zoomend',()=>{if(LM.busy)return;renderStops();legIcons()});
   LM.acts=L.layerGroup();
   LM.sync=()=>{const on=map.getZoom()>=8.5&&state.mc!=='none';if(on&&!map.hasLayer(LM.acts))LM.acts.addTo(map);if(!on&&map.hasLayer(LM.acts))map.removeLayer(LM.acts)};
   map.on('zoomend',LM.sync);buildActs();
-  LM.trav=L.marker(LM.pts[0],{icon:L.divIcon({className:'ltrav',html:'<div class="tv"></div>',iconSize:[40,40],iconAnchor:[20,20]}),interactive:false,keyboard:false,zIndexOffset:900}).addTo(map);
-  el.addEventListener('pointerdown',()=>{if(LM.busy)stopTour()});
+  LM.trav=L.marker(LM.pts[0],{icon:L.divIcon({className:'ltrav',html:'<div class="tv"></div>',iconSize:[40,40],iconAnchor:[20,20]}),interactive:true,keyboard:false,zIndexOffset:900,bubblingMouseEvents:false}).addTo(map);LM.trav.on('click',()=>runTour());
+  el.addEventListener('pointerdown',()=>{if(LM.busy)stopTour()});el.addEventListener('wheel',()=>{if(LM.busy)stopTour()},{passive:true});
   idleLoop();
   setTimeout(()=>{
     if(LM.map!==map)return;
@@ -2446,7 +2590,7 @@ function mountMap(){
 }
 /* Ohne Start bleibt das Symbol still stehen: am Ort des gewählten Tages, mit dem Verkehrsmittel, das dorthin führt */
 function idleLoop(){
-  const map=LM.map;if(!map||!LM.trav||LM.busy)return;
+  const map=LM.map;if(!map||!LM.trav||LM.busy||(LM.tour&&!LM.tour.done&&LM.tour.map===map))return;
   const i=state.day,sg=segsOn(i),ty=sg.length?ROUTE_META[sg[sg.length-1]][0]:'flug';
   const ll=i===0?STOPS.home.ll:STOPS[stopAt(i)].ll;
   LM.trav.setLatLng([ll[1],ll[0]]);setTrav(ty,0);
@@ -2478,7 +2622,7 @@ function showDay(i,quiet){
   const idx=state.kd;state.sel=stopAt(idx)||state.sel;
   if(d)d.innerHTML=dayDetail(idx);
   const kc=$('#kcar');if(kc)kc.innerHTML=carHtml(state.sel);
-  if(dp){const b=dp.querySelector('[aria-pressed="true"]');if(b&&b.scrollIntoView)b.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'})}
+  if(dp)hScroll(dp,dp.querySelector('[aria-pressed="true"]'))
   if(!map)return;
   if(LM.busy)stopTour();
   const acts=DA(idx).map(id=>ACTSBY[id]).filter(a=>a&&a.ll),g=L.layerGroup(),pts=[];
@@ -2497,7 +2641,7 @@ function showDay(i,quiet){
   else if(sp)map.flyTo([sp.ll[1],sp.ll[0]],10,{duration:1.2});
 }
 function locateMe(){
-  const info=$('#tourinfo'),say=t=>{if(info){info.hidden=false;info.innerHTML='<span>'+esc(t)+'</span>';clearTimeout(info._t);info._t=setTimeout(()=>{info.hidden=true},6000)}};
+  const info=$('#kmsg'),say=t=>{if(info){info.hidden=false;info.innerHTML='<span>'+esc(t)+'</span>';clearTimeout(info._t);info._t=setTimeout(()=>{info.hidden=true},6000)}};
   if(!navigator.geolocation||!LM.map){say('Dieses Gerät kann den Standort nicht bestimmen.');return}
   say('Standort wird gesucht …');
   navigator.geolocation.getCurrentPosition(p=>{
@@ -2512,6 +2656,12 @@ function locateMe(){
 }
 
 /* Stationen: nahe beieinander liegende Pins werden zu einer Gruppe, ein Tipp zoomt hinein */
+
+function hScroll(box,el){
+  if(!box||!el)return;
+  const left=box.scrollLeft+(el.getBoundingClientRect().left-box.getBoundingClientRect().left)-(box.clientWidth-el.offsetWidth)/2;
+  try{box.scrollTo({left,behavior:'smooth'})}catch(e){box.scrollLeft=left}
+}
 function legIcons(){
   const map=LM.map;if(!map||!LM.legM)return;
   LM.legM.forEach((m,i)=>{if(!m)return;const a=STOPS[ROUTE[i-1]],b=STOPS[ROUTE[i]],pa=map.latLngToContainerPoint([a.ll[1],a.ll[0]]),pb=map.latLngToContainerPoint([b.ll[1],b.ll[0]]),e=m.getElement();if(e)e.style.display=pa.distanceTo(pb)<110?'none':''});
@@ -2549,7 +2699,7 @@ function selectStop(id,o={}){
   const d=$('#kdet');if(d)d.innerHTML=stopDetail(id);
   const l=$('#klist');if(l)l.outerHTML=stopListHtml(id);
   if(state.kd!=null){state.kd=null;const dp=$('#kdays');if(dp)dp.innerHTML=daysPills();if(LM.map&&LM.dayL){LM.map.removeLayer(LM.dayL);LM.dayL=null}}
-  const kc=$('#kcar');if(kc){kc.innerHTML=carHtml(id);const cur=kc.querySelector('[aria-current="true"]');if(cur&&cur.scrollIntoView)cur.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'})}
+  const kc=$('#kcar');if(kc){kc.innerHTML=carHtml(id);hScroll(kc,kc.querySelector('[aria-current="true"]'))}
   renderStops();updateInfo();
   if(o.fly!==false&&LM.map){if(LM.busy)stopTour();const z=LM.map.getZoom();LM.map.flyTo([STOPS[id].ll[1],STOPS[id].ll[0]],z<8?10:Math.min(z,12),{duration:1.4})}
   refreshWx([id]);
@@ -2564,45 +2714,91 @@ function setView(v){
   if(LM.map)LM.map.flyToBounds(bbOf(v),{duration:1.5,paddingTopLeft:[16,110],paddingBottomRight:[64,120]});
 }
 function updateDetail(){const d=$('#kdet');if(d)d.innerHTML=stopDetail(state.sel)}
-const setTourBtn=on=>{const b=$('#tourbtn');if(b){b.innerHTML=on?'<span class="g">■</span><span>Stopp</span>':'<span class="g">▶</span><span>Tour</span>';b.setAttribute('aria-pressed',on?'true':'false')}const i=$('#tourinfo');if(i&&!on)i.hidden=true};
-function stopTour(){if(LM.busy&&LM.map){try{LM.map._moveEnd(true)}catch(e){}}LM.tid++;LM.busy=false;setTourBtn(false);idleLoop()}
-/* Rundflug: die Kamera fährt dem Symbol hinterher, zoomt bei langen Strecken heraus und an jedem Ort wieder hinein */
-function runTour(){
-  const map=LM.map;if(!map)return;
-  if(LM.busy){stopTour();return}
-  const my=++LM.tid;LM.busy=true;cancelAnimationFrame(LM.raf);setTourBtn(true);
-  const N=ROUTE.length,ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2,lerp=(a,b,t)=>a+(b-a)*t;
-  const stopZ=k=>ROUTE[k]==='home'?5:10;
-  const P=[{t:'stop',k:0,dur:1500}];
+/* Rundfahrt: Abspielen, Pause, Weiterfahren, Überspringen. Die Kamera folgt dem Symbol über setView (so laufen Pins, Linien und Kacheln immer mit). */
+function setTourBtn(mode){
+  const b=$('#tourbtn');
+  if(b){const m=mode==='play'?['❚❚','Pause']:mode==='pause'?['▶','Weiter']:['▶','Tour'];b.innerHTML=`<span class="g">${m[0]}</span><span>${m[1]}</span>`;b.setAttribute('aria-pressed',mode==='play'?'true':'false');b.setAttribute('aria-label',mode==='play'?'Rundfahrt pausieren':mode==='pause'?'Rundfahrt fortsetzen':'Rundfahrt abspielen')}
+  const t=$('#tourtoggle');if(t){t.textContent=mode==='play'?'❚❚':'▶';t.setAttribute('aria-label',mode==='play'?'Pause':'Weiter')}
+  const bar=$('#tourinfo');if(bar&&mode==='idle')bar.hidden=true;
+}
+function tourBarText(t){const e=$('#tourbar-t');if(e)e.innerHTML=t}
+function showTourBar(){
+  const bar=$('#tourinfo');if(!bar)return;
+  if(!bar.dataset.built){bar.innerHTML=`<button type="button" data-tprev aria-label="Vorheriger Ort">⏮</button><button type="button" data-tour id="tourtoggle" aria-label="Pause">❚❚</button><button type="button" data-tnext aria-label="Nächster Ort">⏭</button><span class="tt" id="tourbar-t"></span>`;bar.dataset.built='1'}
+  bar.hidden=false;
+}
+/* Beim Eingreifen (Antippen, Ziehen, Zoomen, anderer Ort) wird nur pausiert. Die Position bleibt erhalten. */
+function stopTour(){
+  if(!LM.busy)return;
+  LM.tid++;cancelAnimationFrame(LM.raf);LM.busy=false;
+  if(LM.map){try{renderStops();legIcons()}catch(e){}}
+  setTourBtn('pause');
+}
+function tourPhases(map){
+  const N=ROUTE.length,P=[{t:'stop',k:0,dur:1500}];
   for(let k=1;k<N;k++){
     const a=STOPS[ROUTE[k-1]],b=STOPS[ROUTE[k]],len=Math.hypot(a.ll[0]-b.ll[0],a.ll[1]-b.ll[1]),ty=ROUTE_META[k][0];
-    const z=Math.max(2,Math.min(10,map.getBoundsZoom(L.latLngBounds(LM.seg[k]),false,L.point(70,70))));
+    const z=Math.max(2,Math.min(10,map.getBoundsZoom(L.latLngBounds(LM.seg[k]),false,L.point(90,90))));
     P.push({t:'move',k,ty,z,dur:ty==='flug'?Math.max(3500,Math.min(8000,3200+len*70)):Math.max(2600,Math.min(4500,2200+len*250))});
     P.push({t:'stop',k,dur:k===N-1?2400:1800});
   }
-  const alive=()=>LM.map===map&&LM.tid===my,info=$('#tourinfo');
-  let idx=0,t0=performance.now(),fresh=true,cz=map.getZoom(),cc=map.getCenter();
-  putTrav(LM.seg[1],0,ROUTE_META[1][0]);
-  map._stop();map._moveStart(true,false);let lastEnd=0;
+  return P;
+}
+/* Start dort, wo man gerade ist: Tagesansicht, gewählter Ort oder gewählter Tag. Sonst am Anfang. */
+function tourStartIdx(){
+  let k=0;
+  if(state.kd!=null){for(let j=1;j<ROUTE.length;j++)if(ROUTE_DAY[j]<=state.kd)k=j}
+  else if(state.sel&&state.sel!=='home'){const j=ROUTE.indexOf(state.sel);if(j>0)k=j}
+  else if(state.day>0){for(let j=1;j<ROUTE.length;j++)if(ROUTE_DAY[j]<=state.day)k=j}
+  if(k>=ROUTE.length-1)k=0;
+  return 2*k;
+}
+function runTour(){
+  const map=LM.map;if(!map)return;
+  if(LM.busy){stopTour();return}
+  tourPlay();
+}
+function tourSkip(d){
+  const map=LM.map;if(!map)return;
+  if(!LM.tour||LM.tour.map!==map||LM.tour.done){tourPlay();return}
+  const T=LM.tour,ph=T.P[T.idx];
+  let k=ph.k,idx;
+  if(d>0)idx=ph.t==='move'?T.idx+1:2*Math.min(ROUTE.length-1,k+1);
+  else idx=ph.t==='move'?T.idx-1:2*Math.max(0,k-1);
+  idx=Math.max(0,Math.min(T.P.length-1,idx));
+  if(LM.busy){LM.tid++;cancelAnimationFrame(LM.raf);LM.busy=false}
+  tourPlay(idx);
+}
+function tourPlay(fromIdx){
+  const map=LM.map;if(!map||!L)return;
+  if(!LM.tour||LM.tour.map!==map||LM.tour.done)LM.tour={map,P:tourPhases(map),idx:tourStartIdx(),el:0,done:false,fresh:true};
+  const T=LM.tour;
+  if(fromIdx!=null){T.idx=fromIdx;T.el=0;T.fresh=true}
+  const my=++LM.tid;LM.busy=true;cancelAnimationFrame(LM.raf);setTourBtn('play');showTourBar();
+  const ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2,lerp=(a,b,t)=>a+(b-a)*t,stopZ=k=>ROUTE[k]==='home'?5:10;
+  let t0=performance.now()-T.el,cz=map.getZoom(),cc=map.getCenter(),lastCam=null;
   const frame=now=>{
-    if(!alive())return;
-    const ph=P[idx],u=Math.min(1,(now-t0)/ph.dur);let tgt,z;
+    if(LM.map!==map||LM.tid!==my)return;
+    const ph=T.P[T.idx];T.el=now-t0;const u=Math.min(1,T.el/ph.dur);let tgt,z;
     if(ph.t==='move'){
       const a=STOPS[ROUTE[ph.k-1]],b=STOPS[ROUTE[ph.k]],f=ease(u);
       putTrav(LM.seg[ph.k],f,ph.ty);tgt=posOn(LM.seg[ph.k],f).ll;
       const z0=stopZ(ph.k-1),z1=stopZ(ph.k);
       z=u<.2?lerp(z0,ph.z,ease(u/.2)):u>.8?lerp(ph.z,z1,ease((u-.8)/.2)):ph.z;
-      if(fresh&&info){info.hidden=false;info.innerHTML=`${trI(ph.ty,16)}<span>${TRN[ph.ty]}: ${esc(a.n)} → ${esc(b.n)}</span>`}
+      if(T.fresh){tourBarText(`${trI(ph.ty,16)}<span>${TRN[ph.ty]}: ${esc(a.n)} → ${esc(b.n)}</span>`)}
     }else{
-      const s=STOPS[ROUTE[ph.k]];tgt=[s.ll[1],s.ll[0]];z=stopZ(ph.k);
-      if(fresh){selectStop(ROUTE[ph.k],{fly:false});if(info){info.hidden=false;info.innerHTML=`${trI(ROUTE[ph.k]==='home'?'home':'flug',16)}<span>${esc(s.n)}</span>`}}
+      const sp=STOPS[ROUTE[ph.k]];tgt=[sp.ll[1],sp.ll[0]];z=stopZ(ph.k);
+      LM.trav&&LM.trav.setLatLng(tgt);
+      if(T.fresh){tourBarText(`<span>${esc(sp.n)}</span>`);if(ROUTE[ph.k]!=='home')selectStop(ROUTE[ph.k],{fly:false})}
     }
-    fresh=false;
-    const k=ph.t==='move'?.22:.14;
-    cc=L.latLng(cc.lat+(tgt[0]-cc.lat)*k,cc.lng+(tgt[1]-cc.lng)*k);cz+=(z-cz)*.12;
-    map._move(cc,cz,{flyTo:true});
-    if(now-lastEnd>300){lastEnd=now;map._moveEnd(true);map._moveStart(true,false)}
-    if(u>=1){idx++;t0=now;fresh=true;if(idx>=P.length){LM.busy=false;setTourBtn(false);map._moveEnd(true);map.flyToBounds(bbOf(state.mv),{paddingTopLeft:[16,110],paddingBottomRight:[64,120],duration:2});idleLoop();return}}
+    if(T.fresh){T.fresh=false;try{renderStops();legIcons()}catch(e){}}
+    const kf=ph.t==='move'?.25:.16;
+    cc=L.latLng(cc.lat+(tgt[0]-cc.lat)*kf,cc.lng+(tgt[1]-cc.lng)*kf);cz+=(z-cz)*.14;
+    map.setView(cc,cz,{animate:false});
+    if(u>=1){
+      T.idx++;T.el=0;t0=now;T.fresh=true;
+      if(T.idx>=T.P.length){LM.busy=false;T.done=true;setTourBtn('idle');try{renderStops();legIcons()}catch(e){}map.flyToBounds(bbOf(state.mv),{paddingTopLeft:[16,110],paddingBottomRight:[64,120],duration:2});idleLoop();return}
+    }
     LM.raf=requestAnimationFrame(frame);
   };
   LM.raf=requestAnimationFrame(frame);
@@ -2722,14 +2918,21 @@ function syncDisable(){try{localStorage.removeItem(SYNC_KEY)}catch(e){}SYNC.url=
 /* Unterkunftsideen in drei Klassen mit Buchungslinks */
 const bookingU=(h,b)=>'https://www.booking.com/searchresults.html?ss='+encodeURIComponent(h.q)+'&checkin='+iso(addDays(START,b.a))+'&checkout='+iso(addDays(START,b.b+1))+'&group_adults=2&no_rooms=1';
 const gHotelsU=h=>'https://www.google.com/travel/search?q='+encodeURIComponent(h.q);
+/* Bewertungen: Booking (von 10) und Tripadvisor (von 5, nur ab 10 Bewertungen) */
+function hotelScore(stop,x){
+  const t=typeof HOTEL_TA!=='undefined'?HOTEL_TA[stop+'|'+x.n]:null,tOk=t&&t[1]>=10;
+  const bk=x.r?'Booking '+String(x.r).replace('.',',')+'/10':'';
+  const ta=tOk?'Tripadvisor '+String(t[0]).replace('.',',')+'/5 ('+t[1].toLocaleString('de-DE')+' Bewertungen)':'';
+  return [bk,ta].filter(Boolean).join(' · ')||'noch keine Bewertung';
+}
 function hotelIdeas(b){
   const H=HOTELS[b.stop],st=STOPS[b.stop].st;
-  let h=`<details class="hotl"><summary>Ideen für Unterkünfte in 3 Klassen</summary><p class="note">Preis pro Nacht für zwei im Doppelzimmer, gesucht für ${esc(H.ab)}. Richtwerte, vor der Buchung prüfen. Die Links öffnen Booking (mit euren Reisedaten), den Preisvergleich von Google und die Karte.</p>`;
+  let h=`<details class="hotl"><summary>Ideen für Unterkünfte in 3 Klassen</summary><p class="note">Preis pro Nacht für zwei im Doppelzimmer, gesucht für ${esc(H.ab)}. Richtwerte, vor der Buchung prüfen. Bewertungen von Booking (Skala bis 10) und Tripadvisor (Skala bis 5, Stand 17.11.2026). Die Links öffnen Booking (mit euren Reisedaten), den Preisvergleich von Google und die Karte.</p>`;
   if(st==='jp'||st==='ko')h+='<p class="note">In Japan und Seoul beginnt Klasse 1 bei ca. 35–70 € pro Nacht für zwei. Noch günstiger sind Hostel-Privatzimmer und Kapselhotels (oft ab ca. 25–35 € pro Person, nicht geprüft).</p>';
   HOTEL_CLASSES.forEach(c=>{
     const L=H[c[0]]||[];if(!L.length)return;
     const lo=Math.min(...L.map(x=>x.p)),hi=Math.max(...L.map(x=>x.p));
-    h+=`<h4>${esc(c[1])} <span class="hp">ca. ${lo===hi?lo:lo+'–'+hi} €</span></h4><p class="note">${esc(c[2])}</p><ul>`+L.map(x=>`<li><b>${esc(x.n)}</b><span class="hp">ca. ${x.p} € pro Nacht · ${x.r?String(x.r).replace('.',',')+'/10':'noch keine Bewertung'}</span><span class="note">${esc(x.a)}</span><span class="lk"><a href="${bookingU(x,b)}" target="_blank" rel="noopener">Booking ↗</a><a href="${gHotelsU(x)}" target="_blank" rel="noopener">Preise vergleichen ↗</a><a href="${mapsQ(x.q)}" target="_blank" rel="noopener">Karte ↗</a></span></li>`).join('')+'</ul>';
+    h+=`<h4>${esc(c[1])} <span class="hp">ca. ${lo===hi?lo:lo+'–'+hi} €</span></h4><p class="note">${esc(c[2])}</p><ul>`+L.map(x=>`<li><b>${esc(x.n)}</b><span class="hp">ca. ${x.p} € pro Nacht · ${hotelScore(b.stop,x)}</span><span class="note">${esc(x.a)}</span><span class="lk"><a href="${bookingU(x,b)}" target="_blank" rel="noopener">Booking ↗</a><a href="${gHotelsU(x)}" target="_blank" rel="noopener">Preise vergleichen ↗</a><a href="${mapsQ(x.q)}" target="_blank" rel="noopener">Karte ↗</a></span></li>`).join('')+'</ul>';
   });
   return h+'</details>';
 }
@@ -2926,12 +3129,14 @@ async function liveRates(btn){
 
 /* ---------- Ereignisse ---------- */
 document.addEventListener('click',e=>{
-  const t=e.target.closest('[data-trip],[data-sheet],[data-kday],[data-locate],[data-fit],[data-today],[data-kdet],[data-prio],[data-thm],[data-showact],[data-mc],[data-ifs],[data-ifc],[data-tab],[data-nav],[data-pf],[data-mv],[data-stop],[data-map],[data-gomap],[data-goplan],[data-del],[data-addexp],[data-editbk],[data-addact],[data-delbk],[data-delexp],[data-bkv],[data-more],[data-budget],[data-rates],[data-ratesedit],[data-wx],[data-export],[data-import],[data-pack],[data-packdel],[data-syncsave],[data-syncnow],[data-syncoff],[data-reset],[data-resetyes],[data-mm],[data-mmtoggle],[data-tour]');
+  const t=e.target.closest('[data-trip],[data-sheet],[data-tprev],[data-tnext],[data-kday],[data-locate],[data-fit],[data-today],[data-kdet],[data-prio],[data-thm],[data-showact],[data-mc],[data-ifs],[data-ifc],[data-tab],[data-nav],[data-pf],[data-mv],[data-stop],[data-map],[data-gomap],[data-goplan],[data-del],[data-addexp],[data-editbk],[data-addact],[data-delbk],[data-delexp],[data-bkv],[data-more],[data-budget],[data-rates],[data-ratesedit],[data-wx],[data-export],[data-import],[data-pack],[data-packdel],[data-syncsave],[data-syncnow],[data-syncoff],[data-reset],[data-resetyes],[data-mm],[data-mmtoggle],[data-tour]');
   if(!t)return;const D=t.dataset;
   if(D.trip){if(D.trip!==state.trip){useTrip(D.trip);state.tab='heute';render();scrollTo(0,0)}}
   else if(D.sheet)openActSheet(D.sheet);
   else if(D.kday!==undefined)showDay(parseInt(D.kday,10));
   else if(D.locate!==undefined)locateMe();
+  else if(D.tprev!==undefined)tourSkip(-1);
+  else if(D.tnext!==undefined)tourSkip(1);
   else if(D.fit!==undefined){state.sel=null;state.kd=null;const dp=$('#kdays');if(dp)dp.innerHTML=daysPills();setView('trip');updateInfo()}
   else if(D.today!==undefined)showDay(Math.min(ND()-1,Math.max(0,realDay())));
   else if(D.kdet!==undefined){const e=$('#kdet');if(e)e.scrollIntoView({behavior:'smooth',block:'start'})}
@@ -2977,6 +3182,15 @@ document.addEventListener('click',e=>{
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape')closeSheet();
   if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('.mk')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}
+});
+
+/* Tastatur: Leertaste startet oder pausiert die Rundfahrt, Pfeile springen zum vorherigen oder nächsten Ort */
+document.addEventListener('keydown',e=>{
+  if(state.tab!=='karte'||!LM.map||document.body.classList.contains('noscroll'))return;
+  const tg=e.target&&e.target.tagName;if(/INPUT|TEXTAREA|SELECT/.test(tg||'')||e.metaKey||e.ctrlKey||e.altKey)return;
+  if(e.code==='Space'||e.key===' '){if(tg==='BUTTON'||tg==='A')return;e.preventDefault();runTour()}
+  else if((e.key==='ArrowRight'||e.key==='ArrowLeft')&&(LM.busy||LM.tour)&&tg!=='SELECT'){e.preventDefault();tourSkip(e.key==='ArrowRight'?1:-1)}
+  else if(e.key==='Escape'&&LM.busy){stopTour()}
 });
 document.addEventListener('error',e=>{const t=e.target;if(t&&t.tagName==='IMG'){const f=t.closest&&t.closest('.af');if(f)f.classList.add('noimg')}},true);
 
