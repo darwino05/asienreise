@@ -1783,7 +1783,7 @@ const B_ROUTE_META=[null,
  ['zug','ca. 45 min'],
  ['zug','ca. 45 min'],
  ['zug','ca. 15 min'],
- ['flug','15.3. ab 19:05 über Hongkong, an Zürich 16.3. um 07:25']];
+ ['flug','15.3. ab 19:00 über Shanghai, an Zürich 16.3. um 06:55']];
 const B_DAYS=[
  ['Anreise',null,'Abflug Zürich am Dienstag, Nachtflug nach Bangkok'],
  ['Bangkok','bkk','Ankunft, Check-in, abends Chinatown (Yaowarat) zum Streetfood'],
@@ -1826,7 +1826,7 @@ const B_DAYS=[
  ['→ Osaka','osa','Zug (ca. 15 min); Sumiyoshi-Taisha, Kuromon-Markt, abends Dotonbori'],
  ['Osaka','osa','Burg Osaka, Shinsekai; abends Red&Blue Street am Fluss'],
  ['Osaka','osa','Cup-Noodles-Museum, Bouldern, Takoyaki; letzte Einkäufe, packen'],
- ['Rückflug',null,'Tagsüber noch Osaka, am Nachmittag mit dem Zug zum Flughafen KIX; Abflug 19:05 über Hongkong, Ankunft in Zürich am 16.3. um 07:25']
+ ['Rückflug',null,'Tagsüber noch Osaka, am Nachmittag mit dem Zug zum Flughafen KIX; Abflug 19:00 über Shanghai, Ankunft in Zürich am 16.3. um 06:55']
 ];
 
 const B_SEED=[
@@ -1860,7 +1860,7 @@ const B_SEED=[
  {id:'l12',k:'leg',ty:'zug',a:29,from:'Kawazu',to:'Tokyo',t:'Odoriko direkt (oder über Atami + Shinkansen), ca. 2,5–3 Std., ca. 35–45 € p. P. Eki-net, ab 3.2.'},
  {id:'l13',k:'leg',ty:'zug',a:33,from:'Tokyo',to:'Kyoto',t:'Shinkansen Nozomi, ca. 2 h 15. EX Hayatoku 21: 11.820 JPY (ca. 72 €) p. P. in der SmartEX-App, bis 14.2. buchen'},
  {id:'l14',k:'leg',ty:'zug',a:38,from:'Kyoto',to:'Osaka',t:'JR-Zug, ca. 15–30 min, ein paar Euro. Keine Buchung nötig'},
- {id:'l15',k:'leg',ty:'flug',a:41,from:'Osaka (KIX)',to:'Zürich',t:'Cathay CX569 + CX383, 19:05 → ZRH 07:25 (+1), Umstieg Hongkong, Koffer inkl. Ca. 710 € p. P. Auf cathaypacific.com buchen. Zum Flughafen KIX mit dem Zug (Haruka)'},
+ {id:'l15',k:'leg',ty:'flug',a:41,from:'Osaka (KIX)',to:'Zürich',t:'Shanghai Airlines FM822 + China Eastern MU255, 19:00 → ZRH 06:55 (+1), Umstieg Shanghai Pudong (5 h 10), ca. 19 h 55. Preis am 25.11. nicht angezeigt, auf ceair.com prüfen und als eine Buchung nehmen. Zum Flughafen KIX mit dem Zug (Haruka)'},
  {id:'a1',k:'act',a:3,t:'Thai-Kochkurs in Bangkok',stop:'bkk'},
  {id:'a2',k:'act',a:11,t:'Bootstour Maya Bay und Pileh Lagoon',stop:'phi'},
  {id:'a3',k:'act',a:14,t:'Phang-Nga-Bucht-Tour (James Bond Island)',stop:'phu'},
@@ -1943,7 +1943,7 @@ const B_BOARD=[
  {a:5,from:'BKK',fn:'Bangkok',to:'KBV',tn:'Krabi',no:'Thai AirAsia FD4400',dep:'17:50',arr:'19:15',via:'Nonstop',pr:'ca. 95 €',tip:['Abflug in Suvarnabhumi (BKK), nicht in Don Mueang.','Gepäck vorher dazubuchen.','Von Krabi ca. 45 Minuten nach Ao Nang.']},
  {a:15,from:'HKT',fn:'Phuket',to:'HAN',tn:'Hanoi',no:'Thai AirAsia FD3036 und FD640',dep:'06:30',arr:'11:50',via:'Umstieg in Bangkok',pr:'ca. 157 €',tip:['Vietnam-E-Visum ausgedruckt oder am Handy dabeihaben.','Als eine Buchung nehmen, nicht zwei einzelne Tickets.','Gepäck vorher dazubuchen.']},
  {a:25,from:'HAN',fn:'Hanoi',to:'NRT',tn:'Tokyo',no:'HK Express UO541 und UO650',dep:'09:35',arr:'19:05',via:'Umstieg in Hongkong',pr:'ca. 230 €',tip:['Mit U-Connect buchen. Ohne diesen Zusatz sind 1 h 25 Umstieg zu knapp.','Visit Japan Web vorher ausfüllen.','Früh zum Flughafen Noi Bai fahren.']},
- {a:41,from:'KIX',fn:'Osaka',to:'ZRH',tn:'Zürich',no:'Cathay CX569 und CX383',dep:'19:05',arr:'07:25 (+1 Tag)',via:'Umstieg in Hongkong',pr:'ca. 710 €',tip:['Ankunft in Zürich am 16.3. in der Früh.','Gepäck bis zum Nachmittag im Hotel lagern.','Tax-free-Einkäufe vor dem Check-in am Zoll zeigen.']}
+ {a:41,from:'KIX',fn:'Osaka',to:'ZRH',tn:'Zürich',no:'Shanghai Airlines FM822 und China Eastern MU255',dep:'19:00',arr:'06:55 (+1 Tag)',via:'Umstieg in Shanghai',pr:'Preis auf ceair.com prüfen',tip:['Ankunft in Zürich am 16.3. in der Früh.','Gepäck bis zum Nachmittag im Hotel lagern.','Tax-free-Einkäufe vor dem Check-in am Zoll zeigen.']}
 ];
 const B_COSTX={
  flights:[
@@ -1951,7 +1951,7 @@ const B_COSTX={
   {leg:'Bangkok → Krabi',how:'Nonstop mit Thai AirAsia FD4400, 17:50–19:15 ab Suvarnabhumi',when:'7.2.',price:'ca. 95 € (Stand 25.11.2026)',tip:'Günstiger ist FD3215 um 16:40 ab Don Mueang (ca. 52 €). Früh und nonstop ab Suvarnabhumi: Thai Vietjet VZ340, 07:00–08:30 (ca. 56 €). Gepäck extra.'},
   {leg:'Phuket → Hanoi',how:'Thai AirAsia FD3036 + FD640, 06:30–11:50 mit Umstieg in Don Mueang',when:'17.2.',price:'ca. 157 € (Stand 25.11.2026)',tip:'Als eine Buchung nehmen. Es gibt keinen Direktflug.'},
   {leg:'Hanoi → Tokyo',how:'HK Express UO541 + UO650, 09:35–19:05 (Narita) mit 1 h 25 Umstieg in Hongkong',when:'27.2. (am Tag)',price:'ca. 230 € (Stand 25.11.2026)',tip:'Nur mit U-Connect buchen, dann wird das Gepäck durchgecheckt und bei verpasstem Anschluss umgebucht. Direkt fliegt VietJet VJ934 (08:20–15:25) für ca. 407 €.'},
-  {leg:'Osaka → Zürich',how:'Cathay CX569 + CX383, 19:05 ab KIX, 07:25 an Zürich (+1 Tag), Umstieg in Hongkong',when:'15.3. (Montag)',price:'ca. 710 € (Stand 25.11.2026)',tip:'Ankunft am 16.3. Günstiger: CX507 um 18:05 oder CX561 um 17:00 (je ca. 652 €, gleiche Ankunft) oder Starlux mit Etihad um 12:20 (ca. 559 €, 2 Umstiege).'}
+  {leg:'Osaka → Zürich',how:'Shanghai Airlines FM822 + China Eastern MU255, 19:00 ab KIX, 06:55 an Zürich (+1 Tag), Umstieg in Shanghai Pudong (5 h 10)',when:'15.3. (Montag)',price:'am 25.11.2026 kein Preis angezeigt, auf ceair.com prüfen',tip:'Ankunft am 16.3., ca. 19 h 55 gesamt. Als eine Buchung nehmen, dann ist der Umstieg abgesichert. Alternativen: Cathay CX507 um 18:05 (ca. 652 € p. P., an 07:25) oder Starlux mit Etihad um 12:20 (ca. 559 €, 2 Umstiege).'}
  ],
  other:[
   {leg:'Boot Ao Nang → Koh Lanta',price:'ca. 17–31 € (670–1.215 THB)',tip:'Ca. 1,5–2,5 Std., Abfahrt ab ca. 10:30. Alternative Minivan über Land ca. 3–4 Std. für ca. 400–820 THB. Preise und Fahrplan je nach Anbieter, in der Hochsaison vorab buchen.'},
