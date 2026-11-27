@@ -242,7 +242,7 @@ svg.map{display:block;width:100%;height:auto;max-height:68vh}
 .legend2 b{margin-left:auto;font-variant-numeric:tabular-nums;font-weight:600}
 .sw{width:11px;height:11px;border-radius:3px;background:var(--c);flex:none}
 .exp{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-.exp li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.exp li{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
 .exp li:first-child{border-top:0}
 .exp .t{display:flex;flex-direction:column;min-width:0}
 .exp .t small{color:var(--muted);font-size:13px;overflow-wrap:anywhere}
@@ -598,7 +598,28 @@ body.noscroll .fab,body.nofab .fab{display:none}
 body.scrolled .fab{width:56px;height:56px;padding:0;justify-content:center}
 body.scrolled .fab .fl{display:none}
 @media (min-width:820px){.fab{right:max(16px,calc(50vw - 380px + 16px));bottom:calc(88px + env(safe-area-inset-bottom,0px))}}
-@media (hover:hover){.tabs button:hover{background:color-mix(in srgb,var(--ink) 6%,transparent)}}
+@media (hover:hover){.tabs button:not([aria-selected="true"]):not([aria-current]):hover{background:color-mix(in srgb,var(--ink) 6%,transparent)}}
+
+/* ---------- Computer: ganze Bildschirmbreite (26.11.2026) ---------- */
+@media (min-width:1100px){
+ .wrap{max-width:1500px;padding-inline:32px}
+ .tabs div{max-width:900px}
+ #view>.stack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+ #view>.stack>*{min-width:0}
+ #view>.stack>:is(.bp,.hero,.nav,.glance,details.tips,.mapcard,p.note,.chips){grid-column:1/-1}
+ #view>.stack>:first-child:is(.card){grid-column:1/-1}
+ .stage .days{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch}
+ .stage .day::before{display:none}
+ .stage>.intro{max-width:900px}
+ #view>.stack:has(>.globe){grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:24px}
+ #view>.stack:has(>.globe)>.globe{grid-column:1;grid-row:2/span 40;position:sticky;top:16px}
+ #view>.stack:has(>.globe)>:is(.gsum,.legs){grid-column:2}
+ .fab{right:max(16px,calc(50vw - 750px + 32px))}
+}
+@media (min-width:1600px){
+ #view>.stack:not(:has(>.globe)){grid-template-columns:repeat(3,minmax(0,1fr))}
+ .stage .days{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 </style>
 
 </head>
@@ -645,6 +666,7 @@ const STOPS={
  lan:{n:'Koh Lanta',st:'th',ll:[99.05,7.58],lab:'r',q:'Koh Lanta, Thailand'},
  rep:{n:'Siem Reap',st:'kh',ll:[103.856,13.3633],lab:'r',q:'Siem Reap, Kambodscha'},
  sgn:{n:'Ho-Chi-Minh-Stadt',st:'vn',ll:[106.7019,10.7769],lab:'r',q:'Ho Chi Minh City, Vietnam'},
+ cbe:{n:'Cai Be',st:'vn',ll:[106.034,10.334],lab:'r',q:'Cai Be, Tien Giang, Vietnam'},
  cth:{n:'Can Tho',st:'vn',ll:[105.788,10.038],lab:'r',q:'Can Tho, Vietnam'},
  cdc:{n:'Chau Doc',st:'vn',ll:[105.117,10.705],lab:'r',q:'Chau Doc, An Giang, Vietnam'},
  htn:{n:'Ha Tien',st:'vn',ll:[104.487,10.381],lab:'l',q:'Ha Tien, Vietnam'},
@@ -718,6 +740,7 @@ const CLIM={
  khs:{hi:32,lo:22,ic:'partly',rain:'trocken, einzelne Schauer im Dschungel möglich',tip:'Schwül im Regenwald. Leichte lange Kleidung, Insektenschutz, wasserfeste Tasche für Boot und Wasserfälle.'},
  hag:{hi:21,lo:11,ic:'cloud',rain:'Nieselregen und Nebel möglich',tip:'In den Bergen morgens und abends kühl. Windjacke, Handschuhe und Regenschutz für die Motorradtage.'},
  sgn:{hi:35,lo:25,ic:'sun',rain:'trocken, Regenzeit erst später',tip:'Heiß und schwül. Leichte Kleidung, viel trinken.'},
+ cbe:{hi:32,lo:23,ic:'sun',rain:'trocken',tip:'Heiß am Tag, auf dem Roller lange, leichte Kleidung, Sonnencreme und Mückenschutz.'},
  cth:{hi:32,lo:23,ic:'sun',rain:'trocken',tip:'Heiß, am Fluss morgens angenehm. Für den Markt um 5 Uhr eine leichte Jacke, sonst luftige Kleidung und Sonnenschutz.'},
  cdc:{hi:33,lo:23,ic:'sun',rain:'trocken',tip:'Heiß und trocken. Für das Boot im Mangrovenwald Mückenschutz und Hut mitnehmen.'},
  htn:{hi:32,lo:23,ic:'sun',rain:'trocken',tip:'Warm mit Meerwind. Sonnenschutz und Badesachen.'},
@@ -1169,8 +1192,12 @@ const ACTS_JT=[
 {id:"sam-namuang",s:"sam",c:"nature",t:"Na-Muang-Wasserfälle",q:"Na Muang Waterfall Koh Samui",d:"Zwei Wasserfälle im grünen Inselinneren, am unteren kann man baden.",h:"Tagsüber",p:"Eintritt frei",z:"1,5 Std.",w:"Süden der Insel, Grab oder Roller",tips:["Im März weniger Wasser.","Keine Elefantenshows buchen."]}
 ];
 /* Südvietnam (Reise 2): Saigon, Mekongdelta, Ha Tien, Phu Quoc. Koordinaten TomTom, Preise und Zeiten online geprüft am 25.11.2026. Keine Fotos. */
-const ACTLL_SV={'sgn-nguyenhue':[10.7738,106.7037],'cth-ninhkieu':[10.03835,105.78843],'cth-cairang':[10.0076,105.7504],'cdc-trasu':[10.5730,105.0456],'cdc-sam':[10.6701,105.0825],'htn-honchong':[10.1379,104.6402],'pqc-onglang':[10.2574,103.9367],'pqc-honthom':[10.0270,104.0072],'pqc-sao':[10.0530,104.0352],'pqc-park':[10.3283,104.0246]};
+const ACTLL_SV={'mek-roller':[10.3617,106.3624],'cbe-river':[10.3343,106.0339],'cbe-vinhlong':[10.2534,105.9614],'sgn-nguyenhue':[10.7738,106.7037],'cth-ninhkieu':[10.03835,105.78843],'cth-cairang':[10.0076,105.7504],'cdc-trasu':[10.5730,105.0456],'cdc-sam':[10.6701,105.0825],'htn-honchong':[10.1379,104.6402],'pqc-onglang':[10.2574,103.9367],'pqc-honthom':[10.0270,104.0072],'pqc-sao':[10.0530,104.0352],'pqc-park':[10.3283,104.0246]};
 const ACTS_SV=[
+/* ---------- ROLLERTOUR MEKONGDELTA ---------- */
+{id:"mek-roller",s:"cbe",c:"trip",t:"Rollertour Mekongdelta (3 Tage mit Fahrer)",q:"My Tho, Tien Giang, Vietnam",d:"Drei Tage auf dem Roller durchs Mekongdelta: über kleine Straßen, Brücken und Fähren von Saigon über Tan An und My Tho nach Cai Be, weiter über Vinh Long nach Can Tho zum schwimmenden Markt und zurück nach Saigon. Ihr sitzt hinten, ein Guide fährt. Das ist das Gegenstück zum Ha-Giang-Loop in Reise 1, nur flach, warm und mit viel Wasser.",h:"Start ca. 8 Uhr in Saigon, Rückkehr am Abend des 3. Tages",p:"VietLong Travel: privat, Preis auf Anfrage. Elegant Travel (Magpie): ab 299 USD. Übernachtungen, Essen laut Programm, Boote, Eintritte inklusive",z:"3 Tage",w:"Abholung in Saigon",tips:["Nur einen kleinen Rucksack mitnehmen, das große Gepäck bleibt im Hotel in Saigon.","Lange, leichte Kleidung und Sonnencreme, auf dem Roller brennt die Sonne.","Vorher klären: Preis für zwei Mitfahrer, Helme, Versicherung."]},
+{id:"cbe-river",s:"cbe",c:"sight",t:"Cai Be: Boot zum alten Haus am Fluss",q:"Cai Be, Tien Giang, Vietnam",d:"In Cai Be geht es mit dem Boot über den Fluss zu einem alten Wohnhaus. Am Abend ist es ruhig am Wasser, die Nacht verbringt ihr in einem Gästehaus am Fluss.",h:"Nachmittags auf der Rollertour",p:"In der Tour enthalten",z:"1–2 Std.",w:"Teil der Rollertour, Tag 1",tips:["Die Bootsfahrt dauert laut Anbieter ca. 30 Minuten."]},
+{id:"cbe-vinhlong",s:"cth",c:"nature",t:"Vinh Long: mit dem Boot durch die Kanäle",q:"Vinh Long, Vietnam",d:"Zwischen Cai Be und Vinh Long fahrt ihr mit dem Boot durch schmale Kanäle mit Obstgärten und Dörfern, dann weiter auf dem Roller nach Can Tho.",h:"Tag 2 der Rollertour",p:"In der Tour enthalten",z:"ca. 2,5 Std. Boot",w:"Teil der Rollertour, Tag 2",tips:["Wasser und Hut mitnehmen."]},
 /* ---------- SAIGON ---------- */
 {id:"sgn-nguyenhue",s:"sgn",c:"night",t:"Abends auf der Nguyen-Hue-Fußgängerzone",q:"Nguyen Hue Walking Street, Ho Chi Minh City",d:"Breiter Boulevard im Distrikt 1 zwischen Rathaus und Saigon-Fluss. Abends treffen sich hier Familien und junge Leute, es gibt Straßenmusik und Snacks. Guter, ruhiger Start nach dem Flug.",h:"Rund um die Uhr, abends am lebendigsten",p:"Frei",z:"1–2 Std.",w:"Distrikt 1, zu Fuß",tips:["Am Wochenende ist am meisten los."]},
 /* ---------- CAN THO ---------- */
@@ -1564,32 +1591,32 @@ const BOARD=(()=>{
   document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-bp]');if(b)b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true')});
   return {card};
 })();
-/* ---------- Reise 2: Kopie von Reise 1 (2.2.–15.3.2027), aber mit Südvietnam statt Nordvietnam: Saigon, Mekongdelta (Can Tho, Chau Doc), Ha Tien und Phu Quoc. Thailand und Japan wie Reise 1. Erstellt 25.11.2026. ---------- */
+/* ---------- Reise 2 (Plan B): genau wie Reise 1 mit Hanoi, Ha-Giang-Loop und Lan-Ha-Bucht, aber vier statt drei Nächte auf Koh Lanta und nur zwei statt drei in Phuket. Erstellt 27.11.2026. ---------- */
 const A_START=new Date(2027,1,2);
 const A_STAGES=[
- {id:'th',name:'Thailand',from:0,to:14,intro:'Bangkok mit den Tempeln aus eurer Liste und dem Chinesischen Neujahr am 6.2., dann per Flug in den Süden: Ao Nang bei Krabi, Koh Lanta, Koh Phi Phi und zum Schluss Phuket. Februar gehört an der Andamanensee zur Trockenzeit mit ruhigem Meer.',
-  tips:['Chinesisches Neujahr ist am 6.2. In Thailand sind rund um den 5.–14.2. mehr Gäste unterwegs, Unterkünfte und Flüge werden teurer. Dafür ist Yaowarat in Bangkok am Neujahrstag ein Fest.','Die Inselkette Krabi, Lanta, Phi Phi, Phuket liegt in einer Reihe. Die Strecken sind kurz, aber nur mit Fähren zu schaffen. Fahrpläne und Preise ändern sich je nach Anbieter und Saison, deshalb vor der Buchung beim Anbieter prüfen.','Fähren laut Fahrplänen im Netz: Ao Nang/Railay–Koh Lanta ca. 1,5–2,5 Std., Abfahrt ab ca. 10:30, ca. 670–1.215 THB (Minivan über Land ca. 400–820 THB, 3–4 Std.). Koh Lanta–Phi Phi ca. 1–1,5 Std., in der Hochsaison zwei Abfahrten (ca. 8–9 Uhr und 13–14 Uhr), ca. 500–750 THB. Phi Phi–Phuket (Rassada Pier) ca. 2 Std., Abfahrten u. a. um 9:00, 11:00, 14:00, 14:30, 15:30, ca. 450–700 THB. Nehmt die Morgenfähre, die früheren Boote sind zuerst ausverkauft.','Nur auf Phi Phi sind Unterkünfte und Essen deutlich teurer als auf dem Festland. Zwei Nächte reichen.','Sonntag 14.2. ist der Tag, an dem ihr in Phuket ankommt. Das passt zum Sunday Walking Street Market in der Altstadt.','Seit 15.9.2026 ist die visumfreie Zeit in Thailand auf 30 Tage gekürzt. Ihr bleibt mit 16 Tagen deutlich darunter.','Monkey Trail in Ao Nang ist euer Muss. Railay und Phra Nang am selben Tag sind „Kann“. Phuket–Saigon: Vietjet VJ808 fliegt nonstop, 14:10–16:05.']},
- {id:'vn',name:'Vietnam',from:15,to:24,intro:'Zehn Tage im warmen Süden: drei Nächte Saigon, dann über Land durchs Mekongdelta mit dem schwimmenden Markt in Can Tho, dem Mangrovenwald Trà Sư und dem Sam-Berg bei Chau Doc, den Kalkfelsen von Hon Chong bei Ha Tien und zum Schluss mit der Fähre auf die Insel Phu Quoc. Am 27.2. Flug über Saigon nach Tokyo. Mit österreichischem Pass braucht ihr ein E-Visum.',
-  tips:['Im Süden ist Ende Februar Trockenzeit: ca. 32 °C am Tag, kaum Regen. Anders als im Norden braucht ihr keine warme Kleidung, dafür Sonnenschutz und Mückenschutz für das Delta.','Das vietnamesische Neujahr (Tết) ist am 6.2. Ab dem 17.2. haben die meisten Betriebe wieder offen.','Saigon–Can Tho: Busse fahren fast rund um die Uhr ab dem Busbahnhof Mien Tay, ca. 3,5–4 Std. Phuong Trang (FUTA) ca. 195.000 VND, laut 12Go ab ca. 5–9 USD.','Can Tho–Chau Doc: Busse u. a. von FUTA mehrmals täglich (z. B. 10:00, 12:00, 13:00, 14:00), ca. 3 Std., ab ca. 5–12 USD (12Go).','Chau Doc–Ha Tien: Auf 12Go gibt es dafür keinen Bus, nur einen Privatwagen (ca. 2,5–3 Std., ca. 47–53 USD pro Auto). Das ist zu zweit die einfachste Lösung.','Ha Tien–Phu Quoc: Schnellfähren von Superdong (u. a. 06:10, 08:20, 09:50, 13:15) und Phu Quoc Express, ca. 1 h 20, ca. 230.000–350.000 VND pro Person. Ankunft am Hafen Bai Vong.','Schwimmender Markt Cai Rang: Am meisten los ist zwischen 6:00 und 7:30 Uhr, gegen 8:30 Uhr ist fast alles vorbei. Boote ab Ninh-Kieu-Ufer gegen 5 Uhr, die Fahrt dauert 30–40 Min.','Am 27.2. landet ihr erst um 01:00 Uhr nachts in Tokyo Haneda. Die erste Nacht (27./28.2.) am besten nahe Haneda buchen.']},
+ {id:'th',name:'Thailand',from:0,to:14,intro:'Bangkok mit den Tempeln aus eurer Liste und dem Chinesischen Neujahr am 6.2., dann per Flug in den Süden: Ao Nang bei Krabi, vier Nächte Koh Lanta, Koh Phi Phi und zum Schluss zwei Nächte Phuket. Februar gehört an der Andamanensee zur Trockenzeit mit ruhigem Meer.',
+  tips:['Chinesisches Neujahr ist am 6.2. In Thailand sind rund um den 5.–14.2. mehr Gäste unterwegs, Unterkünfte und Flüge werden teurer. Dafür ist Yaowarat in Bangkok am Neujahrstag ein Fest.','Die Inselkette Krabi, Lanta, Phi Phi, Phuket liegt in einer Reihe. Die Strecken sind kurz, aber nur mit Fähren zu schaffen. Fahrpläne und Preise ändern sich je nach Anbieter und Saison, deshalb vor der Buchung beim Anbieter prüfen.','Fähren laut Fahrplänen im Netz: Ao Nang/Railay–Koh Lanta ca. 1,5–2,5 Std., Abfahrt ab ca. 10:30, ca. 670–1.215 THB (Minivan über Land ca. 400–820 THB, 3–4 Std.). Koh Lanta–Phi Phi ca. 1–1,5 Std., in der Hochsaison zwei Abfahrten (ca. 8–9 Uhr und 13–14 Uhr), ca. 500–750 THB. Phi Phi–Phuket (Rassada Pier) ca. 2 Std., Abfahrten u. a. um 9:00, 11:00, 14:00, 14:30, 15:30, ca. 450–700 THB. Nehmt die Morgenfähre, die früheren Boote sind zuerst ausverkauft.','Nur auf Phi Phi sind Unterkünfte und Essen deutlich teurer als auf dem Festland. Zwei Nächte reichen.','Phuket hat nur zwei Nächte: Ankunft mit der Fähre am 15.2., Phang-Nga-Tour am 16.2., am 17.2. um 06:30 der Flug nach Hanoi. Ein Hotel in der Altstadt oder Richtung Flughafen spart Fahrzeit (Kata liegt ca. 45–60 Min. vom Flughafen).','Seit 15.9.2026 ist die visumfreie Zeit in Thailand auf 30 Tage gekürzt. Ihr bleibt mit 16 Tagen deutlich darunter.','Monkey Trail in Ao Nang ist euer Muss. Railay und Phra Nang am selben Tag sind „Kann“. Phuket–Hanoi: Es gibt keinen Direktflug, aber täglich mehrere Verbindungen mit einem Stopp in Bangkok (insgesamt ca. 5–8 Std., u. a. Thai Airways, Bangkok Airways, Thai AirAsia). Bei Billigfliegern nur ein durchgehendes Ticket buchen.']},
+ {id:'vn',name:'Vietnam',from:15,to:24,intro:'Zehn Tage: Hanoi mit Altstadt, vier Tage Ha-Giang-Loop durch die Berge im Norden, ein Ruhetag in Hanoi und eine Nacht auf dem Schiff in der Lan-Ha-Bucht. Danach eine Nacht in Hanoi und am 27.2. der Tagflug nach Tokyo. Mit österreichischem Pass braucht ihr ein E-Visum.',
+  tips:['Das vietnamesische Neujahr (Tết) ist am 6.2. Ihr seid ab dem 17.2. dort, dann haben die meisten Betriebe wieder offen. Trotzdem Touren früh buchen.','Ende Februar ist es in Hanoi und vor allem auf dem Ha-Giang-Loop kühl und oft neblig (Berge 5–12 °C). Warme Kleidung, Regenjacke und Handschuhe mitnehmen.','Der 4-Tage-Loop ist anstrengend, aber landschaftlich der Höhepunkt. Fahrt als Beifahrer mit einem Easy Rider. Wer selbst fährt, braucht einen passenden Führerschein (internationaler Führerschein, A-Klasse) und eine Versicherung, die das abdeckt.','Hanoi–Ha Giang: Limousinenbus ca. 5,5–7 Std., Abfahrten u. a. um 7:00 und 16:00, ca. 260.000–400.000 VND. Zurück nach Hanoi fahren am Abend Limousinen (ca. 16 Uhr, Ankunft ca. 22 Uhr) und Nachtbusse (ca. 20–21 Uhr, Ankunft 3–5 Uhr). Der Tag danach ist bewusst frei, damit beides passt.','Ha Giang: Seit Juni 2026 wird für Ausländer in den Grenzgebieten ein Permit von ca. 10 USD verlangt, die Tour regelt das meist. Nach einem tödlichen Unfall im April 2026 gelten strengere Regeln für Anbieter.','Lan-Ha-Bucht: Zwei Tage und eine Nacht auf dem Schiff, ca. 105–195 USD pro Person, meist mit Abholung in der Hanoier Altstadt gegen 8 Uhr und Fahrt zum Hafen (ca. 2,5–3,5 Std.). Mahlzeiten und Kajak sind oft dabei, der Transfer manchmal nicht (ca. 25 USD extra). Zurück in Hanoi seid ihr am Nachmittag. Im Februar kann es dunstig und kühl sein, Abfahrten fallen bei schlechter Sicht manchmal aus, wählt einen Anbieter mit Umbuchung.','Hanoi–Tokyo gibt es nonstop mit Vietnam Airlines, VietJet, JAL und ANA. Nachtflüge laut Fahrplänen im Netz: Vietnam Airlines um 0:25 (Ankunft Narita ca. 7:00), VietJet um 0:55 (Ankunft ca. 8:00). Fahrzeiten vor der Buchung bei der Airline bestätigen.']},
  {id:'jp',name:'Japan',from:25,to:41,intro:'Japan im Spätwinter, mit der frühen Blüte: Die Kawazu-Kirschen blühen im Februar und Anfang März, dazu die Pflaumenblüte (Ume). Zuerst zwei Tage Tokyo, dann zwei Nächte Kawazu, zurück nach Tokyo, weiter nach Kyoto mit Nara und zum Schluss Osaka. Rechnet mit kalten 3–12 °C. Die normalen Kirschen (Somei Yoshino) blühen erst Ende März, nach eurem Urlaub.',
   tips:['Seit 1.11.2026 gibt es tax-free nur noch als Rückerstattung: Im Laden den vollen Preis zahlen und vor dem Check-in am Zoll die Ware vorzeigen. Am Abreisetag mehr Zeit einplanen.','Kawazu: Die Kirschen blühen meist von Mitte Februar bis Anfang März, das Fest lief 2026 vom 7.2. bis 8.3. Die Termine für 2027 waren am 25.11.2026 noch nicht veröffentlicht. Zwei Nächte lassen einen Reservetag, falls es regnet oder die Blüte später kommt. Die Odoriko-Direktzüge nach Kawazu fahren laut JR East mehrmals täglich ab Tokyo (u. a. morgens um 7:30, 9:30 und 10:30, je nach Saison).','Pflaumenblüte: Atami (Januar bis März), Yushima Tenjin in Tokyo (Mitte Februar bis Mitte März) und Kitano Tenmangu in Kyoto (Ende Februar bis Anfang März).','teamLab Planets und Shibuya Sky vorab online buchen, die Zeitfenster sind oft Tage vorher ausverkauft. teamLab Planets ist laut Betreiber bis Ende 2027 geöffnet.','Dienstags geschlossen: Cup-Noodles-Museum Osaka (am Sonntag 14.3. geöffnet) und National Art Center Tokyo (Freitag 5.3. geöffnet). Der Plan berücksichtigt das.','Duty-Free läuft in Japan seit 1.11.2026 anders: Ihr zahlt den vollen Preis inklusive Steuer und bekommt sie bei der Ausreise zurück. Am Flughafen etwas mehr Zeit einplanen.','Rainbow Line (Fukui), Gulliver-Garten (Shiga) und Okuyama Ameyama liegen weit draußen und sind ohne Auto kaum sinnvoll. Sie stehen nur als Idee in der Liste.','Der Rückflug geht am Montag 15.3. Das lässt einen Tag Puffer vor dem Büro am 17.3.']}
 ];
-const A_ORDER=['bkk','krb','lan','phi','phu','sgn','cth','cdc','htn','pqc','tyo','kaw','kyo','nar','osa'];
-const A_ROUTE=['home','bkk','krb','lan','phi','phu','sgn','cth','cdc','htn','pqc','tyo','kaw','tyo','kyo','nar','kyo','osa','home'];
-const A_ROUTE_DAY=[0,1,5,7,10,12,15,18,19,21,22,25,27,29,33,35,36,38,41];
-const A_SEG_DAY=[0,0,5,7,10,12,15,18,19,21,22,25,27,29,33,35,36,38,41];
+const A_ORDER=['bkk','krb','lan','phi','phu','han','hag','hlb','tyo','kaw','kyo','nar','osa'];
+const A_ROUTE=['home','bkk','krb','lan','phi','phu','han','hag','han','hlb','han','tyo','kaw','tyo','kyo','nar','kyo','osa','home'];
+const A_ROUTE_DAY=[0,1,5,7,11,13,15,17,21,23,24,25,27,29,33,35,36,38,41];
+const A_SEG_DAY=[0,0,5,7,11,13,15,17,21,23,24,25,27,29,33,35,36,38,41];
 const A_ROUTE_META=[null,
  ['flug','Nonstop Zürich–Bangkok, ca. 10,5 Std. (Thai TG973)'],
  ['flug','Nonstop ca. 1 h 25 (AirAsia FD4400)'],
  ['boot','Boot ab Ao Nang/Railay ca. 1,5–2,5 Std. (oder Minivan ca. 3–4 Std.)'],
  ['boot','Fähre ca. 1–1,5 Std., morgens und mittags'],
  ['boot','Fähre ca. 2 Std. (Speedboat ca. 1 Std.)'],
- ['flug','Nonstop ca. 1 h 55 (Vietjet VJ808, 14:10–16:05)'],
- ['bus','Bus ab Mien Tay ca. 3,5–4 Std.'],
- ['bus','Bus ca. 3 Std.'],
- ['bus','Privatwagen ca. 2,5–3 Std. (kein Bus auf 12Go)'],
- ['boot','Schnellfähre ca. 1 h 20'],
- ['flug','27.2. Phu Quoc 08:25 → Saigon 09:30 (VJ328), dann Saigon 17:20 → Tokyo Haneda 01:00 (+1, VJ820)'],
+ ['flug','Mit Umstieg in Bangkok, ca. 5 h 20 (kein Direktflug)'],
+ ['bus','Limousinen-Bus ca. 6 Std.'],
+ ['bus','Bus ca. 6 Std. zurück'],
+ ['bus','Abholung in Hanoi, Fahrt zum Hafen ca. 2,5–3,5 Std.'],
+ ['bus','Rückfahrt nach Hanoi ca. 2,5–3,5 Std.'],
+ ['flug','27.2. ab 09:35 über Hongkong, an Narita 19:05'],
  ['zug','Odoriko ab Tokyo ca. 2 h 30'],
  ['zug','Izukyu-Linie, Shinkansen ab Atami, ca. 3 Std.'],
  ['zug','Shinkansen ca. 2 h 15'],
@@ -1608,23 +1635,23 @@ const A_DAYS=[
  ['→ Koh Lanta','lan','Boot Ao Nang–Koh Lanta (Abfahrt ca. 10:30, ca. 1,5–2,5 Std.); Strand, Sonnenuntergang'],
  ['Koh Lanta','lan','Mu-Ko-Lanta-Nationalpark mit Leuchtturm, nachmittags Lanta Old Town'],
  ['Koh Lanta','lan','Schnorcheltour (Koh Rok) oder freier Strandtag; optional Tauchtag'],
+ ['Koh Lanta','lan','Freier Tag auf Lanta: Strand, Massage, Sonnenuntergang an der Westküste'],
  ['→ Koh Phi Phi','phi','Fähre nach Phi Phi (morgens ca. 8–9 Uhr, ca. 1–1,5 Std.); Viewpoint zum Sonnenuntergang, abends Ton Sai'],
  ['Koh Phi Phi','phi','Bootstour: Maya Bay, Pileh Lagoon, Schnorcheln und Monkey Beach'],
- ['→ Phuket','phu','Fähre nach Phuket (ab 9:00 Uhr, ca. 2 Std., Rassada Pier), Altstadt; abends Sunday Walking Street (Lard Yai)'],
- ['Phuket','phu','Wat Chalong, Karon Viewpoint, zum Sonnenuntergang Promthep Cape'],
- ['Phuket','phu','Phang-Nga-Bucht und James Bond Island (Tagestour)'],
- ['→ Saigon','sgn','Flug Vietjet VJ808 Phuket 14:10 → Saigon 16:05 (nonstop); abends Nguyen-Hue-Boulevard'],
- ['Saigon','sgn','Ben-Thanh-Markt, Kathedrale Notre-Dame und Hauptpost; abends Streetfood-Tour auf dem Roller'],
- ['Saigon','sgn','Vormittags Cu-Chi-Tunnel (Ben Duoc), nachmittags War Remnants Museum; abends Rooftop-Bar'],
- ['→ Can Tho','cth','Bus Saigon (Mien Tay) → Can Tho, ca. 3,5–4 Std.; abends Ninh-Kieu-Ufer und Nachtmarkt'],
- ['→ Chau Doc','cdc','Früh um ca. 5 Uhr mit dem Boot zum schwimmenden Markt Cai Rang; nachmittags Bus nach Chau Doc (ca. 3 Std.)'],
- ['Chau Doc','cdc','Mangrovenwald Trà Sư mit dem Boot (ca. 30–40 Min. Fahrt), Sonnenuntergang auf dem Sam-Berg'],
- ['→ Ha Tien','htn','Privatwagen Chau Doc → Ha Tien (ca. 2,5–3 Std.); nachmittags Hon Chong mit Felsenküste und Strand'],
- ['→ Phu Quoc','pqc','Schnellfähre Ha Tien → Phu Quoc (z. B. Superdong 08:20, ca. 1 h 20); nachmittags Strand Ong Lang'],
- ['Phu Quoc','pqc','Bootstour zu den An-Thoi-Inseln mit Schnorcheln, Seilbahn Hon Thom'],
- ['Phu Quoc','pqc','Sao Beach oder Tour in den Nationalpark im Norden; letzter Abend am Strand'],
- ['→ Tokyo','tyo','Flug VJ328 Phu Quoc 08:25 → Saigon 09:30, Wartezeit in Saigon, Flug VJ820 Saigon 17:20 → Tokyo Haneda, Ankunft 28.2. um 01:00; Hotel nahe Haneda'],
- ['Tokyo','tyo','Ausschlafen nach der späten Ankunft. Asakusa: Senso-ji und Asakusa-Schrein, Sumida-Fluss; nachmittags teamLab Planets; abends Golden Gai und Omoide Yokocho in Shinjuku'],
+ ['→ Phuket','phu','Fähre nach Phuket (ab 9:00 Uhr, ca. 2 Std., Rassada Pier), Altstadt; zum Sonnenuntergang Promthep Cape'],
+ ['Phuket','phu','Phang-Nga-Bucht und James Bond Island (Tagestour); früh schlafen, am nächsten Morgen geht der Flug um 06:30'],
+ ['→ Hanoi','han','Flug Phuket 06:30 → Hanoi 11:50 mit Umstieg in Bangkok; abends Altstadt, Bia Hoi an der Straßenecke'],
+ ['Hanoi','han','Hoan-Kiem-See, Literaturtempel, Streetfood-Tour; abends Bia Hoi und Egg Coffee'],
+ ['→ Ha Giang','hag','Bus Hanoi–Ha Giang (ca. 6 Std.); Tour abholen und Motorrad-Briefing'],
+ ['Ha-Giang-Loop','hag','Tag 1: Quan Ba, Yen Minh, Dong Van; Übernachtung im Homestay'],
+ ['Ha-Giang-Loop','hag','Tag 2: Dong Van, Mã Pí Lèng Pass, Nho-Que-Fluss, Meo Vac'],
+ ['Ha-Giang-Loop','hag','Tag 3: Du-Già-Region mit Wasserfall und Reisterrassen; Homestay'],
+ ['→ Hanoi','han','Tag 4: Rückfahrt nach Ha Giang. Danach Limousinenbus um ca. 16 Uhr (Ankunft ca. 22 Uhr) oder Nachtbus (Ankunft 3–5 Uhr)'],
+ ['Ruhetag in Hanoi','han','Ausruhen nach dem Loop: Wasserpuppentheater, Egg Coffee, Kochkurs; Wäsche und Packen'],
+ ['→ Lan-Ha-Bucht','hlb','Abholung in der Altstadt ca. 8 Uhr, Fahrt zum Hafen (ca. 2,5–3,5 Std.); Schiff, Kajak und Sonnenuntergang, Nacht an Bord'],
+ ['Lan-Ha-Bucht → Hanoi','han','Sonnenaufgang an Deck, gegen Mittag zurück am Hafen, Rückfahrt nach Hanoi (ca. 2,5–3,5 Std.), Abendessen in der Altstadt, Nacht in Hanoi'],
+ ['→ Tokyo','tyo','Flug HK Express 09:35 ab Hanoi, Ankunft Narita 19:05, Zug ins Zentrum (ca. 1 Std.), Einchecken; spätes Abendessen in Shinjuku'],
+ ['Tokyo','tyo','Asakusa: Senso-ji und Asakusa-Schrein, Sumida-Fluss; nachmittags teamLab Planets'],
  ['→ Kawazu','kaw','Odoriko ab Tokyo (ca. 2,5 Std.); Kirschblüte am Kawazu-Fluss, abends Onsen'],
  ['Kawazu','kaw','Wasserfälle von Kawazu (Nanadaru); Reservetag für die Blüte, falls es regnet'],
  ['Kawazu → Tokyo','tyo','Pflaumengarten in Atami, Shinkansen zurück nach Tokyo'],
@@ -1645,15 +1672,15 @@ const A_DAYS=[
 const A_SEED=[
  {id:'s1',k:'stay',stop:'bkk',a:1,b:4,t:'Bangkok'},
  {id:'s2',k:'stay',stop:'krb',a:5,b:6,t:'Ao Nang'},
- {id:'s3',k:'stay',stop:'lan',a:7,b:9,t:'Koh Lanta'},
- {id:'s4',k:'stay',stop:'phi',a:10,b:11,t:'Koh Phi Phi'},
- {id:'s5',k:'stay',stop:'phu',a:12,b:14,t:'Phuket (Kata)'},
- {id:'s6',k:'stay',stop:'sgn',a:15,b:17,t:'Saigon'},
- {id:'s7',k:'stay',stop:'cth',a:18,b:18,t:'Can Tho'},
- {id:'s8',k:'stay',stop:'cdc',a:19,b:20,t:'Chau Doc'},
- {id:'s9',k:'stay',stop:'htn',a:21,b:21,t:'Ha Tien'},
- {id:'s10',k:'stay',stop:'pqc',a:22,b:24,t:'Phu Quoc'},
- {id:'s11',k:'stay',stop:'tyo',a:25,b:26,t:'Tokyo (erste Nacht nahe Haneda, Ankunft 01:00)'},
+ {id:'s3',k:'stay',stop:'lan',a:7,b:10,t:'Koh Lanta'},
+ {id:'s4',k:'stay',stop:'phi',a:11,b:12,t:'Koh Phi Phi'},
+ {id:'s5',k:'stay',stop:'phu',a:13,b:14,t:'Phuket'},
+ {id:'s6',k:'stay',stop:'han',a:15,b:16,t:'Hanoi'},
+ {id:'s7',k:'stay',stop:'hag',a:17,b:20,t:'Ha Giang und Homestays'},
+ {id:'s8',k:'stay',stop:'han',a:21,b:22,t:'Hanoi'},
+ {id:'s9',k:'stay',stop:'hlb',a:23,b:23,t:'Schiff in der Lan-Ha-Bucht'},
+ {id:'s10',k:'stay',stop:'han',a:24,b:24,t:'Hanoi (Nacht vor dem Flug nach Tokyo)'},
+ {id:'s11',k:'stay',stop:'tyo',a:25,b:26,t:'Tokyo (erste Nächte)'},
  {id:'s12',k:'stay',stop:'kaw',a:27,b:28,t:'Kawazu (Onsen)'},
  {id:'s13',k:'stay',stop:'tyo',a:29,b:32,t:'Tokyo'},
  {id:'s14',k:'stay',stop:'kyo',a:33,b:37,t:'Kyoto'},
@@ -1661,48 +1688,48 @@ const A_SEED=[
  {id:'l0',k:'leg',ty:'flug',a:0,from:'Zürich',to:'Bangkok',t:'Thai TG973, ab ZRH 20:00, an BKK 12:35 (+1), ohne Umstieg, Koffer inkl. Ca. 512 € p. P. Direkt auf thaiairways.com buchen'},
  {id:'l1',k:'leg',ty:'flug',a:5,from:'Bangkok',to:'Krabi',t:'Thai AirAsia FD4400, 17:50 → 19:15, ohne Umstieg, ab Suvarnabhumi (BKK). Ca. 95 € p. P. + Koffer. Auf airasia.com buchen. Günstiger: FD3215 16:40 ab Don Mueang, ca. 52 €'},
  {id:'l2',k:'leg',ty:'boot',a:7,from:'Ao Nang',to:'Koh Lanta',t:'Fähre + Van, ca. 1,5–2,5 Std., ca. 16–25 € p. P. Auf 12go.asia buchen'},
- {id:'l3',k:'leg',ty:'boot',a:10,from:'Koh Lanta',to:'Koh Phi Phi',t:'Fähre ca. 8–9 Uhr, ca. 1–1,5 Std., ca. 13–19 € p. P. Auf 12go.asia buchen'},
- {id:'l4',k:'leg',ty:'boot',a:12,from:'Koh Phi Phi',to:'Phuket',t:'Fähre ab 9:00 nach Rassada Pier, ca. 2 Std., ca. 12–19 € p. P. Auf 12go.asia buchen'},
- {id:'l5',k:'leg',ty:'flug',a:15,from:'Phuket',to:'Saigon',t:'Vietjet VJ808, 14:10 → 16:05, nonstop. Ca. 124 € p. P. (SlickTrip, 25.11.2026). Auf vietjetair.com buchen, Gepäck dazubuchen'},
- {id:'l6',k:'leg',ty:'bus',a:18,from:'Saigon',to:'Can Tho',t:'Bus ab Busbahnhof Mien Tay, ca. 3,5–4 Std., z. B. Phuong Trang (FUTA) ca. 195.000 VND (ca. 7 €) p. P. Auf 12go.asia oder futabus.vn'},
- {id:'l7',k:'leg',ty:'bus',a:19,from:'Can Tho',to:'Chau Doc',t:'Bus am Nachmittag (z. B. FUTA 13:00 oder 14:00), ca. 3 Std., ca. 5–12 USD p. P. Auf 12go.asia'},
- {id:'l8',k:'leg',ty:'bus',a:21,from:'Chau Doc',to:'Ha Tien',t:'Privatwagen, ca. 2,5–3 Std., ca. 47–53 USD pro Auto. Auf 12go.asia (GoEz Travel) oder über das Hotel'},
- {id:'l9',k:'leg',ty:'boot',a:22,from:'Ha Tien',to:'Phu Quoc',t:'Schnellfähre Superdong oder Phu Quoc Express, ca. 1 h 20, ca. 230.000–350.000 VND (ca. 8–12 €) p. P. Auf 12go.asia'},
- {id:'l10',k:'leg',ty:'flug',a:25,from:'Phu Quoc',to:'Tokyo',t:'Vietjet VJ328 08:25 → Saigon 09:30 (ca. 36 € p. P.), dann Vietjet VJ820 17:20 → Haneda 01:00 (+1), nonstop, ca. 270 € p. P. (SlickTrip, 25.11.2026). Zwei getrennte Tickets, deshalb fast 8 Std. Puffer in Saigon'},
+ {id:'l3',k:'leg',ty:'boot',a:11,from:'Koh Lanta',to:'Koh Phi Phi',t:'Fähre ca. 8–9 Uhr, ca. 1–1,5 Std., ca. 13–19 € p. P. Auf 12go.asia buchen'},
+ {id:'l4',k:'leg',ty:'boot',a:13,from:'Koh Phi Phi',to:'Phuket',t:'Fähre ab 9:00 nach Rassada Pier, ca. 2 Std., ca. 12–19 € p. P. Auf 12go.asia buchen'},
+ {id:'l5',k:'leg',ty:'flug',a:15,from:'Phuket',to:'Hanoi',t:'Thai AirAsia FD3036 + FD640, 06:30 → 11:50, Umstieg Don Mueang (2 h). Ca. 157 € p. P. + Koffer. Auf airasia.com als eine Buchung nehmen'},
+ {id:'l6',k:'leg',ty:'bus',a:17,from:'Hanoi',to:'Ha Giang',t:'Limousinenbus, ca. 6 Std., ab ca. 10–13 € p. P. Oft in der Loop-Tour inklusive, sonst 12go.asia'},
+ {id:'l7',k:'leg',ty:'bus',a:21,from:'Ha Giang',to:'Hanoi',t:'Limousinenbus ca. 16 Uhr, ca. 6 Std., ca. 10–15 € p. P. Oft in der Tour inklusive'},
+ {id:'l8',k:'leg',ty:'bus',a:23,from:'Hanoi',to:'Lan-Ha-Bucht',t:'Abholung in der Altstadt ca. 8 Uhr, ca. 2,5–3,5 Std. Meist im Schiffspreis'},
+ {id:'l9',k:'leg',ty:'bus',a:24,from:'Lan-Ha-Bucht',to:'Hanoi',t:'Rücktransfer, ca. 2,5–3,5 Std. Meist im Schiffspreis'},
+ {id:'l10',k:'leg',ty:'flug',a:25,from:'Hanoi',to:'Tokyo',t:'HK Express UO541 + UO650, 09:35 → Narita 19:05, Umstieg Hongkong (1 h 25). Ca. 230 € p. P. + Koffer. Auf hkexpress.com mit U-Connect buchen (Gepäck wird durchgecheckt)'},
  {id:'l11',k:'leg',ty:'zug',a:27,from:'Tokyo',to:'Kawazu',t:'Odoriko-Direktzug, ca. 2,5 Std., ca. 35–40 € p. P. Auf Eki-net buchen, ab 1.2. (Tokuwari bis −35 %)'},
  {id:'l12',k:'leg',ty:'zug',a:29,from:'Kawazu',to:'Tokyo',t:'Odoriko direkt (oder über Atami + Shinkansen), ca. 2,5–3 Std., ca. 35–45 € p. P. Eki-net, ab 3.2.'},
  {id:'l13',k:'leg',ty:'zug',a:33,from:'Tokyo',to:'Kyoto',t:'Shinkansen Nozomi, ca. 2 h 15. EX Hayatoku 21: 11.820 JPY (ca. 72 €) p. P. in der SmartEX-App, bis 14.2. buchen'},
  {id:'l14',k:'leg',ty:'zug',a:38,from:'Kyoto',to:'Osaka',t:'JR-Zug, ca. 15–30 min, ein paar Euro. Keine Buchung nötig'},
  {id:'l15',k:'leg',ty:'flug',a:41,from:'Osaka (KIX)',to:'Zürich',t:'Shanghai Airlines FM822 + China Eastern MU255, 19:00 → ZRH 06:55 (+1), Umstieg Shanghai Pudong (5 h 10), ca. 19 h 55. Preis am 25.11. nicht angezeigt, auf ceair.com prüfen und als eine Buchung nehmen. Zum Flughafen KIX mit dem Zug (Haruka)'},
  {id:'a1',k:'act',a:3,t:'Thai-Kochkurs in Bangkok',stop:'bkk'},
- {id:'a2',k:'act',a:11,t:'Bootstour Maya Bay und Pileh Lagoon',stop:'phi'},
+ {id:'a2',k:'act',a:12,t:'Bootstour Maya Bay und Pileh Lagoon',stop:'phi'},
  {id:'a3',k:'act',a:14,t:'Phang-Nga-Bucht-Tour (James Bond Island)',stop:'phu'},
- {id:'a4',k:'act',a:16,t:'Streetfood-Tour auf dem Roller in Saigon',stop:'sgn'},
- {id:'a5',k:'act',a:23,t:'Bootstour An-Thoi-Inseln (Phu Quoc)',stop:'pqc'},
+ {id:'a4',k:'act',a:18,t:'Ha-Giang-Loop-Tour (Easy Rider, 4 Tage)',stop:'hag'},
+ {id:'a5',k:'act',a:23,t:'Lan-Ha-Bucht: Schiff mit Übernachtung',stop:'hlb'},
  {id:'a6',k:'act',a:26,t:'teamLab Planets (Zeitfenster buchen)',stop:'tyo'},
  {id:'a7',k:'act',a:27,t:'Kawazu-Kirschblüte und Onsen',stop:'kaw'},
  {id:'a8',k:'act',a:30,t:'Shibuya Sky',stop:'tyo'},
  {id:'a9',k:'act',a:37,t:'Kochkurs und Teezeremonie Kyoto',stop:'kyo'}
 ];
 const A_FRIST=[
- {d:'2026-11-30',t:'Flüge buchen und Tage vergleichen',s:'Open-Jaw Zürich → Bangkok (Di 2.2.) und Osaka → Zürich (Mo 15.3.). Dazu Bangkok–Krabi (7.2.), Phuket–Saigon (17.2., VJ808), Phu Quoc–Saigon und Saigon–Tokyo (27.2., VJ328 und VJ820). Der Tokyo-Flug am 27.2. war am 25.11. teurer als sonst, Preis beobachten.'},
+ {d:'2026-11-30',t:'Flüge buchen und Tage vergleichen',s:'Open-Jaw Zürich → Bangkok (Di 2.2.) und Osaka → Zürich (Mo 15.3.). Dazu Bangkok–Krabi (7.2.), Phuket–Hanoi über Bangkok (17.2.) und Hanoi–Tokyo (Tagflug am 27.2., HK Express 09:35). Preise ±3 Tage mit dem Google-Flights-Kalender vergleichen, rund um den 6.2. ist es teurer.'},
  {d:'2026-12-15',t:'Unterkünfte Thailand zum Neujahr und Japan buchen',s:'Rund um das Chinesische Neujahr (5.–14.2.) sind Unterkünfte in Bangkok, Krabi und auf den Inseln schneller weg. Kostenlos stornierbar wählen.'},
- {d:'2027-01-05',t:'Unterkünfte Südvietnam buchen',s:'Saigon (17.–20.2.), Can Tho (20.2.), Chau Doc (21.–23.2.), Ha Tien (23.2.) und Phu Quoc (24.–27.2.). Kostenlos stornierbar wählen.'},
- {d:'2027-02-01',t:'Bus, Wagen und Fähre in Südvietnam buchen',s:'Bus Saigon–Can Tho (20.2.), Bus Can Tho–Chau Doc (21.2.), Privatwagen Chau Doc–Ha Tien (23.2.) und Fähre Ha Tien–Phu Quoc (24.2.), z. B. auf 12go.asia.'},
+ {d:'2027-01-05',t:'Ha-Giang-Loop-Tour buchen',s:'Für den 18.–21.2. (4 Tage, 3 Nächte) Anbieter mit Easy Riders und guten Bewertungen wählen, Versicherungsschutz für Motorrad-Mitfahrer prüfen. Am 23.2. fährt abends ein Bus zurück nach Hanoi (Limousine ca. 16 Uhr oder Nachtbus), der 24.2. ist als Ruhetag frei.'},
+ {d:'2027-01-10',t:'Lan-Ha-Bucht-Schiff buchen',s:'2 Tage und 1 Nacht ab 25.2., mit Abholung in Hanoi. Anbieter mit guten Bewertungen und Umbuchung bei schlechter Sicht wählen. Klären, ob der Transfer ab Hanoi im Preis ist.'},
  {d:'2027-01-15',t:'Kawazu: Festtermine und Blütenprognose prüfen',s:'Die Kirschen blühen meist Mitte Februar bis Anfang März. Ende Februar die Blütenprognose ansehen, im Zweifel den Reservetag nutzen. Odoriko-Platz früh reservieren, Fahrplan bei JR East prüfen.'},
- {d:'2027-01-20',t:'Fähren prüfen und buchen',s:'Ao Nang–Koh Lanta (7.2.), Koh Lanta–Phi Phi (10.2.) und Phi Phi–Phuket (12.2.). Abfahrten laut Netz: Lanta–Phi Phi ca. 8–9 und 13–14 Uhr, Phi Phi–Phuket u. a. 9:00, 11:00, 14:00. Fahrpläne und Preise ändern sich je nach Anbieter, in der Hochsaison vorab buchen.'},
+ {d:'2027-01-20',t:'Fähren prüfen und buchen',s:'Ao Nang–Koh Lanta (9.2.), Koh Lanta–Phi Phi (13.2.) und Phi Phi–Phuket (15.2.). Abfahrten laut Netz: Lanta–Phi Phi ca. 8–9 und 13–14 Uhr, Phi Phi–Phuket u. a. 9:00, 11:00, 14:00. Fahrpläne und Preise ändern sich je nach Anbieter, in der Hochsaison vorab buchen.'},
  {d:'2027-01-30',t:'Vietnam-E-Visum beantragen',s:'25 USD, ca. 3 Werktage. Spätestens 2–3 Wochen vor Einreise (17.2.).'},
  {d:'2027-01-31',t:'Thailand: Einreisekarte TDAC',s:'Pflicht, innerhalb von 72 h vor Ankunft (3.2.) ausfüllen.'},
  {d:'2027-02-10',t:'teamLab Planets und Shibuya Sky buchen',s:'teamLab für den 28.2. (Sonntag, früh buchen), Shibuya Sky für den 4.3. Die Zeitfenster sind oft Tage vorher ausverkauft.'},
- {d:'2027-02-21',t:'Japan: Visit Japan Web',s:'Optional, beschleunigt die Einreise. Vor dem Flug nach Tokyo (27.2.).'}
+ {d:'2027-02-21',t:'Japan: Visit Japan Web',s:'Optional, beschleunigt die Einreise. Vor dem Flug nach Tokyo (26.2.).'}
 ];
-const A_BOOK=['Urlaub 1.2.–16.3.2027 fixieren, Rückflug am Montag 15.3. (Büro am 17.3.)','Open-Jaw-Flug buchen: Zürich → Bangkok (Di 2.2.), Osaka → Zürich (Mo 15.3.). Preise ±3 Tage vergleichen','Unterkünfte Thailand rund um Neujahr (5.–14.2.) früh buchen','Unterkünfte Japan 26.2.–15.3. buchen (kostenlos stornierbar). Kawazu mit Onsen früh reservieren','Südvietnam: Bus Saigon–Can Tho, Bus Can Tho–Chau Doc, Privatwagen nach Ha Tien und Fähre nach Phu Quoc buchen','Zwischenflüge: Bangkok–Krabi, Phuket–Saigon (VJ808), Phu Quoc–Saigon (VJ328) und Saigon–Tokyo Haneda (VJ820)','Fähren Ao Nang–Lanta, Lanta–Phi Phi und Phi Phi–Phuket prüfen und in der Hauptsaison vorab buchen','teamLab Planets und Shibuya Sky vorab buchen','Vietnam-E-Visum beantragen','Reiseversicherung inkl. Auslandskranken und Sportschutz (Schnorcheln)'];
+const A_BOOK=['Urlaub 1.2.–16.3.2027 fixieren, Rückflug am Montag 15.3. (Büro am 17.3.)','Open-Jaw-Flug buchen: Zürich → Bangkok (Di 2.2.), Osaka → Zürich (Mo 15.3.). Preise ±3 Tage vergleichen','Unterkünfte Thailand rund um Neujahr (5.–14.2.) früh buchen','Unterkünfte Japan 26.2.–15.3. buchen (kostenlos stornierbar). Kawazu mit Onsen früh reservieren','Ha-Giang-Loop-Tour (4 Tage) mit Easy Rider und Versicherungsklärung buchen','Lan-Ha-Bucht-Schiff (2 Tage, 1 Nacht) buchen','Zwischenflüge: Bangkok–Krabi, Phuket–Hanoi (über Bangkok), Hanoi–Tokyo (27.2. am Tag, mit U-Connect)','Fähren Ao Nang–Lanta, Lanta–Phi Phi und Phi Phi–Phuket prüfen und in der Hauptsaison vorab buchen','teamLab Planets und Shibuya Sky vorab buchen','Vietnam-E-Visum beantragen','Reiseversicherung inkl. Auslandskranken, Motorrad-Mitfahrer und Sportschutz'];
 const A_ENTRY=[
  {st:'th',n:'Thailand',r:'Visumfrei, seit 15.9.2026 nur noch bis 30 Tage (vorher 60). Digitale Einreisekarte TDAC ist Pflicht.',w:'TDAC innerhalb von 72 h vor Ankunft'},
  {st:'vn',n:'Vietnam',r:'E-Visum nötig (25 USD, ca. 3 Werktage). Österreich steht nicht auf der Liste der Länder mit 45 Tagen visumfrei.',w:'Mindestens 2–3 Wochen vorher auf evisa.gov.vn'},
  {st:'jp',n:'Japan',r:'Visumfrei bis 90 Tage. Visit Japan Web ist optional und beschleunigt die Einreise. Die geplante Einreise-Genehmigung JESTA kommt frühestens 2028.',w:'Vor dem Flug nach Tokyo'}
 ];
-const A_RECO=['Dieser Plan ist für euren Urlaub vom 1.2. bis 16.3. gebaut: Südostasien zuerst, Japan zuletzt, weil die frühe Blüte (Kawazu, Pflaumen) Ende Februar und Anfang März am schönsten ist und Japan dann etwas milder ist.','Die Route geht von Bangkok nach Süden, nicht nach Norden: Bangkok, Krabi, Koh Lanta, Koh Phi Phi, Phuket. Kurze Strecken, wenig Fliegen, Meer und Inseln im Februar, wenn die Trockenzeit ruhiges Wasser bringt.','Einen Flug-Dienstag-Trick gibt es nicht mehr sicher: Aktuelle Auswertungen sehen mal Mittwoch, mal Donnerstag oder Freitag vorn. Dienstag ist vor allem leerer. Vergleicht die Preise ±3 Tage mit dem Google-Flights-Kalender.','Flüge nur dort, wo es übers Meer oder sehr weit geht: Bangkok–Krabi, Phuket–Saigon, Phu Quoc–Saigon und Saigon–Tokyo. Durchs Mekongdelta geht es mit Bus, Wagen und Fähre.','Aus eurer Liste (49 verschiedene Orte) sind die meisten im Tagesplan. Einige stehen mit Begründung unter „Ideen und Aktivitäten“, aber nicht im Plan: Ko Tao, Sa Pa, Bạch Long Glass Bridge, Wat Samphran, Rainbow Line Fukui, Gulliver-Garten Shiga und Okuyama Ameyama Nature Park. Chiang Mai, Khao Sok, Angkor, Hoi An und Ninh Binh sind mit dem neuen Plan rausgefallen.','Seoul ist aus dem Plan genommen, die Kirschblüte dort ist erst im April. Dafür gibt es Kawazu, die früheste Kirschblüte Japans, mit zwei Nächten und Onsen.','Chinesisches Neujahr (6.2.) fällt in euren Bangkok-Teil: mehr Gäste, höhere Preise. Dafür ist Yaowarat in Bangkok ein Fest.','Reise 2 ist der Vergleich zu Reise 1: Thailand und Japan sind gleich, nur Vietnam ist anders. Statt Hanoi, Ha-Giang-Loop und Lan-Ha-Bucht geht es in den warmen Süden. Dafür fehlen die Berge und Karstfelsen des Nordens.','Landschaften im Süden: der schwimmende Markt Cai Rang am frühen Morgen, der Mangrovenwald Trà Sư mit dem Boot, der Blick vom Sam-Berg über die Reisfelder bis Kambodscha, die Felsenküste von Hon Chong und die Strände und Inseln von Phu Quoc.','Nach Krabi, Koh Lanta, Phi Phi und Phuket ist Phu Quoc noch einmal Strand. Wer weniger Strand will, kann eine Nacht Phu Quoc gegen eine zweite Nacht in Can Tho tauschen.','Fushimi Inari und Nishiki-Markt vor 9 Uhr besuchen, danach wird es sehr voll.','Golden-Gai in Tokyo am besten ab etwa 20 Uhr. Viele Bars haben eine kleine Sitzgebühr und nur wenige Plätze.'];
+const A_RECO=['Dieser Plan ist für euren Urlaub vom 1.2. bis 16.3. gebaut: Südostasien zuerst, Japan zuletzt, weil die frühe Blüte (Kawazu, Pflaumen) Ende Februar und Anfang März am schönsten ist und Japan dann etwas milder ist.','Die Route geht von Bangkok nach Süden, nicht nach Norden: Bangkok, Krabi, Koh Lanta, Koh Phi Phi, Phuket. Kurze Strecken, wenig Fliegen, Meer und Inseln im Februar, wenn die Trockenzeit ruhiges Wasser bringt.','Einen Flug-Dienstag-Trick gibt es nicht mehr sicher: Aktuelle Auswertungen sehen mal Mittwoch, mal Donnerstag oder Freitag vorn. Dienstag ist vor allem leerer. Vergleicht die Preise ±3 Tage mit dem Google-Flights-Kalender.','Flüge nur dort, wo der Landweg über sechs Stunden dauert: Bangkok–Krabi, Phuket–Hanoi und Hanoi–Tokyo (27.2. am Tag mit Umstieg in Hongkong). Dazwischen Fähre, Bus und Shinkansen.','Aus eurer Liste (49 verschiedene Orte) sind die meisten im Tagesplan. Einige stehen mit Begründung unter „Ideen und Aktivitäten“, aber nicht im Plan: Ko Tao, Sa Pa, Bạch Long Glass Bridge, Wat Samphran, Rainbow Line Fukui, Gulliver-Garten Shiga und Okuyama Ameyama Nature Park. Chiang Mai, Khao Sok, Angkor, Hoi An und Ninh Binh sind mit dem neuen Plan rausgefallen.','Seoul ist aus dem Plan genommen, die Kirschblüte dort ist erst im April. Dafür gibt es Kawazu, die früheste Kirschblüte Japans, mit zwei Nächten und Onsen.','Chinesisches Neujahr (6.2.) fällt in euren Bangkok-Teil: mehr Gäste, höhere Preise. Dafür ist Yaowarat in Bangkok ein Fest.','Vietnam statt Hoi An: Lan-Ha-Bucht mit einer Nacht auf dem Schiff ist das klassische Highlight im Norden, und von Hanoi kommt man gut nach Tokyo. Nach dem Loop gibt es einen Ruhetag in Hanoi.','Der Ha-Giang-Loop dauert jetzt vier Tage und ist die größte Abenteuer-Station der Reise. Wer nicht selbst Motorrad fährt, fährt als Beifahrer mit einem Easy Rider. Vorher klären, ob die Versicherung das abdeckt.','Fushimi Inari und Nishiki-Markt vor 9 Uhr besuchen, danach wird es sehr voll.','Golden-Gai in Tokyo am besten ab etwa 20 Uhr. Viele Bars haben eine kleine Sitzgebühr und nur wenige Plätze.'];
 const A_BKT=[['lang','Langstreckenflug'],['inner','Flüge, Züge & Fähren Asien'],['th','Thailand'],['vn','Vietnam'],['jp','Japan'],['misc','Versicherung, Visa, Puffer']];
 const A_BUCKETS={lang:2440,inner:1200,th:1790,vn:1380,jp:2850,misc:1120};
 const A_DAYACTS=[
@@ -1716,23 +1743,23 @@ const A_DAYACTS=[
  ['lan-beaches'],
  ['lan-nationalpark','lan-oldtown'],
  ['lan-koh-rok'],
+ [],
  ['phi-viewpoint','phi-tonsai'],
  ['phi-maya','phi-tour'],
- ['phu-oldtown','phu-sunday'],
- ['phu-chalong','phu-viewpoint','phu-promthep'],
+ ['phu-oldtown','phu-promthep'],
  ['phu-phangnga'],
- ['sgn-nguyenhue'],
- ['sgn-benthanh','sgn-notredame','sgn-postoffice','sgn-food'],
- ['sgn-cuchi','sgn-warmuseum'],
- ['cth-ninhkieu'],
- ['cth-cairang'],
- ['cdc-trasu','cdc-sam'],
- ['htn-honchong'],
- ['pqc-onglang'],
- ['pqc-islands','pqc-honthom'],
- ['pqc-sao','pqc-park'],
+ ['han-biahoi'],
+ ['han-hoankiem','han-literature','han-foodtour','han-eggcoffee'],
  [],
- ['tyo-sensoji','tyo-asakusashrine','tyo-sumida','tyo-teamlab','tyo-goldengai','tyo-omoide'],
+ ['hag-loop'],
+ ['hag-mapileng'],
+ [],
+ [],
+ ['han-puppets','han-cooking'],
+ ['hlb-cruise','hlb-kayak'],
+ ['hlb-sunrise'],
+ ['tyo-goldengai','tyo-omoide'],
+ ['tyo-sensoji','tyo-asakusashrine','tyo-sumida','tyo-teamlab'],
  ['kaw-sakura'],
  ['kaw-falls'],
  ['kaw-atami'],
@@ -1754,74 +1781,62 @@ const A_DAYACTS=[
 const A_BOARD=[
  {a:0,from:'ZRH',fn:'Zürich',to:'BKK',tn:'Bangkok',no:'Thai TG973',dep:'20:00',arr:'12:35 (+1 Tag)',via:'Nonstop',pr:'ca. 511 €',tip:['TDAC innerhalb von 72 Stunden vor der Ankunft ausfüllen.','Powerbank gehört ins Handgepäck.','Vom Flughafen mit dem Airport Rail Link in die Stadt.']},
  {a:5,from:'BKK',fn:'Bangkok',to:'KBV',tn:'Krabi',no:'Thai AirAsia FD4400',dep:'17:50',arr:'19:15',via:'Nonstop',pr:'ca. 95 €',tip:['Abflug in Suvarnabhumi (BKK), nicht in Don Mueang.','Gepäck vorher dazubuchen.','Von Krabi ca. 45 Minuten nach Ao Nang.']},
- {a:15,from:'HKT',fn:'Phuket',to:'SGN',tn:'Saigon',no:'Vietjet VJ808',dep:'14:10',arr:'16:05',via:'Nonstop',pr:'ca. 124 €',tip:['Vietnam-E-Visum ausgedruckt oder am Handy dabeihaben.','Gepäck vorher dazubuchen.','Vom Flughafen Tan Son Nhat mit Grab in die Stadt.']},
- {a:25,from:'PQC',fn:'Phu Quoc',to:'SGN',tn:'Saigon',no:'Vietjet VJ328',dep:'08:25',arr:'09:30',via:'Nonstop',pr:'ca. 36 €',tip:['Danach in Saigon: VJ820 um 17:20 nach Tokyo Haneda, Ankunft 01:00.','Zwei getrennte Tickets: Gepäck in Saigon neu aufgeben.','Visit Japan Web vorher ausfüllen.']},
- {a:25,from:'SGN',fn:'Saigon',to:'HND',tn:'Tokyo',no:'Vietjet VJ820',dep:'17:20',arr:'01:00 (+1 Tag)',via:'Nonstop',pr:'ca. 270 €',tip:['Ankunft um 1 Uhr nachts: Hotel nahe Haneda buchen.','Visit Japan Web vorher ausfüllen.','Gepäck vorher dazubuchen.']},
+ {a:15,from:'HKT',fn:'Phuket',to:'HAN',tn:'Hanoi',no:'Thai AirAsia FD3036 und FD640',dep:'06:30',arr:'11:50',via:'Umstieg in Bangkok',pr:'ca. 157 €',tip:['Vietnam-E-Visum ausgedruckt oder am Handy dabeihaben.','Als eine Buchung nehmen, nicht zwei einzelne Tickets.','Gepäck vorher dazubuchen.']},
+ {a:25,from:'HAN',fn:'Hanoi',to:'NRT',tn:'Tokyo',no:'HK Express UO541 und UO650',dep:'09:35',arr:'19:05',via:'Umstieg in Hongkong',pr:'ca. 230 €',tip:['Mit U-Connect buchen. Ohne diesen Zusatz sind 1 h 25 Umstieg zu knapp.','Visit Japan Web vorher ausfüllen.','Früh zum Flughafen Noi Bai fahren.']},
  {a:41,from:'KIX',fn:'Osaka',to:'ZRH',tn:'Zürich',no:'Shanghai Airlines FM822 und China Eastern MU255',dep:'19:00',arr:'06:55 (+1 Tag)',via:'Umstieg in Shanghai',pr:'Preis auf ceair.com prüfen',tip:['Ankunft in Zürich am 16.3. in der Früh.','Gepäck bis zum Nachmittag im Hotel lagern.','Tax-free-Einkäufe vor dem Check-in am Zoll zeigen.']}
 ];
 const A_COSTX={
  flights:[
   {leg:'Zürich → Bangkok',how:'Nonstop mit Thai TG973, 20:00 ab Zürich, 12:35 an Bangkok (+1 Tag)',when:'2.2.',price:'ca. 511 € (Stand 25.11.2026)',tip:'Direkt auf thaiairways.com buchen. Alternative TG971 um 13:15 (ca. 537 €).'},
   {leg:'Bangkok → Krabi',how:'Nonstop mit Thai AirAsia FD4400, 17:50–19:15 ab Suvarnabhumi',when:'7.2.',price:'ca. 95 € (Stand 25.11.2026)',tip:'Günstiger ist FD3215 um 16:40 ab Don Mueang (ca. 52 €). Früh und nonstop ab Suvarnabhumi: Thai Vietjet VZ340, 07:00–08:30 (ca. 56 €). Gepäck extra.'},
-  {leg:'Phuket → Saigon',how:'Nonstop mit Vietjet VJ808, 14:10–16:05',when:'17.2.',price:'ca. 124 € (Stand 25.11.2026)',tip:'Einziger Nonstop-Flug an diesem Tag. Gepäck extra.'},
-  {leg:'Phu Quoc → Saigon',how:'Nonstop mit Vietjet VJ328, 08:25–09:30',when:'27.2.',price:'ca. 36 € (Stand 25.11.2026)',tip:'Später: VJ320 um 11:05 (ca. 47 €). Vietnam Airlines ab ca. 58 €.'},
-  {leg:'Saigon → Tokyo',how:'Nonstop mit Vietjet VJ820, 17:20 ab Saigon, 01:00 an Haneda (+1 Tag)',when:'27.2.',price:'ca. 270 € (Stand 25.11.2026)',tip:'Für dieses Datum teurer als sonst (üblich ca. 117–226 €). Preis beobachten. Ankunft nachts, erste Nacht nahe Haneda.'},
+  {leg:'Phuket → Hanoi',how:'Thai AirAsia FD3036 + FD640, 06:30–11:50 mit Umstieg in Don Mueang',when:'17.2.',price:'ca. 157 € (Stand 25.11.2026)',tip:'Als eine Buchung nehmen. Es gibt keinen Direktflug.'},
+  {leg:'Hanoi → Tokyo',how:'HK Express UO541 + UO650, 09:35–19:05 (Narita) mit 1 h 25 Umstieg in Hongkong',when:'27.2. (am Tag)',price:'ca. 230 € (Stand 25.11.2026)',tip:'Nur mit U-Connect buchen, dann wird das Gepäck durchgecheckt und bei verpasstem Anschluss umgebucht. Direkt fliegt VietJet VJ934 (08:20–15:25) für ca. 407 €.'},
   {leg:'Osaka → Zürich',how:'Shanghai Airlines FM822 + China Eastern MU255, 19:00 ab KIX, 06:55 an Zürich (+1 Tag), Umstieg in Shanghai Pudong (5 h 10)',when:'15.3. (Montag)',price:'am 25.11.2026 kein Preis angezeigt, auf ceair.com prüfen',tip:'Ankunft am 16.3., ca. 19 h 55 gesamt. Als eine Buchung nehmen, dann ist der Umstieg abgesichert. Alternativen: Cathay CX507 um 18:05 (ca. 652 € p. P., an 07:25) oder Starlux mit Etihad um 12:20 (ca. 559 €, 2 Umstiege).'}
  ],
  other:[
   {leg:'Boot Ao Nang → Koh Lanta',price:'ca. 17–31 € (670–1.215 THB)',tip:'Ca. 1,5–2,5 Std., Abfahrt ab ca. 10:30. Alternative Minivan über Land ca. 3–4 Std. für ca. 400–820 THB. Preise und Fahrplan je nach Anbieter, in der Hochsaison vorab buchen.'},
   {leg:'Fähre Koh Lanta → Koh Phi Phi',price:'ca. 13–19 € (500–750 THB)',tip:'Ca. 1–1,5 Std., in der Hochsaison zwei Abfahrten (ca. 8–9 und 13–14 Uhr). Morgenfähre nehmen und vorab buchen.'},
   {leg:'Fähre Koh Phi Phi → Phuket (Rassada Pier)',price:'ca. 12–19 € (450–700 THB)',tip:'Ca. 2 Std. Abfahrten u. a. 9:00, 11:00, 14:00, 14:30, 15:30. Speedboat ca. 600–900 THB und 45–60 Min.'},
-  {leg:'Bus Saigon → Can Tho',price:'ca. 5–9 € (Phuong Trang ca. 195.000 VND)',tip:'Ab Busbahnhof Mien Tay, ca. 3,5–4 Std., fast rund um die Uhr.'},
-  {leg:'Bus Can Tho → Chau Doc',price:'ca. 5–11 € (5–12 USD)',tip:'Ca. 3 Std., z. B. FUTA mehrmals täglich.'},
-  {leg:'Privatwagen Chau Doc → Ha Tien',price:'ca. 22–25 € pro Person (47–53 USD pro Auto)',tip:'Ca. 2,5–3 Std. Auf 12Go gibt es dafür keinen Bus.'},
-  {leg:'Schnellfähre Ha Tien → Phu Quoc',price:'ca. 8–12 € (230.000–350.000 VND)',tip:'Ca. 1 h 20, Superdong u. a. 06:10, 08:20, 09:50, 13:15.'},
-  {leg:'Boot zum schwimmenden Markt Cai Rang',price:'ca. 5–7 € pro Person (300.000–400.000 VND pro Boot für 2–3)',tip:'Ab Ninh-Kieu-Ufer um ca. 5 Uhr. Über das Hotel oft 50–100 % teurer.'},
+  {leg:'Lan-Ha-Bucht: Schiff, 2 Tage mit Übernachtung',price:'ca. 100–180 € (105–195 USD)',tip:'Abholung in der Altstadt ca. 8 Uhr, Fahrt zum Hafen 2,5–3,5 Std. Mahlzeiten und Kajak oft dabei, der Transfer teils extra (ca. 25 USD). Preise nach Schiffsklasse sehr unterschiedlich.'},
+  {leg:'Bus Hanoi ↔ Ha Giang',price:'ca. 10–16 € je Strecke (260.000–400.000 VND)',tip:'Limousinenbus ca. 5,5–7 Std., hin u. a. 7:00 und 16:00. Zurück am Abend Limousine (ca. 16 Uhr, an ca. 22 Uhr) oder Nachtbus (ca. 20–21 Uhr, an 3–5 Uhr).'},
+  {leg:'Ha-Giang-Loop (4 Tage mit Easy Rider)',price:'ca. 180–300 €',tip:'Ohne Bus, meist mit Übernachtung und Essen. Permit ca. 10 USD kommt oft dazu.'},
   {leg:'Odoriko Tokyo ↔ Kawazu',price:'ca. 25–45 € je Strecke',tip:'Direktzug, Sitzplatz reservieren. Rückweg über Atami und Shinkansen ist ähnlich teuer.'},
   {leg:'Shinkansen Tokyo → Kyoto',price:'ca. 85 € (ca. 13.900 JPY)',tip:'Einzelticket am Automaten oder per SmartEX-App.'}
  ],
  cats:[
   {n:'Langstreckenflug Open-Jaw',lo:1070,mid:1220,hi:1700,spar:'Flexible Daten, Mittwoch oder Donnerstag fliegen, ein Gepäckstück.',mehr:'Direktflug oder Premium Economy.'},
-  {n:'Flüge, Züge, Fähren und Busse in Asien (5 Flüge, 4 Fähren)',lo:560,mid:680,hi:880,spar:'Billigflieger ohne Gepäck, Fähren statt Speedboat, Bus wo es passt.',mehr:'Linienflüge mit Gepäck, Speedboat, Sitzplätze.'},
-  {n:'Unterkunft',lo:620,mid:1040,hi:1780,spar:'Klasse 1: In Thailand und Vietnam ca. 13–35 € pro Nacht für zwei. In Japan ab ca. 35–70 €. Nur eine teure Nacht in Kawazu.',mehr:'Klasse 3 auf den Inseln, auf Phu Quoc, Kawazu-Ryokan und Kyoto.'},
+  {n:'Flüge, Züge, Fähren und Busse in Asien (3 Flüge, 3 Fähren)',lo:480,mid:600,hi:800,spar:'Billigflieger ohne Gepäck, Fähren statt Speedboat, Bus wo es passt.',mehr:'Linienflüge mit Gepäck, Speedboat, Sitzplätze.'},
+  {n:'Unterkunft',lo:620,mid:1040,hi:1780,spar:'Klasse 1: In Thailand und Vietnam ca. 20–35 € pro Nacht für zwei. In Japan ab ca. 35–70 €. Nur eine teure Nacht in Kawazu.',mehr:'Klasse 3 auf den Inseln, in Phuket, Kawazu-Ryokan und Kyoto.'},
   {n:'Essen und Trinken',lo:520,mid:860,hi:1420,spar:'Streetfood, Konbini-Frühstück, Mittagsmenüs in Japan.',mehr:'Restaurants, Izakaya, Golden-Gai-Abende, Ryokan-Dinner.'},
-  {n:'Aktivitäten und Eintritte',lo:300,mid:560,hi:980,spar:'Tempel, Märkte und Strände statt Touren.',mehr:'Phang-Nga-Tour, Maya-Bay-Boot, Streetfood-Tour Saigon, Inselhopping und Seilbahn auf Phu Quoc, teamLab, Kochkurse, Klettern, Surfen.'},
+  {n:'Aktivitäten und Eintritte',lo:380,mid:700,hi:1150,spar:'Tempel, Märkte und Strände statt Touren.',mehr:'Phang-Nga-Tour, Maya-Bay-Boot, Ha-Giang-Tour, Schiff in der Lan-Ha-Bucht, teamLab, Kochkurse, Klettern, Surfen.'},
   {n:'Lokaler Transport',lo:320,mid:470,hi:670,spar:'Metro, Bus, Songthaew, Einzeltickets.',mehr:'Taxi und Grab, Mietroller auf Phuket und Lanta.'},
-  {n:'Visa, eSIM, Versicherung',lo:140,mid:200,hi:290,spar:'Nur das Vietnam-E-Visum (ca. 25 USD) ist Pflicht.',mehr:'Versicherung mit Rücktransport.'},
+  {n:'Visa, eSIM, Versicherung',lo:140,mid:200,hi:290,spar:'Nur das Vietnam-E-Visum (ca. 25 USD) ist Pflicht.',mehr:'Versicherung mit Rücktransport und Motorrad-Mitfahrer.'},
   {n:'Puffer und Mitbringsel',lo:150,mid:300,hi:600,spar:'Nur das Nötigste kaufen.',mehr:'Souvenirs, Kleidung, Duty-Free.'}
  ]
 };
 const A_QUELLEN=[
  {t:'Flugzeiten und Preise: SlickTrip',u:'https://slicktrip.com/',s:'Suche am 25.11.2026 für zwei Personen.'},
+ {t:'HK Express: U-Connect',u:'https://www.hkexpress.com/Plan/Extras/U-Connect',s:'Gepäck wird durchgecheckt; ohne U-Connect muss man es in Hongkong selbst neu aufgeben.'},
+ {t:'Flüge Phuket–Hanoi (Flightroutes)',u:'https://www.flightroutes.com/HKT-HAN',s:'Kein Direktflug, mehrere Verbindungen mit einem Stopp in Bangkok.'},
  {t:'Flüge Bangkok–Krabi (FlightConnections)',u:'https://www.flightconnections.com/flights-from-bkk-to-kbv',s:'Viele Nonstop-Flüge täglich, mehrere Airlines.'},
  {t:'Fähre Koh Lanta–Phi Phi (Trip Store Krabi)',u:'https://www.tripstorekrabi.com/Transfers/From-Koh-Lanta/To-Koh-Phi-Phi/By-Lanta-Petpailin',s:'In der Hochsaison zwei Abfahrten am Tag, ca. 600 THB.'},
  {t:'Fähren Phi Phi–Phuket (Rassada Pier)',u:'https://rassadapier.net/_new_ferry_from_phiphi_to_phuket.php',s:'Abfahrten u. a. 9:00, 11:00, 14:00, 14:30, 15:30. Fahrpläne bitte beim Anbieter bestätigen.'},
  {t:'Ao Nang nach Koh Lanta: Boot und Minivan',u:'https://www.smartenplus.co.th/blog/ao-nang-to-koh-lanta-the-best-ways-to-travel-by-sea-or-road',s:'Boot ca. 1,5–2,5 Std., Minivan 3–4 Std.'},
- {t:'Flug Phuket–Saigon am 17.2. (SlickTrip)',u:'https://slicktrip.com/flights?key=HKT%3BSGN%3Beconomy%3B2%3B2027-02-17',s:'Vietjet VJ808, 14:10–16:05, nonstop. Suche am 25.11.2026.'},
- {t:'Flug Phu Quoc–Saigon am 27.2. (SlickTrip)',u:'https://slicktrip.com/flights?key=PQC%3BSGN%3Beconomy%3B2%3B2027-02-27',s:'Vietjet VJ328, 08:25–09:30, und weitere Flüge bis Mittag.'},
- {t:'Flug Saigon–Tokyo am 27.2. (SlickTrip)',u:'https://slicktrip.com/flights?key=SGN%3BTYOA%3Beconomy%3B2%3B2027-02-27',s:'Vietjet VJ820, 17:20–01:00 (Haneda), nonstop.'},
- {t:'Bus Saigon–Can Tho (12Go)',u:'https://12go.asia/en/travel/ho-chi-minh-city/can-tho/?z=4715579',s:'Viele Busse fast rund um die Uhr, ca. 3,5–4 Std.'},
- {t:'Bus Can Tho–Chau Doc (12Go)',u:'https://12go.asia/en/travel/can-tho/chau-doc?z=13836450',s:'U. a. FUTA mehrmals täglich, ca. 3 Std.'},
- {t:'Chau Doc–Ha Tien (12Go)',u:'https://12go.asia/en/travel/chau-doc/ha-tien?z=14813844',s:'Kein Bus im Angebot, Privatwagen ca. 2,5–3 Std.'},
- {t:'Fähre Ha Tien–Phu Quoc (Local Vietnam)',u:'https://localvietnam.com/mekong-delta/kien-giang/ha-tien-to-phu-quoc/',s:'Superdong und Phu Quoc Express ca. 1 h 20, Preise und Häfen.'},
- {t:'Fähren Ha Tien–Phu Quoc, Fahrplan (12Go)',u:'https://12go.asia/en/ferry/ha-tien/phu-quoc',s:'Abfahrten u. a. 06:10, 08:20, 09:50, 13:15 (Superdong).'},
- {t:'Schwimmende Märkte in Can Tho (Hostelworld)',u:'https://www.hostelworld.com/blog/cai-rang-floating-markets-without-a-tour/',s:'Beste Zeit 6:00–7:30 Uhr, Bootspreise, Bus ab Saigon.'},
- {t:'Mangrovenwald Trà Sư (Mekong Smile)',u:'https://mekongsmile.com/tra-su-cajuput-forest/',s:'Eintritt 120.000 VND, Boote 70.000–80.000 VND, 20–30 km von Chau Doc.'},
- {t:'Sam-Berg bei Chau Doc (Local Vietnam)',u:'https://localvietnam.com/mekong-delta/an-giang/sam-mountain/',s:'Heiliger Berg mit Aussicht und Tempeln.'},
- {t:'Hon Chong: Hon Phu Tu (Lonely Planet)',u:'https://www.lonelyplanet.com/vietnam/attractions/father-son-isle/a/poi-sig/1527128/357893',s:'Felsen vor der Küste bei Hon Chong.'},
- {t:'Seilbahn Hon Thom (Vietnam Tourism)',u:'https://www.vietnamtourism.com/en/hon-thom-cable-car-in-phu-quoc-tickets-prices',s:'7.899 m übers Meer, 650.000 VND, täglich 9–17 Uhr.'},
- {t:'Ong Lang Beach (Vietnam Airlines)',u:'https://www.vietnamairlines.com/en/useful-information/travel-guide/ong-lang-beach',s:'Ruhiger Strand an der Westküste von Phu Quoc.'},
- {t:'Sao Beach (Vietnam Tourism)',u:'https://www.vietnamtourism.com/de/sao-beach-auf-phu-quoc-der-komplette-guide-zu-vietnams-wei',s:'Weißer Sandstrand im Südosten von Phu Quoc.'},
+ {t:'Bus Hanoi–Ha Giang (Ha Giang Expeditions)',u:'https://hagiangexpeditions.com/bus-to-ha-giang-schedule/',s:'Limousinenbus und Nachtbus, Zeiten und Preise je Anbieter.'},
+ {t:'Lan-Ha-Bucht 2 Tage und 1 Nacht (GetYourGuide)',u:'https://www.getyourguide.com/hanoi-l205/hanoi-2-days-ha-long-lan-ha-bay-5-star-cruise-with-balcony-t205941/',s:'Beispiel für Preise und Abholung in Hanoi.'},
  {t:'Kawazu-Kirschblütenfest 2027 (Japan Cheapo)',u:'https://japancheapo.com/events/kawazu-cherry-blossom-festival/',s:'Zeitraum Anfang Februar bis Anfang März 2027, genaue Termine bei der Stadt prüfen.'},
- {t:'Eure Google-Maps-Liste „Asien“',u:'https://maps.app.goo.gl/i3CsMdWrLjfdiZds9',s:'Grundlage von Reise 1 und 2: 49 Orte, davon die meisten im Tagesplan.'},
+ {t:'Eure Google-Maps-Liste „Asien“',u:'https://maps.app.goo.gl/i3CsMdWrLjfdiZds9',s:'Grundlage von Reise 1: 49 Orte, davon die meisten im Tagesplan.'},
  {t:'Fähren Ao Nang – Koh Lanta (Direct Ferries)',u:'https://www.directferries.com/koh_lanta_ao_nang_nopparat_thara_beach_ferry.htm',s:'Ca. 2 h 15, Preise je nach Anbieter sehr unterschiedlich.'},
  {t:'Fähren ab Phuket (Phuket Expat Guide)',u:'https://phuketexpatguide.pages.dev/blog/ferry-from-phuket-islands/',s:'Phi Phi ca. 400–450 THB (Fähre, ca. 2 Std.), Speedboat ca. 600–900 THB.'},
  {t:'Phuket: Sehenswürdigkeiten und Touren (Thai Holiday Guide)',u:'https://www.thaiholidayguide.com/things-to-do-in-phuket/',s:'Altstadt, Sunday Walking Street, Phang-Nga-Touren.'},
+ {t:'Vietnam Airlines: Ho-Chi-Minh-Stadt–Phuket direkt (Vietnam News)',u:'https://vietnamnews.vn/economy/1782320/vietnam-airlines-launches-direct-ho-chi-minh-city-phuket-route.html',s:'Nonstop nur ab Ho-Chi-Minh-Stadt bestätigt, für Hanoi–Phuket mit Stopp rechnen.'},
  {t:'Kawazu-Kirschblütenfest 2026',u:'https://jw-webmagazine.com/tips/kawazu-cherry-blossom-festival/',s:'Das Fest lief vom 7.2. bis 8.3.2026. Die Termine für 2027 stehen noch nicht fest.'},
  {t:'Pflaumenblüte in Japan: die besten Orte',u:'https://jw-webmagazine.com/tips/plum-blossoms-in-japan',s:'Ume blühen von Mitte Februar bis Mitte März, u. a. Kitano Tenmangu, Yushima Tenjin, Atami.'},
  {t:'Welcher Wochentag ist am günstigsten zum Fliegen?',u:'https://www.afar.com/magazine/expedia-data-shows-new-best-day-to-book-cheaper-flights',s:'Aktuelle Daten sind uneinig: Mittwoch, Donnerstag oder Freitag vorn, Dienstag ist leerer.'},
  {t:'Thailand: Visumfreiheit auf 30 Tage gekürzt',u:'https://www.ttgasia.com/2026/09/08/thailand-cuts-visa-free-stay-to-30-days-for-60-countries/',s:'Gilt seit 15.9.2026.'},
  {t:'Japan: neue Duty-Free-Regel ab 1.11.2026',u:'https://www.japan-guide.com/news/tax-free-shopping.html',s:'Steuer wird erst bei der Ausreise erstattet.'},
+ {t:'Ha-Giang-Loop: Permit und Regeln 2026 (Time Out)',u:'https://www.timeout.com/asia/news/ha-giang-loop-permits-what-travellers-need-to-know-before-riding-vietnams-famous-mountain-route-061426',s:'Border Area Entry Permit, Hinweise für Reisende.'},
+ {t:'Ha-Giang-Loop: strengere Sicherheitsregeln (Tuoi Tre)',u:'https://news.tuoitre.vn/vietnam-tightens-safety-rules-on-ha-giang-loop-motorbike-tours-103260415184453028.htm',s:'Nach einem tödlichen Unfall im April 2026.'}
 ];
 /* ---------- Reise B: eure Route 2.2.–15.3.2027. Bangkok, dann Süden (Krabi, Koh Lanta, Phi Phi, Phuket), Vietnam mit 4-Tage-Loop, Japan mit Kawazu. Ohne Norden, Kambodscha und Korea. ---------- */
 const B_START=new Date(2027,1,2);
@@ -1949,7 +1964,7 @@ const B_FRIST=[
  {d:'2027-01-05',t:'Ha-Giang-Loop-Tour buchen',s:'Für den 18.–21.2. (4 Tage, 3 Nächte) Anbieter mit Easy Riders und guten Bewertungen wählen, Versicherungsschutz für Motorrad-Mitfahrer prüfen. Am 23.2. fährt abends ein Bus zurück nach Hanoi (Limousine ca. 16 Uhr oder Nachtbus), der 24.2. ist als Ruhetag frei.'},
  {d:'2027-01-10',t:'Lan-Ha-Bucht-Schiff buchen',s:'2 Tage und 1 Nacht ab 25.2., mit Abholung in Hanoi. Anbieter mit guten Bewertungen und Umbuchung bei schlechter Sicht wählen. Klären, ob der Transfer ab Hanoi im Preis ist.'},
  {d:'2027-01-15',t:'Kawazu: Festtermine und Blütenprognose prüfen',s:'Die Kirschen blühen meist Mitte Februar bis Anfang März. Ende Februar die Blütenprognose ansehen, im Zweifel den Reservetag nutzen. Odoriko-Platz früh reservieren, Fahrplan bei JR East prüfen.'},
- {d:'2027-01-20',t:'Fähren prüfen und buchen',s:'Ao Nang–Koh Lanta (7.2.), Koh Lanta–Phi Phi (10.2.) und Phi Phi–Phuket (12.2.). Abfahrten laut Netz: Lanta–Phi Phi ca. 8–9 und 13–14 Uhr, Phi Phi–Phuket u. a. 9:00, 11:00, 14:00. Fahrpläne und Preise ändern sich je nach Anbieter, in der Hochsaison vorab buchen.'},
+ {d:'2027-01-20',t:'Fähren prüfen und buchen',s:'Ao Nang–Koh Lanta (9.2.), Koh Lanta–Phi Phi (12.2.) und Phi Phi–Phuket (14.2.). Abfahrten laut Netz: Lanta–Phi Phi ca. 8–9 und 13–14 Uhr, Phi Phi–Phuket u. a. 9:00, 11:00, 14:00. Fahrpläne und Preise ändern sich je nach Anbieter, in der Hochsaison vorab buchen.'},
  {d:'2027-01-30',t:'Vietnam-E-Visum beantragen',s:'25 USD, ca. 3 Werktage. Spätestens 2–3 Wochen vor Einreise (17.2.).'},
  {d:'2027-01-31',t:'Thailand: Einreisekarte TDAC',s:'Pflicht, innerhalb von 72 h vor Ankunft (3.2.) ausfüllen.'},
  {d:'2027-02-10',t:'teamLab Planets und Shibuya Sky buchen',s:'teamLab für den 28.2. (Sonntag, früh buchen), Shibuya Sky für den 4.3. Die Zeitfenster sind oft Tage vorher ausverkauft.'},
@@ -2617,7 +2632,7 @@ const tempI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
 /* ---------- Zustand ---------- */
 const ND=()=>DAYS.length;
 const state={kmode:'globe',trip:'a',tab:'heute',day:Math.min(42,Math.max(0,realDay())),pf:'all',mv:'world',sel:null,more:'todo',bkv:'stay',ifs:'all',ifc:'all',iq:'',iqRaw:'',mc:'all',act:null,kd:null};
-const DEF=()=>({done:{},vis:{},pl:{},custom:{book:[],pack:[]},bk:{},cbk:[],exp:[],set:{n1:'Person 1',n2:'Person 2',buckets:Object.assign({},BUCKETS_DEF),rates:{THB:38,VND:29000,JPY:165,KRW:1550,USD:1.1},ratesAt:''}});
+const DEF=()=>({done:{},vis:{},pl:{},custom:{book:[],pack:[]},bk:{},cbk:[],exp:[],set:{n1:'Darwin',n2:'Annika',buckets:Object.assign({},BUCKETS_DEF),rates:{THB:38,VND:29000,JPY:165,KRW:1550,USD:1.1},ratesAt:''}});
 let store=null;
 function loadStore(j){
   if(!j||typeof j!=='object')return;
@@ -2628,7 +2643,7 @@ function loadStore(j){
   if(j.bk&&typeof j.bk==='object')store.bk=j.bk;
   if(Array.isArray(j.cbk))store.cbk=j.cbk;
   if(Array.isArray(j.exp))store.exp=j.exp;
-  if(j.set){const s=j.set;if(s.n1)store.set.n1=s.n1;if(s.n2)store.set.n2=s.n2;Object.assign(store.set.buckets,s.buckets||{});Object.assign(store.set.rates,s.rates||{});store.set.ratesAt=s.ratesAt||''}
+  if(j.set){const s=j.set;if(s.n1&&s.n1!=='Person 1')store.set.n1=s.n1;if(s.n2&&s.n2!=='Person 2')store.set.n2=s.n2;Object.assign(store.set.buckets,s.buckets||{});Object.assign(store.set.rates,s.rates||{});store.set.ratesAt=s.ratesAt||''}
 }
 const persist=()=>{try{localStorage.setItem(TRIP.key,JSON.stringify(store))}catch(e){}};
 const save=()=>{persist();syncSoon()};
@@ -2661,7 +2676,7 @@ function syncApply(flat,old){
     const i=p.indexOf(':'),t=p.slice(0,i),k=p.slice(i+1);
     if(t==='d')s.done[k]=v;else if(t==='v')s.vis[k]=v;else if(t==='p')s.pl[k]=v;else if(t==='b')s.bk[k]=v;
     else if(t==='c')cbk.push(v);else if(t==='x')exp.push(v);else if(t==='lb')lb.push(v);else if(t==='lp')lp.push(v);
-    else if(t==='s'){if(k==='n1')s.set.n1=v;else if(k==='n2')s.set.n2=v;else if(k==='ra')s.set.ratesAt=v}
+    else if(t==='s'){if(k==='n1'&&v!=='Person 1')s.set.n1=v;else if(k==='n2'&&v!=='Person 2')s.set.n2=v;else if(k==='ra')s.set.ratesAt=v}
     else if(t==='sb')s.set.buckets[k]=v;else if(t==='sr')s.set.rates[k]=v;
   }
   /* Reihenfolge wie bisher, Neues hinten */
@@ -2915,21 +2930,21 @@ const TRIPS={
   buckets:B_BUCKETS,first:'bkk',last:'osa',
   costNote:'Rund 5.400 € pro Person in der Mitte (Sparen ca. 3.700 €, Komfort ca. 8.400 €), zu zweit etwa 10.800 €. Schätzungen, Stand November 2026.',
   costTotal:'ca. 3.700–8.400 €',
-  costTip:'Größte Hebel: Klasse 1 in Thailand und Vietnam (ca. 20–35 € pro Nacht für zwei), Fähren statt Speedboat und Flüge nur dort, wo der Landweg über sechs Stunden dauert. Reise 2 (mit Südvietnam) liegt in der Mitte rund 60 € pro Person tiefer.',
+  costTip:'Größte Hebel: Klasse 1 in Thailand und Vietnam (ca. 20–35 € pro Nacht für zwei), Fähren statt Speedboat und Flüge nur dort, wo der Landweg über sechs Stunden dauert. Reise 2 ist gleich, nur mit einer Nacht mehr auf Koh Lanta und einer weniger in Phuket, und kostet etwa gleich viel.',
   flight:'Zürich → Bangkok (Di 2.2., nonstop), Rückflug Osaka → Zürich (15.3., über Hongkong). Dazwischen Bangkok–Krabi (7.2.), Phuket–Hanoi (17.2., Umstieg Bangkok) und Hanoi–Tokyo (27.2., Umstieg Hongkong). Fähren, Busse, Odoriko und Shinkansen übernehmen den Rest.',
   costx:B_COSTX,board:B_BOARD,quellen:B_QUELLEN,
   quellenNote:'Reise 1 kommt aus eurer Google-Maps-Liste „Asien“ und eurer Route: Bangkok, Süden mit Inseln, Vietnam mit Ha-Giang-Loop und Lan-Ha-Bucht, Japan mit Kawazu. Der Zeitplan ist für euren Urlaub vom 1.2. bis 16.3. gebaut. Die Quellen unten stützen die Fakten zu Fähren, Einreise, Blüte, Preisen und Regeln.',
   dots:['th','vn','jp']},
- a:{id:'a',key:'asien27d',name:'Reise 2',tag:'Mit Südvietnam',start:A_START,stages:A_STAGES,order:A_ORDER,route:A_ROUTE,routeDay:A_ROUTE_DAY,segDay:A_SEG_DAY,routeMeta:A_ROUTE_META,days:A_DAYS,seed:A_SEED,frist:A_FRIST,book:A_BOOK,entry:A_ENTRY,reco:A_RECO,bkt:A_BKT,dayacts:A_DAYACTS,
+ a:{id:'a',key:'asien27d',name:'Reise 2',tag:'Wie Reise 1, mehr Koh Lanta',start:A_START,stages:A_STAGES,order:A_ORDER,route:A_ROUTE,routeDay:A_ROUTE_DAY,segDay:A_SEG_DAY,routeMeta:A_ROUTE_META,days:A_DAYS,seed:A_SEED,frist:A_FRIST,book:A_BOOK,entry:A_ENTRY,reco:A_RECO,bkt:A_BKT,dayacts:A_DAYACTS,
   viewkeys:['world','all','th','vn','jp'],viewAll:{n:'Asien',bb:[95,3.5,143,41],lvl:0},
   reglbl:[['th','THAILAND',99.4,11.2,'middle'],['vn','VIETNAM',110,18.6,'start'],['jp','JAPAN',140.8,32.6,'middle']],
   buckets:A_BUCKETS,first:'bkk',last:'osa',
-  costNote:'Rund 5.330 € pro Person in der Mitte (Sparen ca. 3.700 €, Komfort ca. 8.300 €), zu zweit etwa 10.700 €. Schätzungen, Stand November 2026.',
-  costTotal:'ca. 3.700–8.300 €',
-  costTip:'Gegenüber Reise 1: Die Flüge in Vietnam kosten ca. 43 € pro Person mehr (Saigon–Tokyo ist am 27.2. teuer), dazu Privatwagen und Fähre im Delta. Dafür fallen Ha-Giang-Loop und Schiff in der Lan-Ha-Bucht weg. Unterm Strich rund 60 € pro Person günstiger.',
-  flight:'Zürich → Bangkok (Di 2.2., nonstop), Rückflug Osaka → Zürich (15.3., über Shanghai). Dazwischen Bangkok–Krabi (7.2.), Phuket–Saigon (17.2., nonstop), Phu Quoc–Saigon und Saigon–Tokyo Haneda (27.2.). Busse, Wagen und Fähre durchs Mekongdelta, Odoriko und Shinkansen in Japan.',
+  costNote:'Rund 5.400 € pro Person in der Mitte (Sparen ca. 3.700 €, Komfort ca. 8.400 €), zu zweit etwa 10.800 €. Schätzungen, Stand November 2026.',
+  costTotal:'ca. 3.700–8.400 €',
+  costTip:'Größte Hebel: Klasse 1 in Thailand und Vietnam (ca. 20–35 € pro Nacht für zwei), Fähren statt Speedboat und Flüge nur dort, wo der Landweg über sechs Stunden dauert. Reise 2 kostet etwa gleich viel, nur die Nächte verteilen sich anders.',
+  flight:'Zürich → Bangkok (Di 2.2., nonstop), Rückflug Osaka → Zürich (15.3., über Hongkong). Dazwischen Bangkok–Krabi (7.2.), Phuket–Hanoi (17.2., Umstieg Bangkok) und Hanoi–Tokyo (27.2., Umstieg Hongkong). Fähren, Busse, Odoriko und Shinkansen übernehmen den Rest.',
   costx:A_COSTX,board:A_BOARD,quellen:A_QUELLEN,
-  quellenNote:'Reise 2 ist eine Kopie von Reise 1. Thailand und Japan sind gleich, Vietnam geht in den warmen Süden: Saigon, Mekongdelta mit Can Tho und Chau Doc, Ha Tien und Phu Quoc. Flüge, Busse, Fähren, Hotels und Preise am 25.11.2026 online geprüft.',
+  quellenNote:'Reise 2 ist Reise 1 mit vier statt drei Nächten auf Koh Lanta und nur zwei Nächten in Phuket. Reise 1 kommt aus eurer Google-Maps-Liste „Asien“ und eurer Route: Bangkok, Süden mit Inseln, Vietnam mit Ha-Giang-Loop und Lan-Ha-Bucht, Japan mit Kawazu. Der Zeitplan ist für euren Urlaub vom 1.2. bis 16.3. gebaut. Die Quellen unten stützen die Fakten zu Fähren, Einreise, Blüte, Preisen und Regeln.',
   dots:['th','vn','jp']}
 };
 function useTrip
@@ -3591,7 +3606,7 @@ function viewGeld(){
   h+=`<div class="card"><div class="cnt"><h2 class="lbl">Ausgaben</h2><span class="mono">${E.length}</span></div>`;
   if(!E.length)h+=`<p class="note">Noch keine Ausgaben. Mit „+ Ausgabe“ trägst du die erste ein. Auch gebuchte Flüge und Unterkünfte kannst du hier erfassen.</p>`;
   else{let last='';h+='<ul class="exp">';E.forEach(x=>{if(x.date!==last){h+=`</ul><div class="dayh"><span>${dl(x.date)}</span><span>${eur(c.byD[x.date])}</span></div><ul class="exp">`;last=x.date}
-    h+=`<li><span class="t"><b>${catName(x.cat)} · ${esc(bktName(x.bk))}</b><small>${x.cur!=='EUR'?nf0.format(x.amt)+' '+x.cur+' · ':''}${x.who==='1'?n1:n2}${x.shared?' · geteilt':''}${x.note?' · '+esc(x.note):''}</small></span><span class="a">${eur2(x.eur)}</span><button class="x" data-delexp="${x.id}" aria-label="Ausgabe löschen">×</button></li>`});h+='</ul>'}
+    h+=`<li><span class="t"><b>${catName(x.cat)} · ${esc(bktName(x.bk))}</b><small>${x.cur!=='EUR'?nf0.format(x.amt)+' '+x.cur+' · ':''}${x.who==='1'?n1:n2}${x.shared?' · geteilt':''}${x.note?' · '+esc(x.note):''}</small></span><span class="a">${eur2(x.eur)}</span><button class="x ed" data-editexp="${x.id}" aria-label="Ausgabe ändern">✎</button><button class="x" data-delexp="${x.id}" aria-label="Ausgabe löschen">×</button></li>`});h+='</ul>'}
   return h+'</div></div>';
 }
 
@@ -3783,22 +3798,24 @@ function openSheet(title,body,onSave,label){
   return form;
 }
 const optRadio=(name,list,val)=>list.map(([k,n])=>`<label class="opt"><input type="radio" name="${name}" value="${k}" ${k===val?'checked':''}><span>${n}</span></label>`).join('');
-function expForm(){
-  const rl=realDay(),st=stageOf(state.day),defB=(rl>=0&&rl<=ND()-1)?st.id:'misc';
-  return `<div class="fld"><label for="e-amt">Betrag</label><div class="rowf"><input id="e-amt" name="amt" type="number" inputmode="decimal" step="any" min="0" required><select id="e-cur" name="cur" aria-label="Währung">${CURS.map(c=>`<option value="${c}" ${c==='EUR'?'selected':''}>${c} · ${CURN[c]}</option>`).join('')}</select></div><p class="mono" id="e-prev">= 0,00 €</p></div>
-   <fieldset class="fld"><legend>Kategorie</legend><div class="opts">${optRadio('cat',CATS,'essen')}</div></fieldset>
+function expForm(x){
+  const rl=realDay(),st=stageOf(state.day),defB=x?x.bk:((rl>=0&&rl<=ND()-1)?st.id:'misc');
+  return `<div class="fld"><label for="e-amt">Betrag</label><div class="rowf"><input id="e-amt" name="amt" type="number" inputmode="decimal" step="any" min="0" required value="${x?x.amt:''}"><select id="e-cur" name="cur" aria-label="Währung">${CURS.map(c=>`<option value="${c}" ${c===(x?x.cur:'EUR')?'selected':''}>${c} · ${CURN[c]}</option>`).join('')}</select></div><p class="mono" id="e-prev">= ${x?eur2(x.eur):'0,00 €'}</p></div>
+   <fieldset class="fld"><legend>Kategorie</legend><div class="opts">${optRadio('cat',CATS,x?x.cat:'essen')}</div></fieldset>
    <div class="fld"><label for="e-bk">Bereich</label><select id="e-bk" name="bk">${BKT.map(([k,n])=>`<option value="${k}" ${k===defB?'selected':''}>${n}</option>`).join('')}</select></div>
-   <div class="fld"><label for="e-date">Datum</label><input id="e-date" name="date" type="date" value="${iso(new Date())}" required></div>
-   <fieldset class="fld"><legend>Bezahlt von</legend><div class="opts">${optRadio('who',[['1',esc(store.set.n1)],['2',esc(store.set.n2)]],'1')}</div></fieldset>
-   <label class="chk"><input type="checkbox" name="shared" checked> Auf beide aufteilen</label>
-   <div class="fld"><label for="e-note">Notiz</label><input id="e-note" name="note" type="text" placeholder="z. B. Pad Thai am Nachtmarkt" autocomplete="off"></div>`;
+   <div class="fld"><label for="e-date">Datum</label><input id="e-date" name="date" type="date" value="${x?x.date:iso(new Date())}" required></div>
+   <fieldset class="fld"><legend>Bezahlt von</legend><div class="opts">${optRadio('who',[['1',esc(store.set.n1)],['2',esc(store.set.n2)]],x?x.who:'1')}</div></fieldset>
+   <label class="chk"><input type="checkbox" name="shared" ${!x||x.shared?'checked':''}> Auf beide aufteilen</label>
+   <div class="fld"><label for="e-note">Notiz</label><input id="e-note" name="note" type="text" placeholder="z. B. Pad Thai am Nachtmarkt" autocomplete="off" value="${x?esc(x.note||''):''}"></div>`;
 }
-function openExp(){
-  const form=openSheet('Ausgabe eintragen',expForm(),(fd)=>{
+function openExp(id){
+  const old=id?store.exp.find(e=>e.id===id):null;
+  const form=openSheet(old?'Ausgabe ändern':'Ausgabe eintragen',expForm(old),(fd)=>{
     const amt=num(fd.get('amt'));if(!(amt>0))return false;const cur=fd.get('cur');
-    store.exp.push({id:'x'+Date.now(),date:fd.get('date')||iso(new Date()),eur:Math.round(eurOf(amt,cur)*100)/100,cur,amt,cat:fd.get('cat'),bk:fd.get('bk'),who:fd.get('who'),shared:!!fd.get('shared'),note:String(fd.get('note')||'').trim()});
+    if(old)store.exp=store.exp.filter(e=>e.id!==old.id);
+    store.exp.push({id:old?old.id:'x'+Date.now(),...(old&&old.src?{src:old.src}:{}),date:fd.get('date')||iso(new Date()),eur:Math.round(eurOf(amt,cur)*100)/100,cur,amt,cat:fd.get('cat'),bk:fd.get('bk'),who:fd.get('who'),shared:!!fd.get('shared'),note:String(fd.get('note')||'').trim()});
     save();keep();
-  },'Eintragen');
+  },id?'Speichern':'Eintragen');
   const upd=()=>{const a=num($('#e-amt',form).value),c=$('#e-cur',form).value;$('#e-prev',form).textContent='= '+eur2(eurOf(a,c))};
   form.addEventListener('input',upd);
   form.addEventListener('change',e=>{if(e.target.name==='cat'){const b=$('#e-bk',form);if(e.target.value==='flug'&&!['lang','inner'].includes(b.value))b.value='inner'}});
@@ -3863,7 +3880,7 @@ async function liveRates(btn){
 
 /* ---------- Ereignisse ---------- */
 document.addEventListener('click',e=>{
-  const t=e.target.closest('[data-kmode],[data-gplay],[data-gstep],[data-gz],[data-gall],[data-ggo],[data-trip],[data-sheet],[data-tprev],[data-tnext],[data-kday],[data-locate],[data-fit],[data-today],[data-kdet],[data-prio],[data-thm],[data-showact],[data-mc],[data-ifs],[data-ifc],[data-tab],[data-nav],[data-pf],[data-mv],[data-stop],[data-map],[data-gomap],[data-goplan],[data-del],[data-addexp],[data-editbk],[data-addact],[data-delbk],[data-delexp],[data-bkv],[data-more],[data-budget],[data-rates],[data-ratesedit],[data-wx],[data-export],[data-import],[data-pack],[data-packdel],[data-syncsave],[data-syncnow],[data-syncoff],[data-reset],[data-resetyes],[data-mm],[data-mmtoggle],[data-tour]');
+  const t=e.target.closest('[data-kmode],[data-gplay],[data-gstep],[data-gz],[data-gall],[data-ggo],[data-trip],[data-sheet],[data-tprev],[data-tnext],[data-kday],[data-locate],[data-fit],[data-today],[data-kdet],[data-prio],[data-thm],[data-showact],[data-mc],[data-ifs],[data-ifc],[data-tab],[data-nav],[data-pf],[data-mv],[data-stop],[data-map],[data-gomap],[data-goplan],[data-del],[data-addexp],[data-editexp],[data-editbk],[data-addact],[data-delbk],[data-delexp],[data-bkv],[data-more],[data-budget],[data-rates],[data-ratesedit],[data-wx],[data-export],[data-import],[data-pack],[data-packdel],[data-syncsave],[data-syncnow],[data-syncoff],[data-reset],[data-resetyes],[data-mm],[data-mmtoggle],[data-tour]');
   if(!t)return;const D=t.dataset;
   if(D.trip){if(D.trip!==state.trip){useTrip(D.trip);state.tab='heute';render();scrollTo(0,0)}}
   else if(D.sheet)openActSheet(D.sheet);
@@ -3883,6 +3900,7 @@ document.addEventListener('click',e=>{
   else if(D.ifs){state.ifs=D.ifs;render(true)}
   else if(D.ifc){state.ifc=D.ifc;render(true)}
   else if(D.addexp!==undefined)openExp();
+  else if(D.editexp)openExp(D.editexp);
   else if(D.editbk)openBk(D.editbk);
   else if(D.addact!==undefined)openAct();
   else if(D.delbk){store.cbk=store.cbk.filter(b=>b.id!==D.delbk);store.exp=store.exp.filter(x=>x.src!=='bk:'+D.delbk);save();keep()}
