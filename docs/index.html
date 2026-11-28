@@ -16,27 +16,29 @@
 <style>
 /* Layout: Handy-App mit sechs Tabs und schwebendem Ausgaben-Knopf; eine Farbe pro Etappe (Thailand Safran, Vietnam Jade, Japan Sakura, Südkorea Violett), Rest ist tintenblaues Grau. */
 :root{
-  --bg:#EDF0F5; --surface:#FFFFFF; --surface2:#E3E8F0; --ink:#14213A; --muted:#566682; --line:#D1D9E5;
+  --bg:#FBF3E6; --surface:#FFFDF8; --surface2:#F4E7D2; --ink:#103344; --muted:#5C6B70; --line:#EBDCC3;
+  --acc:#0B7F8A; --acc-b:#13A59A; --sun:#F0703F; --bgglow:rgba(255,176,92,.32); --bgglow2:rgba(19,165,154,.13);
   --th:#D98A0B; --vn:#1F8F68; --jp:#D6456F; --ko:#7A56C9; --warn:#B3261E; --ok:#1B7A4F;
-  --sea:#D5E3EE; --land:#F6F8FA; --coast:#A9BACB; --grid:#C3D2DF;
-  --kh:#2A7FB8; --home:#14213A;
+  --sea:#CDEBEC; --land:#FFF9EE; --coast:#B0CCC3; --grid:#BDDFDD;
+  --kh:#2A7FB8; --home:#103344;
   --g-sky:linear-gradient(180deg,#DCEBFA,#F4F8FD); --g-sea1:#CFE9FB; --g-sea2:#5FA6DF; --g-land:#EAF1D9; --g-coast:#6E9A79; --g-grid:rgba(255,255,255,.5); --g-halo:rgba(95,166,223,.45); --g-shadow:rgba(20,33,58,.2); --g-pin:#FFFFFF; --g-tag:rgba(255,255,255,.93); --g-tagink:#14213A; --g-accent:#B8246A;
   --k1:#D9822B; --k2:#7A56C9; --k3:#1F8F68; --k4:#3B6FD4; --k5:#D6456F; --k6:#0E96A5; --k7:#7D8CA8;
   --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
   --f-body:"Figtree","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-head:"DM Serif Display",Georgia,"Times New Roman",serif;
   --f-mono:"DM Mono",ui-monospace,Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0C1222; --surface:#151E35; --surface2:#1E2A47; --ink:#E9EDF6; --muted:#97A4C0; --line:#2A3654;
-  --th:#F0A93A; --vn:#3FBF92; --jp:#F2799C; --ko:#B396F5; --warn:#FF8F85; --ok:#5FD39B; --kh:#6EB6E8; --home:#E9EDF6;
-  --sea:#0A1020; --land:#1F2C4A; --coast:#38486B; --grid:#16203A;
+  --bg:#071A22; --surface:#0E2630; --surface2:#15343F; --ink:#F4ECDD; --muted:#A5B8BA; --line:#22444F; --bgglow:rgba(240,112,63,.14); --bgglow2:rgba(19,165,154,.16);
+  --th:#F0A93A; --vn:#3FBF92; --jp:#F2799C; --ko:#B396F5; --warn:#FF8F85; --ok:#5FD39B; --kh:#6EB6E8; --home:#F4ECDD;
+  --sea:#05141A; --land:#163240; --coast:#2E5563; --grid:#0D2530;
   --k1:#F0A05A; --k2:#B396F5; --k3:#3FBF92; --k4:#7FA2F5; --k5:#F2799C; --k6:#4CC9D6; --k7:#97A4C0; color-scheme:dark;
   --g-sky:radial-gradient(120% 90% at 50% 40%,#152449,#070C1A); --g-sea1:#2A5C8F; --g-sea2:#0C213F; --g-land:#3F625A; --g-coast:#86B4A2; --g-grid:rgba(255,255,255,.08); --g-halo:rgba(86,160,240,.38); --g-shadow:rgba(255,255,255,.14); --g-pin:#FFFFFF; --g-tag:rgba(10,16,32,.86); --g-tagink:#E9EDF6; --g-accent:#B8246A;
 }}
 :root[data-theme="dark"]{
-  --bg:#0C1222; --surface:#151E35; --surface2:#1E2A47; --ink:#E9EDF6; --muted:#97A4C0; --line:#2A3654;
-  --th:#F0A93A; --vn:#3FBF92; --jp:#F2799C; --ko:#B396F5; --warn:#FF8F85; --ok:#5FD39B; --kh:#6EB6E8; --home:#E9EDF6;
-  --sea:#0A1020; --land:#1F2C4A; --coast:#38486B; --grid:#16203A;
+  --bg:#071A22; --surface:#0E2630; --surface2:#15343F; --ink:#F4ECDD; --muted:#A5B8BA; --line:#22444F; --bgglow:rgba(240,112,63,.14); --bgglow2:rgba(19,165,154,.16);
+  --th:#F0A93A; --vn:#3FBF92; --jp:#F2799C; --ko:#B396F5; --warn:#FF8F85; --ok:#5FD39B; --kh:#6EB6E8; --home:#F4ECDD;
+  --sea:#05141A; --land:#163240; --coast:#2E5563; --grid:#0D2530;
   --k1:#F0A05A; --k2:#B396F5; --k3:#3FBF92; --k4:#7FA2F5; --k5:#F2799C; --k6:#4CC9D6; --k7:#97A4C0; color-scheme:dark;
   --g-sky:radial-gradient(120% 90% at 50% 40%,#152449,#070C1A); --g-sea1:#2A5C8F; --g-sea2:#0C213F; --g-land:#3F625A; --g-coast:#86B4A2; --g-grid:rgba(255,255,255,.08); --g-halo:rgba(86,160,240,.38); --g-shadow:rgba(255,255,255,.14); --g-pin:#FFFFFF; --g-tag:rgba(10,16,32,.86); --g-tagink:#E9EDF6; --g-accent:#B8246A;
 }
@@ -614,6 +616,7 @@ body.scrolled .fab .fl{display:none}
  .stage .day.rv{transform:translateX(-28px)}
  .stage .day.rv.in{transform:none}
  .stage>.intro{max-width:900px}
+ .stage>.stban{max-width:1000px;min-height:260px}
  #view>.stack:has(>.globe){grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:24px}
  #view>.stack:has(>.globe)>.globe{grid-column:1;grid-row:2/span 40;position:sticky;top:16px}
  #view>.stack:has(>.globe)>:is(.gsum,.legs){grid-column:2}
@@ -622,13 +625,77 @@ body.scrolled .fab .fl{display:none}
 @media (min-width:1600px){
  #view>.stack:not(:has(>.globe)){grid-template-columns:repeat(3,minmax(0,1fr))}
 }
+
+/* ---------- Reise-Vibes (28.11.2026): Farben, Schrift, Fotos, Pass, Abflugtafel ---------- */
+body{background:radial-gradient(1000px 560px at 100% -8%,var(--bgglow),transparent 62%),radial-gradient(900px 640px at -12% 108%,var(--bgglow2),transparent 60%),var(--bg);background-attachment:fixed;min-height:100vh}
+h1,h2,h3,.appbar b,.sec{font-family:var(--f-head);font-weight:400;letter-spacing:0}
+h2.lbl{font:500 12px var(--f-mono);letter-spacing:.08em}
+.sh h2{font-size:34px}
+.hero h1{font-weight:400}
+.appbar b{font-size:24px}
+.appbar b em{font-style:italic;color:var(--sun)}
+.card,.day,.bk{box-shadow:0 1px 0 rgba(16,51,68,.03),0 10px 26px -16px rgba(120,78,30,.28)}
+.btn.pri,.tabs button[aria-current="page"],.fab,.chip[aria-pressed="true"],.gctl .gplay,.links button.on,.opt input:checked+span,.kb.pri,.kb[aria-pressed="true"],.kdays button[aria-pressed="true"],.trip[aria-selected="true"],.chip.play[aria-pressed="true"],.kside .btn.pri{background:linear-gradient(135deg,var(--acc),var(--acc-b));color:#fff;border-color:transparent}
+.fab{box-shadow:0 10px 24px -8px rgba(11,127,138,.6)}
+.count,.bphd{background:linear-gradient(120deg,#0F3B4C,#0B6E7A);color:#fff}
+.tabs{background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.stage>.sh{background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+/* Etappen-Banner mit Gruß und Ortszeit */
+.stban{position:relative;overflow:hidden;border-radius:20px;min-height:230px;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding:18px;color:#fff;background:linear-gradient(135deg,var(--sc),#0B6E7A)}
+.stban img,.stopban img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease,transform 8s ease;transform:scale(1.06)}
+.stban img.on,.stopban img.on{opacity:1;transform:scale(1)}
+.stban::after,.stopban::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 25%,rgba(5,20,28,.78))}
+.stban>*:not(img),.stopban>*:not(img){position:relative;z-index:1}
+.stban .hey{font:400 italic clamp(34px,9vw,52px)/1 var(--f-head);text-shadow:0 2px 18px rgba(0,0,0,.35)}
+.stban .hey small{display:block;font:500 13px var(--f-mono);font-style:normal;letter-spacing:.06em;opacity:.85;margin-bottom:6px;text-transform:uppercase}
+.stban .clk{display:flex;flex-wrap:wrap;gap:8px;font:500 13px var(--f-mono)}
+.stban .clk span,.phr span{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:99px;padding:4px 11px}
+.phr{display:flex;flex-wrap:wrap;gap:6px;font-size:13.5px}
+.phr b{font-weight:700}
+.fcr{position:absolute!important;right:12px;top:10px;font:500 10.5px var(--f-mono);color:rgba(255,255,255,.75)}
+/* Stations-Banner im Plan */
+.stopban{position:relative;overflow:hidden;list-style:none;border-radius:16px;min-height:150px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:14px 16px;color:#fff;background:linear-gradient(135deg,var(--sc),#0F3B4C);margin-top:8px}
+.stopban h3{font-size:30px;line-height:1.05;text-shadow:0 2px 14px rgba(0,0,0,.35)}
+.stopban .mono{font-size:12.5px;opacity:.9}
+.stopban .nn{text-align:center;line-height:1;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:8px 12px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.stopban .nn b{display:block;font:400 30px/1 var(--f-head)}
+.stopban .nn span{font-size:12px}
+.days>.stopban::before{display:none}
+/* Abflugtafel */
+.flap{display:inline-flex!important;gap:3px;justify-content:flex-end}
+.flap i{font-style:normal;display:inline-grid;place-items:center;min-width:.78em;height:1.18em;padding:0 .06em;border-radius:6px;background:linear-gradient(180deg,#1C4B5C 0 49%,#123C4B 51% 100%);color:#FFE7B8;font:700 .82em/1 var(--f-mono);position:relative;box-shadow:inset 0 -2px 0 rgba(0,0,0,.25)}
+.flap i::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(0,0,0,.45)}
+.flap i.go{animation:flp .09s linear infinite}
+@keyframes flp{50%{transform:scaleY(.15)}}
+.bpcd b.flap{font-size:40px}
+.count b.flap{font-size:46px}
+/* Reise in Zahlen */
+.nums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.nums div{background:var(--surface2);border-radius:12px;padding:10px;text-align:center}
+.nums b{display:block;font:400 26px/1.1 var(--f-head);color:var(--acc)}
+.nums span{font-size:12.5px;color:var(--muted)}
+.tprog{height:10px;border-radius:99px;background:var(--surface2);overflow:hidden}
+.tprog i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),var(--sun));border-radius:99px}
+/* Reisepass */
+.passcv{border-radius:18px;padding:20px;color:#F7E2B0;background:linear-gradient(140deg,#0F3B4C,#0B5560);display:flex;flex-direction:column;gap:6px;box-shadow:0 14px 30px -18px rgba(0,0,0,.6)}
+.passcv h2{font:400 30px/1.1 var(--f-head);color:#FFF1D2}
+.passcv .mono{color:#F7E2B0;opacity:.85}
+.stamps{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:14px;background:repeating-linear-gradient(0deg,transparent 0 27px,color-mix(in srgb,var(--line) 70%,transparent) 27px 28px),var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+.stamp{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--sc);transform:rotate(var(--r));text-align:center}
+.stamp svg{width:118px;height:118px}
+.stamp .sn{font:400 17px/1.1 var(--f-head)}
+.stamp .sd{font:500 11px var(--f-mono);color:var(--muted)}
+.stamp.todo{opacity:.45;filter:grayscale(.5)}
+.stamp.done svg{animation:stampin .5s cubic-bezier(.3,1.5,.5,1) both;animation-delay:var(--dl)}
+@keyframes stampin{0%{transform:scale(1.8);opacity:0}100%{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.stban img,.stopban img{transition:none;transform:none}.flap i.go{animation:none}}
 </style>
 
 </head>
 <body>
 <div class="wrap">
   <div class="trips" id="trips" role="tablist" aria-label="Reisen"></div>
-  <div class="appbar"><b>Asienreise 2027</b><span class="abr"><span class="mono" id="appinfo"></span><button type="button" class="thm" id="thm" data-thm aria-label="Hell oder dunkel wechseln"></button></span></div>
+  <div class="appbar"><b>Asien<em>reise</em> 2027</b><span class="abr"><span class="mono" id="appinfo"></span><button type="button" class="thm" id="thm" data-thm aria-label="Hell oder dunkel wechseln"></button></span></div>
   <main id="view"></main>
 </div>
 <button class="fab" data-addexp type="button" aria-label="Ausgabe eintragen"><span class="fp" aria-hidden="true">+</span><span class="fl">Ausgabe</span></button>
@@ -1588,7 +1655,7 @@ const BOARD=(()=>{
           <span class="bproute"><span class="bpc"><b>${f.from}</b><span>${esc(f.fn)}</span></span><span class="bpline">${plane}</span><span class="bpc r"><b>${f.to}</b><span>${esc(f.tn)}</span></span></span>
           <span class="bptimes"><span>ab ${f.dep}</span><span>an ${f.arr}</span></span>
           <span class="bpcut"></span>
-          <span class="bpft"><span><b>${esc(f.no)}</b><span>${esc(f.via)} · ${esc(f.pr)} pro Person (Suche vom 25.11.)</span></span><span class="bpcd"><b>${cd[0]}</b><span>${cd[1]}</span></span></span></span>
+          <span class="bpft"><span><b>${esc(f.no)}</b><span>${esc(f.via)} · ${esc(f.pr)} pro Person (Suche vom 25.11.)</span></span><span class="bpcd">${typeof flapHtml==='function'?flapHtml(cd[0]):'<b>'+cd[0]+'</b>'}<span>${cd[1]}</span></span></span></span>
         <span class="bpf back"><span class="bphd"><span>Vor diesem Flug</span><span>${f.from} → ${f.to}</span></span><ul>${f.tip.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><span class="bphint">Noch einmal antippen zum Zurückdrehen.</span></span>
       </span></button>`;
   }
@@ -2911,9 +2978,10 @@ function viewHeute(){
   const w=wxFor(stop,i),cur=WXC[stop]&&WXC[stop].cur;
   const nth=i-st.from+1, nn=st.to-st.from+1;
   let h='<div class="stack">';
-  if(rl<0&&!(TRIP.board||[]).length)h+=`<div class="count"><b>${-rl}</b><span>Tage bis zum Abflug<br>${fmtL(START)}2027</span></div>`;
+  if(rl<0&&!(TRIP.board||[]).length)h+=`<div class="count">${flapHtml(-rl)}<span>Tage bis zum Abflug<br>${fmtL(START)}2027</span></div>`;
   else if(rl>ND()-1)h+=`<div class="count"><span>Die Reise ist vorbei. Schön, dass ihr wieder da seid.</span></div>`;
   h+=BOARD.card(i,rl);
+  h+=numsCard(rl);
   const hi=dayImg(i);
   h+=`<section class="hero${hi?' ph':''}" style="--sc:var(--${st.id})">${hi?`<div class="herobg"><img decoding="async" src="${esc(hi)}" alt="" onload="this.classList.add('on')"><i></i></div><span class="hcr">Foto: Wikipedia</span>`:''}<span class="big" aria-hidden="true">${i+1}</span><div class="mono">Tag ${i+1} von ${ND()} · ${fmtL(date)}<span class="pill">${live?'Heute':rl<0?'Vorschau':'Ausgewählt'}</span></div>
    <h1>${esc(d[0])}</h1><p class="stagechip"><i class="dot"></i>Etappe ${st.name} · Tag ${nth} von ${nn}</p>
@@ -2952,10 +3020,10 @@ function dayRow(i){
 }
 function viewPlan(){
   const chip=(id,n)=>`<button class="chip" data-pf="${id}" aria-pressed="${state.pf===id}">${n}</button>`;
-  let h=`<div class="chips">${chip('all','Alle '+ND()+' Tage')}${STAGES.map(s=>chip(s.id,s.name)).join('')}</div>`;
+  let h=`<div class="chips">${chip('all','Alle '+ND()+' Tage')}${STAGES.map(s=>chip(s.id,s.name)).join('')}</div>`;const seenStop=new Set();
   STAGES.filter(s=>state.pf==='all'||state.pf===s.id).forEach(s=>{
-    h+=`<section class="stage" style="--sc:var(--${s.id})"><header class="sh"><span class="bar"></span><div><h2>${s.name}</h2><p class="mono">${fmt(addDays(START,s.from))} – ${fmt(addDays(START,s.to))} · ${s.to-s.from+1} Tage</p></div></header><p class="intro">${esc(s.intro)}</p><ol class="days">`;
-    for(let i=s.from;i<=s.to;i++)h+=dayRow(i);
+    h+=`<section class="stage" style="--sc:var(--${s.id})"><header class="sh"><span class="bar"></span><div><h2>${s.name}</h2><p class="mono">${fmt(addDays(START,s.from))} – ${fmt(addDays(START,s.to))} · ${s.to-s.from+1} Tage</p></div></header>${stageBanner(s)}<p class="intro">${esc(s.intro)}</p><ol class="days">`;
+    for(let i=s.from;i<=s.to;i++){const k=DAYS[i][1];if(k&&STOPS[k]&&(i===s.from||k!==DAYS[i-1][1])&&!seenStop.has(k)){seenStop.add(k);let n=0;while(i+n<=ND()-1&&DAYS[i+n][1]===k)n++;h+=stopBanner(k,i,n)}h+=dayRow(i)}
     h+=`</ol><details class="tips"><summary>Tipps für ${s.name}</summary><ul>${s.tips.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></details></section>`;
   });
   return h;
@@ -2975,6 +3043,47 @@ const stopListHtml=sel=>`<ul class="stoplist" id="klist">${ORDER.map((id,n)=>{co
 const mapMode=()=>state.mm==='sat'?'sat':state.mm==='svg'?'svg':(typeof L!=='undefined'&&navigator.onLine!==false?'map':'svg');
 const viewSel=()=>`<select id="kview" aria-label="Kartenausschnitt">${VIEWKEYS.map(k=>`<option value="${k}" ${state.mv===k?'selected':''}>${VIEW[k].n}</option>`).join('')}</select>`;
 const stopImgOf=id=>{const a=ACTS.find(x=>x.s===id&&x.img);return a?a.img:null};
+/* ---------- Reise-Vibes (28.11.2026) ---------- */
+const VIBE={th:{fl:'🇹🇭',hey:'Sawasdee!',tz:'Asia/Bangkok',city:'Bangkok'},vn:{fl:'🇻🇳',hey:'Xin chào!',tz:'Asia/Ho_Chi_Minh',city:'Hanoi'},jp:{fl:'🇯🇵',hey:'Konnichiwa!',tz:'Asia/Tokyo',city:'Tokyo'},kr:{fl:'🇰🇷',hey:'Annyeong!',tz:'Asia/Seoul',city:'Seoul'}};
+const imgOn="this.classList.add('on')";
+function localTime(tz){try{return new Date().toLocaleTimeString('de-AT',{timeZone:tz,hour:'2-digit',minute:'2-digit'})}catch(e){return ''}}
+function stageHeroStop(s){const c={};for(let i=s.from;i<=s.to;i++){const k=DAYS[i][1];if(k&&stopImgOf(k))c[k]=(c[k]||0)+1}let b=null;for(const k in c)if(!b||c[k]>c[b])b=k;return b}
+function stageBanner(s){
+  const v=VIBE[s.id],hs=stageHeroStop(s),im=hs?stopImgOf(hs):null,ph=(INFO[s.id]&&INFO[s.id].ph||[]).slice(1,3);
+  return `<div class="stban" style="--sc:var(--${s.id})">${im?`<img src="${esc(im)}" alt="" loading="lazy" decoding="async" onload="${imgOn}"><span class="fcr">Foto: Wikipedia</span>`:''}
+    ${v?`<div class="hey"><small>${v.fl} ${esc(s.name)} sagt</small>${esc(v.hey)}</div><div class="clk"><span>🕒 jetzt ${localTime(v.tz)} in ${esc(v.city)}</span><span>${fmt(addDays(START,s.from))} – ${fmt(addDays(START,s.to))} · ${s.to-s.from+1} Tage</span></div>`:`<div class="hey">${esc(s.name)}</div>`}
+    ${ph.length?`<div class="phr">${ph.map(x=>`<span>${esc(x[0])}${/[?!]$/.test(x[0])?' ':': '}<b>${esc(x[1])}</b></span>`).join('')}</div>`:''}</div>`;
+}
+function stopBanner(id,from,n){
+  const p=STOPS[id];if(!p)return '';const im=stopImgOf(id);
+  return `<li class="stopban" style="--sc:var(--${p.st})">${im?`<img src="${esc(im)}" alt="" loading="lazy" decoding="async" onload="${imgOn}"><span class="fcr">Foto: Wikipedia</span>`:''}<div><h3>${esc(p.n)}</h3><p class="mono">${fmtL(addDays(START,from))} – ${fmtL(addDays(START,from+n))}</p></div><div class="nn"><b>${n}</b><span>${n===1?'Nacht':'Nächte'}</span></div></li>`;
+}
+function hav(a,b){const R=6371,t=x=>x*Math.PI/180,dl=t(b[1]-a[1]),dn=t(b[0]-a[0]),h=Math.sin(dl/2)**2+Math.cos(t(a[1]))*Math.cos(t(b[1]))*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
+function numsCard(rl){
+  let km=0;for(let k=1;k<ROUTE.length;k++){const a=STOPS[ROUTE[k-1]],b=STOPS[ROUTE[k]];if(a&&b)km+=hav(a.ll,b.ll)}
+  const ty={};ROUTE_META.forEach(m=>{if(m)ty[m[0]]=(ty[m[0]]||0)+1});
+  if(rl>=0&&rl<ND()){const seen=ORDER.filter(id=>{const d=stopDays(id);return d.length&&d[0]<=rl}).length;
+    return `<div class="card"><div class="cnt"><h2 class="lbl">Eure Reise bis jetzt</h2><span class="mono">Tag ${rl+1} von ${ND()}</span></div><div class="tprog" role="progressbar" aria-valuemin="0" aria-valuemax="${ND()}" aria-valuenow="${rl+1}"><i style="width:${Math.round((rl+1)/ND()*100)}%"></i></div><p class="note">${seen} von ${ORDER.length} Stationen erreicht · noch ${ND()-rl-1} Tage</p></div>`}
+  if(rl>=ND())return '';
+  const t=(n,l)=>`<div><b data-cu="${n}">${nf0.format(n)}</b><span>${l}</span></div>`;
+  return `<div class="card"><h2 class="lbl">Eure Reise in Zahlen</h2><div class="nums">${t(Math.round(km/100)*100,'Kilometer')}${t(STAGES.length,'Länder')}${t(ORDER.length,'Stationen')}${t(ty.flug||0,'Flüge')}${t(ty.boot||0,'Bootsfahrten')}${t((ty.zug||0)+(ty.bus||0),'Züge und Busse')}</div></div>`;
+}
+function passHtml(){
+  const rl=realDay();let done=0;
+  const st=ORDER.map((id,n)=>{const p=STOPS[id],d=stopDays(id);if(!p||!d.length)return '';const ok=rl>=d[0];if(ok)done++;
+    const stg=stageOf(d[0]),pid='sp'+n,r=((n*37)%23)-11;
+    return `<div class="stamp ${ok?'done':'todo'}" style="--sc:var(--${p.st});--r:${r}deg;--dl:${n*.06}s"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="${pid}" d="M15,60 a45,45 0 1,1 90,0"/></defs><circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="60" cy="60" r="38" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/><text font-family="DM Mono,monospace" font-size="10" letter-spacing="2" fill="currentColor"><textPath href="#${pid}" startOffset="50%" text-anchor="middle">${esc(stg.name.toUpperCase())}</textPath></text><text x="60" y="65" text-anchor="middle" font-family="DM Serif Display,Georgia,serif" font-size="19" fill="currentColor">${fmt(addDays(START,d[0]))}</text><text x="60" y="82" text-anchor="middle" font-family="DM Mono,monospace" font-size="9" letter-spacing="2" fill="currentColor">2027</text></svg><span class="sn">${esc(p.n)}</span><span class="sd">${d.length} ${d.length===1?'Tag':'Tage'}</span></div>`}).join('');
+  return `<div class="passcv"><span class="mono">Reisepass · Asien 2027</span><h2>${esc(store.set.n1)} & ${esc(store.set.n2)}</h2><span class="mono">${done} von ${ORDER.length} Stempeln gesammelt</span></div><div class="stamps">${st}</div><p class="note">Sobald ihr an einem Ort ankommt, wird sein Stempel automatisch gesetzt. Vorher seht ihr ihn nur blass.</p>`;
+}
+function vibesRun(){
+  const calm=calmMotion();
+  document.querySelectorAll('#view .flap:not([data-done])').forEach(el=>{el.dataset.done=1;if(calm)return;const tiles=[...el.querySelectorAll('i')];
+    tiles.forEach((t,k)=>{const fin=t.textContent;t.classList.add('go');const iv=setInterval(()=>{t.textContent=String(Math.floor(Math.random()*10))},60);setTimeout(()=>{clearInterval(iv);t.textContent=fin;t.classList.remove('go')},650+k*280)})});
+  document.querySelectorAll('#view [data-cu]:not([data-done])').forEach(el=>{el.dataset.done=1;const n=+el.dataset.cu;if(calm||!n)return;const t0=performance.now(),D=1200;
+    const step=t=>{const q=Math.min(1,(t-t0)/D),e=1-Math.pow(1-q,3);el.textContent=nf0.format(Math.round(n*e));if(q<1)requestAnimationFrame(step)};requestAnimationFrame(step)});
+}
+const flapHtml=v=>/^\d+$/.test(String(v))?`<b class="flap" aria-label="${v}">${String(v).split('').map(c=>`<i>${c}</i>`).join('')}</b>`:`<b>${v}</b>`;
+
 const cssUrl=u=>"url('"+String(u).replace(/'/g,'%27').replace(/"/g,'%22')+"')";
 function carHtml(sel){
   return ORDER.map((id,n)=>{const p=STOPS[id],ds=stopDays(id),im=stopImgOf(id);return `<button type="button" class="kc" data-stop="${id}" ${sel===id?'aria-current="true"':''} style="--sc:var(--${p.st});${im?'background-image:'+cssUrl(im):''}"><span class="kn">${n+1}</span><span class="kt"><b>${esc(p.n)}</b><small>${esc(rangeText(ds))}</small></span></button>`}).join('');
@@ -3466,8 +3575,9 @@ function viewErfahrung(){
 
 function viewMore(){
   const chip=(id,n)=>`<button class="chip" data-more="${id}" aria-pressed="${state.more===id}">${n}</button>`;
-  let h=`<div class="chips">${chip('todo','Aufgaben')}${chip('ideen','Ideen')}${chip('wetter','Wetter')}${chip('laender','Länder')}${chip('preise','Preise')}${chip('einreise','Einreise')}${chip('kosten','Plan-Kosten')}${chip('apps','Apps')}${chip('erfahrung','Erfahrungen')}${chip('offline','Offline')}${chip('docs','Unterlagen')}${chip('buch','Reisebuch')}${chip('rueck','Rückblick')}${chip('daten','Daten')}</div><div class="stack">`;
+  let h=`<div class="chips">${chip('todo','Aufgaben')}${chip('pass','Reisepass')}${chip('ideen','Ideen')}${chip('wetter','Wetter')}${chip('laender','Länder')}${chip('preise','Preise')}${chip('einreise','Einreise')}${chip('kosten','Plan-Kosten')}${chip('apps','Apps')}${chip('erfahrung','Erfahrungen')}${chip('offline','Offline')}${chip('docs','Unterlagen')}${chip('buch','Reisebuch')}${chip('rueck','Rückblick')}${chip('daten','Daten')}</div><div class="stack">`;
   if(state.more==='todo')h+=listCard('book')+listCard('pack')+'<p class="note">Der Abhak-Stand wird nur auf diesem Gerät gespeichert.</p>';
+  else if(state.more==='pass')h+=passHtml();
   else if(state.more==='ideen'){
     const sc=(id,n)=>`<button class="chip" data-ifs="${id}" aria-pressed="${state.ifs===id}">${n}</button>`,cc=(id,n)=>`<button class="chip" data-ifc="${id}" aria-pressed="${state.ifc===id}">${n}</button>`;
     h+=`<div class="card"><h2 style="font-size:22px">Ideen und Aktivitäten</h2><p class="note">Alle Orte der Reise mit Fotos, Preisen und Links zu Google Maps. Preise sind Richtwerte (Stand 2025/26), vor Ort kann es abweichen.</p><div class="fld"><label for="iq">Suche</label><input id="iq" type="text" value="${esc(state.iqRaw)}" placeholder="z. B. Tempel, Markt, Wandern" autocomplete="off"></div></div><div class="chips">${sc('all','Alle Orte')}${ORDER.map(id=>sc(id,STOPS[id].n)).join('')}</div><div class="chips">${cc('all','Alle')}${Object.keys(CATM).map(k=>cc(k,CATM[k][0])).join('')}</div><div id="ilist">${ideaList()}</div>`;
@@ -3529,7 +3639,7 @@ function render(soft){
   if(fresh){
     const v=$('#view');v.classList.remove('vin');void v.offsetWidth;if(!calmMotion())v.classList.add('vin');
     document.querySelectorAll('#view .count b').forEach(countUp);
-    reveal();
+    reveal();vibesRun();
   }
   if(!soft){
     if(state.tab==='heute')refreshWx([stopAt(state.day),...[1,2,3,4].filter(j=>state.day+j<ND()).map(j=>stopAt(state.day+j))]);
