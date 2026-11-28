@@ -527,7 +527,9 @@ body.noscroll .fab,body.nofab .fab{display:none}
 .ln{display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1;min-width:48px}
 .ln b{font-family:var(--f-display);font-size:36px;color:var(--sc)}
 .ln span{font-size:12px;color:var(--muted)}
+.leg .legbox{transition:border-color .5s ease,box-shadow .5s ease,transform .5s ease}
 .leg.on .legbox{border-color:var(--sc);box-shadow:0 0 0 2px var(--sc)}
+@media (min-width:1100px){.leg.on .legbox{transform:translateX(-6px)}}
 .leg details summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:600;padding-left:4px}
 .leg details ul{margin:0 0 10px;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:14px}
 .leg details{margin-top:4px;border-top:1px solid var(--line)}
@@ -608,8 +610,9 @@ body.scrolled .fab .fl{display:none}
  #view>.stack>*{min-width:0}
  #view>.stack>:is(.bp,.hero,.nav,.glance,details.tips,.mapcard,p.note,.chips){grid-column:1/-1}
  #view>.stack>:first-child:is(.card){grid-column:1/-1}
- .stage .days{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch}
- .stage .day::before{display:none}
+ .stage .days{max-width:1000px}
+ .stage .day.rv{transform:translateX(-28px)}
+ .stage .day.rv.in{transform:none}
  .stage>.intro{max-width:900px}
  #view>.stack:has(>.globe){grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:24px}
  #view>.stack:has(>.globe)>.globe{grid-column:1;grid-row:2/span 40;position:sticky;top:16px}
@@ -618,7 +621,6 @@ body.scrolled .fab .fl{display:none}
 }
 @media (min-width:1600px){
  #view>.stack:not(:has(>.globe)){grid-template-columns:repeat(3,minmax(0,1fr))}
- .stage .days{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 </style>
 
@@ -1389,6 +1391,8 @@ const GLOBE=(()=>{
   }
   function mark(){
     document.querySelectorAll('[data-gcard]').forEach(el=>{const on=+el.dataset.gcard===(sel!=null?sel:(tour.started?tour.seg:-1));el.classList.toggle('on',on);on?el.setAttribute('aria-current','step'):el.removeAttribute('aria-current')});
+    /* Computer: Etappenliste rechts läuft mit (28.11.2026) */
+    if(tour.started&&matchMedia('(min-width:1100px)').matches){const c=document.querySelector('[data-gcard].on');if(c&&c.dataset.gcard!==mark.last){mark.last=c.dataset.gcard;c.scrollIntoView({behavior:calmMotion()?'auto':'smooth',block:'center'})}}
   }
   function button(){const b=document.getElementById('gplay');if(b){b.setAttribute('aria-pressed',tour.playing);b.querySelector('span').textContent=tour.playing?'Pause':(tour.started&&tour.seg<ROUTE.length-1?'Weiter':'Reise abspielen')}}
   function pause(){if(tour.playing){tour.playing=false;button()}}
