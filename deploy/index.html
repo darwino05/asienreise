@@ -2730,7 +2730,7 @@ async function syncNow(manual){
       if(!w.ok)throw new Error('Speichern fehlgeschlagen ('+w.status+')');
     }
     SYNC.at=Date.now();SYNC.msg='Abgeglichen um '+new Date(SYNC.at).toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'})+' Uhr.';
-  }catch(err){SYNC.msg='Abgleich nicht möglich: '+(err&&err.message||err)}
+  }catch(err){const t=String(err&&err.message||err);SYNC.msg='Abgleich nicht möglich: '+t+(/\(40[13]\)/.test(t)?'. Die Datenbank lässt den Zugriff nicht zu: Regeln in Firebase prüfen und ob die Adresse mit dem geheimen Teil endet.':/\(404\)/.test(t)?'. Die Adresse stimmt nicht, bitte nochmals kopieren.':'')}
   SYNC.busy=false;syncUi();
 }
 function syncSoon(){
@@ -3648,7 +3648,7 @@ async function packPhotos(){
   msg('Fertig: '+(urls.length-fail)+' Fotos gespeichert'+(fail?', '+fail+' ließen sich nicht laden':'')+'.');
 }
 async function packClear(){try{await caches.delete('asienmedia-img');await caches.delete('asienmedia-tiles')}catch(e){}offlineStat()}
-const syncCard=()=>`<div class="card"><h2 class="lbl">Gemeinsam nutzen (zwei Handys)</h2><p class="note">Mit einer eigenen, kostenlosen Online-Datenbank gleichen beide Handys Ausgaben, Buchungen und Häkchen von selbst ab. Die Einrichtung steht in PROJEKT.md. Jede Reise hat ihren eigenen Datensatz.</p><div class="fld"><label for="sync-url">Adresse der Datenbank</label><input id="sync-url" type="url" inputmode="url" placeholder="https://…firebasedatabase.app/asienreise-geheimer-code" value="${esc(SYNC.url)}" autocomplete="off" autocapitalize="off"></div><div class="links"><button class="btn pri" data-syncsave>Speichern und abgleichen</button><button data-syncnow>Jetzt abgleichen</button><button data-syncoff>Ausschalten</button></div><p class="note" id="syncmsg" role="status">${esc(SYNC.msg||(SYNC.url?'Eingeschaltet.':'Aus.'))}</p></div>`;
+const syncCard=()=>`<div class="card"><h2 class="lbl">Gemeinsam nutzen (zwei Handys)</h2><p class="note">Mit einer eigenen, kostenlosen Online-Datenbank gleichen beide Handys Ausgaben, Buchungen und Häkchen von selbst ab. Ist es auf einem Handy eingeschaltet, schickt ihr mit „Link fürs zweite Handy“ einen Link, der es dort mit einem Tipp einschaltet. Jede Reise hat ihren eigenen Datensatz.</p><div class="fld"><label for="sync-url">Adresse der Datenbank</label><input id="sync-url" type="url" inputmode="url" placeholder="https://…firebasedatabase.app/asienreise-geheimer-code" value="${esc(SYNC.url)}" autocomplete="off" autocapitalize="off"></div><div class="links"><button class="btn pri" data-syncsave>Speichern und abgleichen</button><button data-syncnow>Jetzt abgleichen</button>${SYNC.url?'<button data-syncshare>Link fürs zweite Handy</button>':''}<button data-syncoff>Ausschalten</button></div><p class="note" id="syncmsg" role="status">${esc(SYNC.msg||(SYNC.url?'Eingeschaltet.':'Aus.'))}</p></div>`;
 function syncEnable(url){
   try{localStorage.setItem(SYNC_KEY,url)}catch(e){}
   SYNC.url=url;metaLoad();syncNow(true);
@@ -3880,7 +3880,7 @@ async function liveRates(btn){
 
 /* ---------- Ereignisse ---------- */
 document.addEventListener('click',e=>{
-  const t=e.target.closest('[data-kmode],[data-gplay],[data-gstep],[data-gz],[data-gall],[data-ggo],[data-trip],[data-sheet],[data-tprev],[data-tnext],[data-kday],[data-locate],[data-fit],[data-today],[data-kdet],[data-prio],[data-thm],[data-showact],[data-mc],[data-ifs],[data-ifc],[data-tab],[data-nav],[data-pf],[data-mv],[data-stop],[data-map],[data-gomap],[data-goplan],[data-del],[data-addexp],[data-editexp],[data-editbk],[data-addact],[data-delbk],[data-delexp],[data-bkv],[data-more],[data-budget],[data-rates],[data-ratesedit],[data-wx],[data-export],[data-import],[data-pack],[data-packdel],[data-syncsave],[data-syncnow],[data-syncoff],[data-reset],[data-resetyes],[data-mm],[data-mmtoggle],[data-tour]');
+  const t=e.target.closest('[data-kmode],[data-gplay],[data-gstep],[data-gz],[data-gall],[data-ggo],[data-trip],[data-sheet],[data-tprev],[data-tnext],[data-kday],[data-locate],[data-fit],[data-today],[data-kdet],[data-prio],[data-thm],[data-showact],[data-mc],[data-ifs],[data-ifc],[data-tab],[data-nav],[data-pf],[data-mv],[data-stop],[data-map],[data-gomap],[data-goplan],[data-del],[data-addexp],[data-editexp],[data-editbk],[data-addact],[data-delbk],[data-delexp],[data-bkv],[data-more],[data-budget],[data-rates],[data-ratesedit],[data-wx],[data-export],[data-import],[data-pack],[data-packdel],[data-syncsave],[data-syncnow],[data-syncshare],[data-syncoff],[data-reset],[data-resetyes],[data-mm],[data-mmtoggle],[data-tour]');
   if(!t)return;const D=t.dataset;
   if(D.trip){if(D.trip!==state.trip){useTrip(D.trip);state.tab='heute';render();scrollTo(0,0)}}
   else if(D.sheet)openActSheet(D.sheet);
@@ -3927,6 +3927,11 @@ document.addEventListener('click',e=>{
   else if(D.import!==undefined){try{const j=JSON.parse($('#imp-t').value);if(!j||typeof j!=='object')throw 0;store=DEF();loadStore(j);save();$('#dmsg').textContent='Daten übernommen.';setTimeout(keep,600)}catch(x){$('#dmsg').textContent='Der Text ist ungültig. Bitte ganz kopieren.'}}
   else if(D.pack!==undefined)packPhotos();
   else if(D.packdel!==undefined)packClear();
+  else if(D.syncshare!==undefined){const link=location.origin+location.pathname+'#sync='+encodeURIComponent(SYNC.url);
+    const done=m=>{SYNC.msg=m;syncUi()};
+    if(navigator.share)navigator.share({title:'Asienreise gemeinsam nutzen',text:'Tippe auf den Link, dann sehen wir beide dieselben Einträge:',url:link}).then(()=>done('Link geteilt. Auf dem zweiten Handy antippen.'),()=>{});
+    else if(navigator.clipboard)navigator.clipboard.writeText(link).then(()=>done('Link kopiert. Schick ihn ans zweite Handy und tippe ihn dort an.'),()=>done('Link: '+link));
+    else done('Link: '+link)}
   else if(D.syncsave!==undefined){const u=(document.getElementById('sync-url').value||'').trim();if(!/^https:\/\//i.test(u)){SYNC.msg='Die Adresse muss mit https:// beginnen.';syncUi()}else syncEnable(u)}
   else if(D.syncnow!==undefined){if(SYNC.url)syncNow(true);else{SYNC.msg='Erst die Adresse eintragen und speichern.';syncUi()}}
   else if(D.syncoff!==undefined)syncDisable();
@@ -3991,6 +3996,9 @@ document.addEventListener('submit',e=>{
   if(e.target.id==='namesf'){e.preventDefault();const fd=new FormData(e.target);store.set.n1=String(fd.get('n1')||'').trim()||'Person 1';store.set.n2=String(fd.get('n2')||'').trim()||'Person 2';save();keep()}
 });
 const hs=(location.hash||'').slice(1);if(TABS.some(t=>t[0]===hs))state.tab=hs;
+if(hs.startsWith('sync=')){let u='';try{u=decodeURIComponent(hs.slice(5)).trim()}catch(e){}
+  if(/^https:\/\/[^\/]+\.(firebasedatabase\.app|firebaseio\.com)\/[^\s]+$/i.test(u)){try{localStorage.setItem(SYNC_KEY,u)}catch(e){}setTimeout(()=>{const b=document.createElement('div');b.setAttribute('role','status');b.textContent='Gemeinsam nutzen ist eingeschaltet. Eure Einträge gleichen sich jetzt ab.';b.style.cssText='position:fixed;left:16px;right:16px;top:16px;z-index:9999;background:#0f1b2d;color:#fff;padding:14px 16px;border-radius:14px;font:600 15px/1.4 system-ui,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.25);text-align:center';document.body.appendChild(b);setTimeout(()=>b.remove(),6000)},300)}
+  try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}
 render();
 syncStart();
 {let raf=0;addEventListener('scroll',()=>{if(raf)return;raf=requestAnimationFrame(()=>{raf=0;document.body.classList.toggle('scrolled',scrollY>160)})},{passive:true})}
